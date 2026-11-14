@@ -1,0 +1,78 @@
+# Field Shift theme — based on Streamlit's shadcn-dual template with an
+# earthy green/brown palette (light/dark toggle stays available).
+
+[theme]
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "6px"
+buttonRadius = "6px"
+font = "'Inter':https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+codeFontSize = "0.875rem"
+baseFontSize = 14
+baseFontWeight = 400
+headingFontSizes = ["36px", "30px", "24px", "20px", "16px", "14px"]
+headingFontWeights = [600, 600, 600, 600, 600, 600]
+linkUnderline = true
+
+[theme.light]
+primaryColor = "#7DA24E"
+backgroundColor = "#c8e4a7"
+secondaryBackgroundColor = "#b0e68d"
+codeBackgroundColor = "#b9e296"
+textColor = "#19231B"
+linkColor = "#6B8E23"
+borderColor = "#DCE7D4"
+codeTextColor = "#19231B"
+grayColor = "#6C7A64"
+blueColor = "#7FA85B"
+greenColor = "#7DA24E"
+redColor = "#9C5138"
+yellowColor = "#B08D3F"
+orangeColor = "#A97142"
+violetColor = "#5E4B33"
+chartCategoricalColors = ["#7DA24E", "#9ACD32", "#6A452C", "#3D2217", "#B08968", "#8CA84A"]
+dataframeBorderColor = "#DCE7D4"
+dataframeHeaderBackgroundColor = "#E3EDDA"
+
+[theme.dark]
+primaryColor = "#9ACD32"
+backgroundColor = "#12100A"
+secondaryBackgroundColor = "#181410"
+codeBackgroundColor = "#211C15"
+textColor = "#EDE6D9"
+linkColor = "#B4DE6A"
+borderColor = "#2C251C"
+codeTextColor = "#EDE6D9"
+grayColor = "#9C8D7F"
+blueColor = "#8CC063"
+greenColor = "#9ACD32"
+redColor = "#C4714F"
+yellowColor = "#D2A65B"
+orangeColor = "#C08A5E"
+violetColor = "#8D7355"
+chartCategoricalColors = ["#9ACD32", "#8CA84A", "#B08968", "#8A6249", "#5E8C3A", "#D2A679"]
+dataframeBorderColor = "#2C251C"
+dataframeHeaderBackgroundColor = "#181410"
+
+[theme.light.sidebar]
+backgroundColor = "#E5EFE0"
+secondaryBackgroundColor = "#DBE8CF"
+codeBackgroundColor = "#CDE1BF"
+textColor = "#19231B"
+borderColor = "#DCE7D4"
+primaryColor = "#6B8E23"
+linkColor = "#6B8E23"
+dataframeHeaderBackgroundColor = "#DBE8CF"
+dataframeBorderColor = "#CDE1BF"
+
+[theme.dark.sidebar]
+backgroundColor = "#100E0A"
+secondaryBackgroundColor = "#181410"
+codeBackgroundColor = "#211C15"
+textColor = "#EDE6D9"
+borderColor = "#2C251C"
+primaryColor = "#9ACD32"
+linkColor = "#B4DE6A"
+dataframeHeaderBackgroundColor = "#181410"
+dataframeBorderColor = "#2C251C"

@@ -1,0 +1,6 @@
+# UI stack. The model team adds its own dependencies (e.g. scikit-learn) here.
+streamlit>=1.67,<2
+pandas>=2.2
+numpy>=1.26
+altair>=5.5
+pydeck>=0.9
