@@ -14,6 +14,7 @@ from components.navigation import (
     render_nav_clearance,
     run_page,
 )
+from components.chat_widget import render_chat
 from utils.data_sources import load_plots
 from utils.types import FarmerPriorities
 
@@ -252,3 +253,5 @@ except Exception as page_exc:
         st.exception(page_exc)
 
 render_nav_clearance()
+
+render_chat()

@@ -1,0 +1,30 @@
+﻿<div class="assistant-root">
+  <button class="surco-fab" type="button" aria-label="Abrir chat con Don Surco" aria-expanded="false" aria-controls="surco-panel">
+    <img class="fab-avatar" alt="" />
+    <span class="fab-badge" aria-hidden="true">✦</span>
+    <span class="fab-name">Don Surco</span>
+  </button>
+  <div class="surco-scrim" hidden></div>
+  <section id="surco-panel" class="surco-panel" role="dialog" aria-modal="true" aria-labelledby="surco-title" inert>
+    <header class="chat-header">
+      <img class="header-avatar" alt="" />
+      <div class="header-copy"><span class="eyebrow">TU COMPA DEL CAMPO</span><h2 id="surco-title">Don Surco <span aria-hidden="true">✦</span></h2><p class="chat-context"></p></div>
+      <button class="close icon-button" type="button" aria-label="Cerrar chat">×</button>
+    </header>
+    <div class="chat-toolbar"><span>Asistente de IA · datos de demostración</span><button class="clear" type="button">Nueva charla</button></div>
+    <div class="clear-confirm" hidden><span>¿Borrar esta charla?</span><button class="confirm" type="button">Borrar</button><button class="keep" type="button">Conservar</button></div>
+    <div class="chat-body" tabindex="0" aria-label="Conversación">
+      <div class="welcome"><span class="welcome-kicker">DEL SURCO A LA SOLUCIÓN</span><h3>¿Qué tal va tu campo?</h3><p>Soy Don Surco. Vamos a entender tu lote y buscar el siguiente buen paso.</p>
+        <div class="suggestions">
+          <button type="button" data-prompt="¿Cómo se encuentra mi parcela y cuáles son sus principales riesgos?">🌱 ¿Cómo va mi parcela?</button>
+          <button type="button" data-prompt="¿Qué rotación me conviene según mis prioridades?">↻ Exploremos una rotación</button>
+          <button type="button" data-prompt="¿Qué acciones puedo tomar para ahorrar agua en mi parcela?">💧 Quiero ahorrar agua</button>
+        </div>
+      </div>
+      <div class="messages" role="log" aria-label="Mensajes de la conversación"></div>
+    </div>
+    <div class="chat-status" role="status" aria-live="polite"></div>
+    <form class="chat-form"><label for="surco-input" class="sr-only">Tu pregunta para Don Surco</label><textarea id="surco-input" rows="2" maxlength="2000" placeholder="Cuéntame, ¿qué pasa en tu parcela?"></textarea><button class="send" type="submit" aria-label="Enviar mensaje">↑</button></form>
+    <footer>Verifica las recomendaciones en campo. La charla dura esta sesión.</footer>
+  </section>
+</div>

@@ -111,3 +111,68 @@ node --test tests/pwa-worker.test.cjs
 Node solo se necesita para las pruebas del service worker, no para ejecutar ni
 publicar la aplicaci?n. Las pruebas automatizadas no sustituyen la comprobaci?n de
 instalaci?n en el navegador y en Community Cloud.
+
+
+## Don Surco: asistente flotante
+
+La rama `feature/don-surco-chat` reutiliza el backend de `legy`
+(`utils/ai_chat.py`) y lo presenta como un componente **CCv2 inline** en todas las
+vistas. No a?ade una quinta opci?n a la navegaci?n. El frontend vive en
+`components/chat_frontend/` y se pasa al componente como cadenas de c?digo;
+no es un paquete CCv2 ni necesita Node/Vite para desplegar.
+
+- Burbuja con el granjero **Don Surco**, sombrero y espiga en la boca; abre un
+  panel lateral que respeta los temas claro/oscuro y la navegaci?n inferior m?vil.
+- Escape, bot?n de cerrar, foco de teclado y movimiento reducido.
+- Historial separado por lote durante la sesi?n; se conserva al navegar.
+  No se guarda en localStorage, en la cach? PWA ni despu?s de reiniciar la sesi?n.
+- Un mensaje a la vez, protecci?n ante eventos duplicados y confirmaci?n para
+  borrar una charla. Si cambia el lote o la estrategia se detiene la consulta
+  pendiente para no mezclar contextos.
+- Los eventos de herramientas se muestran como pasos desplegables; la respuesta
+  final aparece cuando llega del backend. `legy` no implementa streaming de tokens.
+- La mascota usa una animaci?n CSS sutil al pasar el cursor; no es un sprite animado.
+
+### Activar Gemini
+
+Instala `requirements.txt` y configura los secretos del servidor o de Community
+Cloud (nunca la clave en JavaScript ni dentro de los archivos versionados):
+
+```toml
+[google]
+api_key = "TU_CLAVE"
+model = "TU_MODELO_GEMINI_HABILITADO"
+```
+
+Tambi?n se acepta `GOOGLE_API_KEY` como variable de entorno. El modelo conserva
+el valor por defecto de `legy`; se recomienda configurar expl?citamente uno
+habilitado en tu proyecto. Se llama a Gemini solo al enviar una pregunta, nunca
+por abrir el panel o cambiar de p?gina. Las pruebas utilizan eventos simulados y
+no consumen la API. Si falta el SDK o la configuraci?n, la burbuja sigue disponible
+para revisar el dise?o, pero no permite enviar preguntas.
+
+Ejecuta `streamlit run pwa_app.py`. El avatar se sirve desde
+`/app/static/assistant/don-surco.png`; para ello se habilita el servidor est?tico
+nativo de Streamlit. Ese directorio contiene ?nicamente recursos p?blicos.
+
+### Ilustraci?n
+
+`static/assistant/don-surco.png` se gener? con ImageGen integrado, con fondo
+transparente. Prompt de producci?n: granjero caricaturesco adulto y amistoso,
+retrato de busto con sombrero de paja y banda terracota, bigote peque?o, camisa
+crema y overol verde; una espiga seca en la comisura de la boca, sin humo;
+contornos claros y silueta legible como avatar circular de 64 px, paleta
+terracota/durazno/crema/verde, sin texto ni fondo. Animaci?n y encuadre en CSS.
+
+
+Pruebas funcionales del asistente (sin consumo de Gemini):
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+npm install --prefix .venv/js-tests --no-audit --no-fund jsdom
+node --test --experimental-test-isolation=none tests/chat-widget.test.cjs tests/pwa-worker.test.cjs
+```
+
+`jsdom` se instala ?nicamente como herramienta de pruebas dentro de `.venv`,
+que est? ignorado por Git. Comprueba los eventos del panel y el teclado sobre un
+DOM simulado; no sustituye una revisi?n visual en navegador o tel?fono real.
