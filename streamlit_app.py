@@ -17,6 +17,22 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
+st.html(
+    """
+    <style>
+    [data-testid="stMainBlockContainer"] {
+      padding: clamp(2rem, 6vh, 4rem) clamp(1.25rem, 4vw, 3.5rem) 2rem;
+    }
+    @media (max-width: 767px) {
+      [data-testid="stMainBlockContainer"] {
+        padding: 1.5rem clamp(0.75rem, 4vw, 1rem)
+          calc(8rem + env(safe-area-inset-bottom, 0px));
+      }
+    }
+    </style>
+    """
+)
+
 if "farmer_priorities" not in st.session_state:
     st.session_state.farmer_priorities = FarmerPriorities()
 if "local_ground_notes" not in st.session_state:

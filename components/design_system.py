@@ -12,12 +12,12 @@ def styles() -> None:
 .fs-section span { color:var(--fs-accent);font-size:28px; }
 .fs-context { display:flex;flex-wrap:wrap;gap:8px;margin:12px 0; }
 .fs-pill { border:1px solid color-mix(in srgb,var(--fs-accent) 35%,transparent);background:color-mix(in srgb,var(--fs-accent) 7%,transparent);padding:6px 12px;border-radius:100px;font-size:14px; }
-.fs-card { border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:18px;padding:22px;background:color-mix(in srgb,currentColor 3%,transparent);height:100%;overflow-wrap:anywhere; }
+.fs-card { display:flex;flex-direction:column;align-self:stretch;min-height:100%;border:1px solid color-mix(in srgb,currentColor 18%,transparent);border-radius:18px;padding:22px;background:color-mix(in srgb,currentColor 3%,transparent);height:100%;overflow-wrap:anywhere; }
 .fs-card h3 { font-size:21px;margin:12px 0; }.fs-card p { font-size:15px;line-height:1.6;margin:10px 0; }
 .fs-card .fs-label { display:block;color:var(--fs-accent);font-size:14px;font-weight:650;margin-top:14px; }
 .fs-card strong.fs-value { display:block;font-size:30px;line-height:1.35;font-variant-numeric:tabular-nums; }
 .fs-card small { display:block;font-size:14px;line-height:1.6;margin:6px 0; }
-.fs-card .fs-soil { border-top:1px solid color-mix(in srgb,currentColor 15%,transparent);margin-top:16px;padding-top:12px; }
+.fs-card .fs-soil { border-top:1px solid color-mix(in srgb,currentColor 15%,transparent);margin-top:auto;padding-top:12px; }
 .fs-model-note { padding:14px 18px;border-left:4px solid var(--fs-gold);background:color-mix(in srgb,var(--fs-gold) 7%,transparent);border-radius:8px;font-size:14px;line-height:1.65; }
 .st-key-model_content button { min-height:44px; }
 @media(max-width:767px) { .fs-section { font-size:22px!important; }.fs-card {padding:18px;} .st-key-model_content button {max-width:calc(100% - 4.75rem);} }
