@@ -20,12 +20,12 @@ from utils.types import FarmerPriorities, PlotRisk, Recommendation, ScenarioOutc
 
 # Mock stand-in for model features: agronomic traits per crop name.
 _CROP_TRAITS = {
-    "Maíz": {"legume": False, "deep_root": False, "cover": False},
-    "Frijol": {"legume": True, "deep_root": False, "cover": False},
-    "Sorgo": {"legume": False, "deep_root": True, "cover": False},
-    "Trigo": {"legume": False, "deep_root": True, "cover": False},
+    "Maize": {"legume": False, "deep_root": False, "cover": False},
+    "Beans": {"legume": True, "deep_root": False, "cover": False},
+    "Sorghum": {"legume": False, "deep_root": True, "cover": False},
+    "Wheat": {"legume": False, "deep_root": True, "cover": False},
     "Alfalfa": {"legume": True, "deep_root": True, "cover": False},
-    "Cultivo de cobertura": {"legume": False, "deep_root": False, "cover": True},
+    "Cover Crop": {"legume": False, "deep_root": False, "cover": True},
 }
 
 
@@ -61,15 +61,15 @@ def _climate_stress(rainfall_shift_pct: float, temp_anomaly_c: float) -> tuple[f
 def _mechanism_text(traits: dict) -> str:
     parts = []
     if traits["has_legume"]:
-        parts.append("El frijol/alfalfa fija nitrógeno del aire con bacterias en sus raíces, abaratando el fertilizante N del siguiente cultivo.")
+        parts.append("Beans and alfalfa fix nitrogen from the air through root bacteria, reducing nitrogen fertilizer needs for the next crop.")
     if traits["has_deep_root"]:
-        parts.append("El sorgo/trigo desarrolla raíces profundas que infiltran agua y acceden a humedad residual durante la sequía.")
+        parts.append("Sorghum and wheat develop deep roots that improve water infiltration and reach residual moisture during drought.")
     if traits["has_cover"]:
-        parts.append("El cultivo de cobertura mantiene el suelo cubierto todo el año: menos erosión y más humedad retenida.")
+        parts.append("A cover crop keeps soil covered year-round, reducing erosion and helping retain moisture.")
     if traits["monoculture"]:
         parts.append(
-            "El maíz continuo extrae los mismos nutrientes cada ciclo y deja el suelo expuesto entre siembras; "
-            "bajo sequía o calor su rendimiento cae con fuerza."
+            "Continuous maize removes the same nutrients each cycle and leaves soil exposed between plantings; "
+            "yields can drop sharply under drought or heat."
         )
     return " ".join(parts)
 
@@ -95,7 +95,7 @@ def predict_scenario_outcome(
     cost_base = float(rng.uniform(150, 400))
 
     scenario = next((s for s in load_rotation_scenarios() if s.id == scenario_id), None)
-    traits = _scenario_traits(scenario.crops if scenario else ("Maíz", "Maíz", "Maíz"))
+    traits = _scenario_traits(scenario.crops if scenario else ("Maize", "Maize", "Maize"))
     drought, stress = _climate_stress(rainfall_shift_pct, temp_anomaly_c)
 
     # Yield: monocultures lose more under stress; CI widens with the stress.
@@ -145,15 +145,15 @@ def predict_scenario_outcome(
         forage_value_score=round(forage_value, 2),
         agronomic_mechanism=_mechanism_text(traits),
         evidence_summary=(
-            f"SMAP (humedad del suelo) y MODIS/NDVI (vigor) para {plot_id}, con lluvia estacional de NASA POWER. "
-            f"Evaluado con {rainfall_shift_pct:+.0f}% de cambio de lluvia y +{temp_anomaly_c:.1f}°C de anomalía térmica."
+            f"SMAP (soil moisture) and MODIS/NDVI (vegetation vigor) for {plot_id}, with seasonal rainfall from NASA POWER. "
+            f"Evaluated with a {rainfall_shift_pct:+.0f}% rainfall shift and a +{temp_anomaly_c:.1f}°C temperature anomaly."
         ),
         information_gaps=(
-            "Los píxeles satelitales (~1 km²) promedian todo el lote; aún no hay sondas de suelo in-situ ni "
-            "textura por parcela. La incertidumbre crece con el estrés climático simulado."
+            "Satellite pixels (~1 km²) average the entire field; in-situ soil probes and plot-level soil texture are not yet available. "
+            "Uncertainty increases with simulated climate stress."
         ),
         local_review_notes=(
-            "Verificar en campo antes de decidir: humedad a 20 cm, costra/erosión visible y estado sanitario del cultivo."
+            "Verify in the field before making a decision: check moisture at 20 cm, visible crusting or erosion, and crop health."
         ),
     )
 
@@ -274,17 +274,17 @@ def generate_recommendations(plot_id: str, priorities: FarmerPriorities | None =
         recs.append(
             Recommendation(
                 id=f"{plot_id}-riego",
-                title="Riego por goteo con déficit regulado",
-                category="Práctica agronómica",
-                rationale="Déficit hídrico detectado: humedad del suelo por debajo del umbral óptimo.",
+                title="Regulated Deficit Drip Irrigation",
+                category="Agronomic Practice",
+                rationale="Water deficit detected: soil moisture is below the optimal threshold.",
                 expected_impact_pct=12,
                 impact_ci_low=6,
                 impact_ci_high=19,
                 water_delta_mm=-35,
                 cost_usd_per_ha=85,
-                evidence_summary="SMAP muestra humedad volumétrica por debajo del umbral óptimo y NASA POWER confirma déficit de lluvia estacional.",
-                information_gaps="El píxel SMAP (~1 km²) promedia el lote; no mide la estratificación vertical del perfil del suelo.",
-                local_review_notes="Medir humedad a 20 cm con sonda o tensiómetro antes de calibrar el riego.",
+                evidence_summary="SMAP indicates volumetric moisture below the optimal threshold, and NASA POWER confirms a seasonal rainfall deficit.",
+                information_gaps="A SMAP pixel (~1 km²) averages the field and does not measure vertical variation in the soil profile.",
+                local_review_notes="Measure moisture at 20 cm with a probe or tensiometer before adjusting irrigation.",
             )
         )
 
@@ -292,17 +292,17 @@ def generate_recommendations(plot_id: str, priorities: FarmerPriorities | None =
         recs.append(
             Recommendation(
                 id=f"{plot_id}-calor",
-                title="Ajuste de fecha de siembra y variedad tolerante al calor",
-                category="Práctica agronómica",
-                rationale="Estrés térmico elevado en la ventana crítica del cultivo.",
+                title="Adjust Planting Dates and Choose a Heat-Tolerant Variety",
+                category="Agronomic Practice",
+                rationale="High heat stress during a critical crop growth window.",
                 expected_impact_pct=8,
                 impact_ci_low=3,
                 impact_ci_high=14,
                 water_delta_mm=0,
                 cost_usd_per_ha=25,
-                evidence_summary="ECOSTRESS/MODIS indican temperatura superficial alta en la ventana crítica (NASA POWER).",
-                information_gaps="La temperatura satelital es de superficie, no del aire a altura de planta.",
-                local_review_notes="Registrar máximas diarias con termómetro de sombra y revisar marchitez al mediodía.",
+                evidence_summary="ECOSTRESS/MODIS indicate high surface temperatures during a critical window (NASA POWER).",
+                information_gaps="Satellite temperature measures the surface, not air temperature at crop-canopy height.",
+                local_review_notes="Record daily highs with a shaded thermometer and check for wilting around midday.",
             )
         )
 
@@ -310,17 +310,17 @@ def generate_recommendations(plot_id: str, priorities: FarmerPriorities | None =
         recs.append(
             Recommendation(
                 id=f"{plot_id}-npk",
-                title="Fertilizante NPK de liberación controlada",
-                category="Fertilizante",
-                rationale="NDVI bajo sugiere pérdida de nutrientes y vigor vegetal reducido.",
+                title="Controlled-Release NPK Fertilizer",
+                category="Fertilizer",
+                rationale="Low NDVI may indicate nutrient loss and reduced vegetation vigor.",
                 expected_impact_pct=10,
                 impact_ci_low=4,
                 impact_ci_high=17,
                 water_delta_mm=0,
                 cost_usd_per_ha=60,
-                evidence_summary="NDVI (MODIS) bajo sugiere deficiencia de nitrógeno; la tendencia de 12 meses confirma el descenso.",
-                information_gaps="El NDVI no distingue entre N, P o K limitantes ni el estado de la materia orgánica.",
-                local_review_notes="Tomar muestra de suelo (0-20 cm) para análisis de laboratorio antes de aplicar.",
+                evidence_summary="Low NDVI (MODIS) may indicate nitrogen deficiency; the 12-month trend confirms the decline.",
+                information_gaps="NDVI cannot identify whether nitrogen, phosphorus, or potassium is limiting, or indicate organic matter levels.",
+                local_review_notes="Collect a 0–20 cm soil sample for laboratory analysis before applying fertilizer.",
             )
         )
 
@@ -328,17 +328,17 @@ def generate_recommendations(plot_id: str, priorities: FarmerPriorities | None =
         recs.append(
             Recommendation(
                 id=f"{plot_id}-monitoreo",
-                title="Mantener prácticas actuales y monitorear mensualmente",
-                category="Práctica agronómica",
-                rationale="Sin anomalías críticas detectadas en las variables satelitales.",
+                title="Maintain Current Practices and Monitor Monthly",
+                category="Agronomic Practice",
+                rationale="No critical anomalies were detected in the satellite indicators.",
                 expected_impact_pct=2,
                 impact_ci_low=0,
                 impact_ci_high=5,
                 water_delta_mm=0,
                 cost_usd_per_ha=10,
-                evidence_summary="SMAP, MODIS y POWER dentro de rangos normales en los últimos 12 meses.",
-                information_gaps="Ausencia de sondas in-situ; la resolución del píxel promedia microzonas del lote.",
-                local_review_notes="Recorrer el lote mensualmente y anotar observaciones locales (lluvia, humedad, plagas).",
+                evidence_summary="SMAP, MODIS, and POWER indicators have remained within normal ranges over the past 12 months.",
+                information_gaps="There are no in-situ probes; each pixel averages microzones across the field.",
+                local_review_notes="Walk the field monthly and record local observations (rainfall, moisture, pests).",
             )
         )
 
@@ -351,17 +351,17 @@ def generate_recommendations(plot_id: str, priorities: FarmerPriorities | None =
             recs.append(
                 Recommendation(
                     id=f"{plot_id}-forraje",
-                    title="Incorporar alfalfa o cultivo de cobertura forrajero",
-                    category="Práctica agronómica",
-                    rationale="Prioridad declarada: valor forrajero para el ganado además del grano.",
+                    title="Add Alfalfa or a Forage Cover Crop",
+                    category="Agronomic Practice",
+                    rationale="Stated priority: forage value for livestock in addition to grain.",
                     expected_impact_pct=6,
                     impact_ci_low=2,
                     impact_ci_high=11,
                     water_delta_mm=-10,
                     cost_usd_per_ha=45,
-                    evidence_summary="El NDVI estacional (MODIS) y la humedad SMAP soportan un forrajero en la ventana identificada.",
-                    information_gaps="No hay datos de demanda ganadera ni precios locales de forraje.",
-                    local_review_notes="Confirmar disponibilidad de pastura y mercado antes de sembrar.",
+                    evidence_summary="Seasonal NDVI (MODIS) and SMAP soil moisture support planting forage during the identified window.",
+                    information_gaps="Livestock demand and local forage prices are not available.",
+                    local_review_notes="Confirm pasture availability and market conditions before planting.",
                 )
             )
 

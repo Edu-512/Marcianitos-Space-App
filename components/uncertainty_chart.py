@@ -30,7 +30,7 @@ def yield_uncertainty_bands(df: pd.DataFrame, height: int = 300) -> alt.v6.Layer
     band = alt.Chart(band_df, mark="area").encode(
         x=alt.X("date:T", title=None),
         y=alt.Y("value:Q", scale=alt.Scale(zero=False)),
-        color=alt.Color("scenario:N", legend=alt.Legend(title="Escenario")),
+        color=alt.Color("scenario:N", legend=alt.Legend(title="Scenario")),
     )
     band.mark = alt.MarkDef(type="area", opacity=0.25, interpolate="monotone")
 
@@ -53,7 +53,7 @@ def impact_with_ci(df: pd.DataFrame, height: int = 300) -> alt.v6.LayerChart:
     data["label"] = data["label"].astype("category")
 
     bar = alt.Chart(data, mark="bar", height=18).encode(
-        x=alt.X("impact:Q", title="Impacto esperado (%)"),
+        x=alt.X("impact:Q", title="Expected Impact (%)"),
         y=alt.Y("label:N", sort="-x", title=None),
     )
     bar.mark = alt.MarkDef(type="bar", opacity=0.75)
@@ -68,8 +68,8 @@ def impact_with_ci(df: pd.DataFrame, height: int = 300) -> alt.v6.LayerChart:
     return alt.layer(bar, whiskers).properties(height=max(height, 40 * len(data)))
 
 
-#: Calendar order for the seasonal timeline (Spanish month abbreviations).
-_MONTHS_ES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+#: Calendar order for the seasonal timeline (English month abbreviations).
+_MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 def _window_months(start_month: str, end_month: str) -> list[int]:
     """Month numbers (1..12) covered by a window, handling Dec -> Jan wraparound."""
@@ -87,11 +87,11 @@ def seasonal_vulnerability_timeline(windows: list[SeasonalWindow], height: int =
     """
     rows: list[dict] = []
     for w in windows:
-        span = f"{_MONTHS_ES[int(w.start_month) - 1]}–{_MONTHS_ES[int(w.end_month) - 1]}"
+        span = f"{_MONTHS_EN[int(w.start_month) - 1]}–{_MONTHS_EN[int(w.end_month) - 1]}"
         for m in _window_months(w.start_month, w.end_month):
             rows.append(
                 {
-                    "month": _MONTHS_ES[m - 1],
+                    "month": _MONTHS_EN[m - 1],
                     "window_type": w.window_type,
                     "severity": w.severity,
                     "span": span,
@@ -105,17 +105,17 @@ def seasonal_vulnerability_timeline(windows: list[SeasonalWindow], height: int =
     df = pd.DataFrame(rows)
 
     chart = alt.Chart(df, mark="bar").encode(
-        x=alt.X("month:N", sort=_MONTHS_ES, title=None),
+        x=alt.X("month:N", sort=_MONTHS_EN, title=None),
         y=alt.Y("window_type:N", title=None),
         color=alt.Color(
             "severity:N",
             sort=["Low", "Moderate", "High"],
-            legend=alt.Legend(title="Severidad"),
+            legend=alt.Legend(title="Severity"),
         ),
         tooltip=[
-            alt.Tooltip("window_type:N", title="Ventana"),
-            alt.Tooltip("severity:N", title="Severidad"),
-            alt.Tooltip("span:N", title="Periodo"),
+            alt.Tooltip("window_type:N", title="Window"),
+            alt.Tooltip("severity:N", title="Severity"),
+            alt.Tooltip("span:N", title="Period"),
             alt.Tooltip("explanation:N", title=None),
         ],
     )

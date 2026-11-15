@@ -1,4 +1,4 @@
-﻿"""Same-origin PWA routes without modifying installed Streamlit files."""
+"""Same-origin PWA routes without modifying installed Streamlit files."""
 
 import re
 from functools import lru_cache
@@ -9,6 +9,8 @@ from starlette.requests import Request
 from starlette.responses import FileResponse, HTMLResponse
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
+
+from components.navigation import PAGES
 
 PWA_DIR = Path(__file__).resolve().parent.parent / "pwa"
 NO_CACHE = {"Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff"}
@@ -59,6 +61,7 @@ def pwa_routes() -> list[Route | Mount]:
     return [
         Route("/", index),
         Route("/index.html", index),
+        *[Route(f"/{spec.url_path}", index) for spec in PAGES.values()],
         Route("/manifest.webmanifest", manifest),
         Route("/service-worker.js", service_worker),
         Mount("/pwa", app=StaticFiles(directory=PWA_DIR)),

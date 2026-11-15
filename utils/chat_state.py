@@ -42,7 +42,7 @@ class ChatSession:
             getattr(self.iterator, "close", lambda: None)()
         self.iterator = None
         if self.busy:
-            self.messages[-1].update(content="La consulta se detuvo porque cambió el lote o la estrategia. Puedes volver a preguntar.", error=True)
+            self.messages[-1].update(content="The request stopped because the plot or strategy changed. You can ask again.", error=True)
         self.busy = self.starting = False
 
     def advance(self) -> None:
@@ -60,9 +60,9 @@ class ChatSession:
             message["steps"].append({"label": event.label, "payload": event.payload})
             return
         if event.kind == "final":
-            message["content"] = str(event.payload or "No encontré una respuesta. Intenta con otra pregunta.")
+            message["content"] = str(event.payload or "I couldn't find an answer. Try asking another question.")
         else:
-            message.update(content="No pude completar la consulta. Inténtalo de nuevo en un momento.", error=True)
+            message.update(content="I couldn't complete the request. Please try again in a moment.", error=True)
         self.busy = False
         if self.iterator is not None:
             getattr(self.iterator, "close", lambda: None)()

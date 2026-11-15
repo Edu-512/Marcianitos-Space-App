@@ -13,7 +13,7 @@ function setup(overrides = {}) {
   w.requestAnimationFrame = callback => callback();
   w.eval(source.replace('export default function(component)', 'window.mountChat = function(component)'));
   const events = [];
-  const data = { avatar:'./avatar.png', plot_id:'lote-norte', plot_name:'Lote Norte', messages:[], busy:false, enabled:true, open:false, ...overrides };
+  const data = { avatar:'./avatar.png', plot_id:'lote-norte', plot_name:'North Field', messages:[], busy:false, enabled:true, open:false, ...overrides };
   let cleanup;
   const render = changes => {
     Object.assign(data, changes);
@@ -41,13 +41,13 @@ test('bubble opens panel, Escape closes it, and focus returns to bubble', () => 
 
 test('submit emits one request, blocks duplicate submissions and includes plot context', () => {
   const t = setup();
-  t.q('textarea').value = '¿Cómo va mi parcela?';
+  t.q('textarea').value = 'How is my plot doing?';
   t.q('textarea').dispatchEvent(new t.w.Event('input'));
   for (let i=0; i<2; i++) t.q('form').dispatchEvent(new t.w.Event('submit', { cancelable:true }));
   const submissions = t.events.filter(e => e.name === 'submit');
   assert.equal(submissions.length, 1);
   assert.equal(submissions[0].value.plot_id, 'lote-norte');
-  assert.equal(submissions[0].value.text, '¿Cómo va mi parcela?');
+  assert.equal(submissions[0].value.text, 'How is my plot doing?');
   assert.ok(submissions[0].value.id);
   assert.equal(t.q('.send').disabled, true);
   t.dom.window.close();
@@ -55,9 +55,9 @@ test('submit emits one request, blocks duplicate submissions and includes plot c
 
 test('draft survives rerenders; switching plots clears it', () => {
   const t = setup();
-  t.q('textarea').value = 'Mi borrador';
+  t.q('textarea').value = 'My draft';
   t.render({ open:true });
-  assert.equal(t.q('textarea').value, 'Mi borrador');
+  assert.equal(t.q('textarea').value, 'My draft');
   t.render({ plot_id:'lote-sur' });
   assert.equal(t.q('textarea').value, '');
   t.dom.window.close();
@@ -90,6 +90,6 @@ test('clear requires confirmation; missing service or network blocks submission'
   Object.defineProperty(t.w.navigator, 'onLine', { configurable:true, value:false });
   t.w.dispatchEvent(new t.w.Event('offline'));
   assert.equal(t.q('.send').disabled, true);
-  assert.match(t.q('.chat-status').textContent, /Sin conexión/);
+  assert.match(t.q('.chat-status').textContent, /offline/i);
   t.dom.window.close();
 });
