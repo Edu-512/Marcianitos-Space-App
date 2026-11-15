@@ -4,3 +4,27 @@ __pycache__/
 venv/
 .streamlit/secrets.toml
 .DS_Store
+
+# ---- Análisis: datos crudos pesados (se descargan, ver los README) ----
+analisis/cdl/datos/*.tif
+analisis/cdl/datos/ndvi/
+analisis/ss/datos/shp/
+analisis/ss/datos/tabular/
+analisis/humedad_nasa/datos/geojson_condados_eua.json
+
+# ---- Análisis: archivos intermedios y salidas que se regeneran ----
+analisis/**/*.npy
+analisis/**/*.npz
+analisis/**/*.pkl
+analisis/qs/*.csv
+analisis/qs/*.png
+analisis/ss/*.csv
+analisis/ss/*.png
+analisis/cdl/*.csv
+analisis/cdl/*.png
+analisis/cdl/*.tif
+analisis/economia/*.csv
+analisis/clima_power/salida/
+analisis/clima_power/salida_clima/
+analisis/ajuste_suelo_versiones/*.csv
+analisis/ajuste_suelo_versiones/*.json
