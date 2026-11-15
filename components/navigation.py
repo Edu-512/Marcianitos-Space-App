@@ -1,4 +1,4 @@
-﻿"""Native sidebar navigation and shared plot selection for Field Shift."""
+"""Native sidebar navigation and shared plot selection for Field Shift."""
 from __future__ import annotations
 
 import importlib
@@ -69,6 +69,8 @@ def prepare_plot_selection(plots: list[Plot]) -> bool:
     selected = st.session_state.selected_plot_id
     # This runs before the selector is mounted. Never overwrite another widget
     # after mount, and never use a display name as the parcel identity.
+    if st.session_state.get("fs_mobile_plot_select") != selected:
+        st.session_state.fs_mobile_plot_select = selected
     if st.session_state.get("fs_plot_select") != selected:
         st.session_state.fs_plot_select = selected
     return recovered
@@ -103,10 +105,14 @@ def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) ->
                 args=(tuple(names),),
             )
             plot = next(p for p in plots if p.id == st.session_state.selected_plot_id)
-            st.caption(f"{plot.name} · {plot.area_hectares:g} ha · {plot.current_crop}")
+            from utils import field_model as fm
+            if fm.enabled():
+                st.caption(f"{plot.name} | {fm.profile(plot.id)['parcela']['acres']:,} acres")
+            else:
+                st.caption(f"{plot.name} | {plot.area_hectares:g} ha | {plot.current_crop}")
         st.divider()
-        st.caption("Case study: Butler County, Iowa.")
-        st.caption("Prototype with simulated plots and results.")
+        from utils import field_model as fm
+        st.caption("167 satellite-derived fields | property boundaries unverified" if fm.enabled() else "Legacy demonstration data")
 
 
 def render_continuation(pages: dict[str, Any], active_key: str) -> None:
@@ -220,3 +226,34 @@ def render_mobile_clearance() -> None:
     """Let users scroll the final action above the phone navigation dock."""
     with st.container(key="fs_mobile_navigation_clearance"):
         st.space(136)
+
+
+def _mobile_select_plot(valid_ids: tuple[str, ...]) -> None:
+    selected=st.session_state.get("fs_mobile_plot_select")
+    if selected in valid_ids:
+        st.session_state.selected_plot_id=selected
+
+
+def render_mobile_plot_selector(plots: list[Plot]) -> None:
+    active=st.session_state.get("page_key","map_view")
+    if active not in PAGES:active="map_view"
+    status=f"Field Shift | {PAGES[active].title} | {list(PAGES).index(active)+1}/4"
+    # Streamlit exposes no viewport-aware sidebar visibility API. These two
+    # native sidebar hooks are deliberately isolated in this media query.
+    st.html("""<style>
+.st-key-fs_mobile_tools { display:none; }
+@media(max-width:767px) {
+ [data-testid="stSidebar"],[data-testid="stSidebarCollapsedControl"] { display:none!important; }
+ .st-key-fs_mobile_tools { display:block;position:fixed;right:1rem;top:3.25rem;z-index:145;max-width:calc(100% - 2rem); }
+ .st-key-fs_mobile_tools button {min-height:44px;}
+ .st-key-fs_mobile_navigation::before { content:"__JOURNEY_STATUS__";grid-column:1/-1;font-size:12px;font-weight:650;text-align:center; }
+}
+</style>""".replace("__JOURNEY_STATUS__",status))
+    with st.container(key="fs_mobile_tools",horizontal=True,horizontal_alignment="right"):
+        with st.popover("Change plot",icon=":material/landscape:"):
+            if not plots:
+                st.info("No profiles are available.")
+            else:
+                names={p.id:p.name for p in plots}
+                st.selectbox("Choose a plot",list(names),format_func=lambda pid:names[pid],key="fs_mobile_plot_select",
+                             on_change=_mobile_select_plot,args=(tuple(names),))

@@ -8,14 +8,14 @@ from streamlit.testing.v1 import AppTest
 from components.action_plan import action_context, reviewed_count, review_widget_key, unique_actions
 from components.action_markup import action_card, impact_range
 from components.crop_comparison import outcome_for
-from utils.data_sources import load_plots, load_rotation_scenarios
+from utils.data_sources import _load_legacy_plots as load_plots, load_rotation_scenarios
 from utils.model_interface import generate_recommendations
 
 ROOT=Path(__file__).resolve().parents[1]
 
 class ActionPlanTests(TestCase):
     def app(self,with_plan=False):
-        at=AppTest.from_file(str(ROOT/'streamlit_app.py'),default_timeout=25).run()
+        at=_legacy_app_from_file(str(ROOT/'streamlit_app.py'),default_timeout=25).run()
         if with_plan:
             at.button(key='mobile_nav_rotations').click().run()
             at.button(key='select_continuous').click().run()
@@ -138,3 +138,9 @@ class ActionPlanTests(TestCase):
         self.assertFalse(at.exception)
         self.assertEqual(at.session_state['page_key'],'map_view')
         self.assertEqual(at.session_state['selected_plot_id'],'lote-norte')
+
+
+def _legacy_app_from_file(*args,**kwargs):
+    app=AppTest.from_file(*args,**kwargs)
+    app.session_state["data_mode"]="legacy"
+    return app

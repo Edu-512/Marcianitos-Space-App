@@ -55,9 +55,9 @@ textarea::placeholder { color:var(--st-text-color);opacity:.65; }
 footer { font-size:9px;text-align:center;padding:0 14px 14px;opacity:.7; }
 .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
 @media(max-width:767px) {
- .surco-fab { width:66px;height:66px;right:1rem;bottom:calc(8rem + env(safe-area-inset-bottom,0px)); }
+ .surco-fab { width:66px;height:66px;right:1rem;bottom:calc(9rem + env(safe-area-inset-bottom,0px)); }
  .fab-name { display:none; }
- .surco-panel { top:max(1rem,env(safe-area-inset-top,0px));bottom:calc(7.5rem + env(safe-area-inset-bottom,0px));left:.5rem;right:.5rem;width:auto;border-radius:20px;max-height:calc(100dvh - 9rem); }
+ .surco-panel { top:max(1rem,env(safe-area-inset-top,0px));bottom:calc(9rem + env(safe-area-inset-bottom,0px));left:.5rem;right:.5rem;width:auto;border-radius:20px;max-height:calc(100dvh - 10.5rem); }
  .chat-header { padding:12px; }
  .chat-toolbar { padding:4px 12px; }
  .chat-body { padding:12px; }

@@ -1,0 +1,135 @@
+mukey,musym,nombre,acres_mapa,clase_tierra,drenaje,grupo_hidrologico,pendiente_pct,om_pct,awc_cm_cm,agua_disp_0_150cm,arena_pct,limo_pct,arcilla_pct,ph,factor_k,factor_t,frec_inundacion,inund_siembra,enchar_siembra,prof_capa_cm,pct_con_capa_restr,csr2_iowa
+2377844,1152,"Marshan clay loam, 0 to 2 percent slopes, rarely flooded",16687.51,Prime farmland if drained,Poorly drained,C/D,1.0,4.92,0.21,19.07,23.05,50.05,26.9,6.47,0.2,3.0,Rare,5.0,5.0,200.0,0.0,54.0
+2407082,1226,"Lawler loam, 0 to 2 percent slopes, rarely flooded",12376.38,All areas are prime farmland,Somewhat poorly drained,B/D,1.0,4.37,0.21,20.38,30.88,46.55,22.57,6.21,0.32,3.0,Rare,5.0,5.0,200.0,0.0,59.0
+2474680,662C2,"Mt. Carroll silt loam, 5 to 9 percent slopes, moderately eroded",213.71,Farmland of statewide importance,Well drained,B,7.0,1.88,0.23,32.19,11.66,69.77,18.57,6.5,0.43,5.0,Ninguna,0.0,0.0,200.0,0.0,82.0
+2474775,323B,"Fort Dodge loam, 1 to 4 percent slopes",55.16,All areas are prime farmland,Well drained,B,2.3,3.45,0.21,27.57,39.88,37.42,22.7,6.44,0.24,4.0,Ninguna,0.0,0.0,200.0,0.0,78.0
+2474776,395B,"Marquis loam, 2 to 5 percent slopes",8.29,All areas are prime farmland,Moderately well drained,C,2.9,3.05,0.19,25.39,35.27,43.53,21.2,5.78,0.24,5.0,Ninguna,0.0,0.0,200.0,0.0,91.0
+2474777,620B,"Port Byron silt loam, 2 to 5 percent slopes",12.99,All areas are prime farmland,Well drained,B,3.9,3.0,0.22,31.05,13.4,71.2,15.4,6.5,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,95.0
+2474778,813B,"Atkinson loam, till plain, 2 to 5 percent slopes",3.65,All areas are prime farmland,Well drained,C,3.0,3.29,0.14,15.58,40.0,38.92,21.07,6.6,0.24,3.0,Ninguna,0.0,0.0,127.0,100.0,60.0
+2474779,814B,"Rockton loam, till plain, 2 to 5 percent slopes",5.82,All areas are prime farmland,Well drained,C,3.0,3.24,0.14,9.56,40.15,38.23,21.62,6.62,0.24,2.0,Ninguna,0.0,0.0,79.0,100.0,47.0
+2474780,814C,"Rockton loam, till plain, 5 to 9 percent slopes",2.85,Farmland of statewide importance,Well drained,C,7.0,3.23,0.14,9.25,40.3,37.95,21.75,6.66,0.24,2.0,Ninguna,0.0,0.0,79.0,100.0,40.0
+2474781,8175B,"Dickinson fine sandy loam, terrace, 1 to 4 percent slopes, rarely flooded",3.15,All areas are prime farmland,Well drained,A,1.9,1.95,0.15,14.91,64.04,25.66,10.3,6.27,0.2,3.0,Rare,0.0,0.0,200.0,0.0,52.0
+2474784,184B,"Klinger silty clay loam, 2 to 5 percent slopes",30.09,All areas are prime farmland,Somewhat poorly drained,C/D,2.9,4.78,0.23,24.28,9.85,62.15,28.0,6.23,0.28,5.0,Ninguna,0.0,0.0,200.0,0.0,95.0
+2474785,626,"Hayfield loam, 24 to 40 inches to sand and gravel, 0 to 2 percent slopes",3.43,All areas are prime farmland,Somewhat poorly drained,B/D,1.0,2.83,0.22,18.89,28.9,46.2,24.9,6.5,0.28,3.0,Ninguna,0.0,0.0,200.0,0.0,56.0
+2474786,936,"Coland-Spillville complex, 0 to 2 percent slopes, occasionally flooded",18.65,Prime farmland if drained,Poorly drained,C/D,1.0,4.78,0.13,19.23,34.15,40.0,25.85,6.46,0.17,5.0,Occasional,100.0,0.0,200.0,0.0,70.0
+2474787,216C2,"Ripon silt loam, 20 to 30 inches to limestone, 5 to 9 percent slopes, moderately eroded",7.23,Farmland of statewide importance,Well drained,C,7.0,3.2,0.23,14.49,10.93,66.47,22.6,7.51,0.32,2.0,Ninguna,0.0,0.0,76.0,100.0,48.0
+2474788,217B,"Ripon silt loam, 30 to 40 inches to limestone, 2 to 5 percent slopes",6.06,All areas are prime farmland,Well drained,C,4.0,3.2,0.23,18.79,10.93,66.47,22.6,7.51,0.28,2.0,Ninguna,0.0,0.0,76.0,100.0,57.0
+2474789,512C,"Marlean loam, 2 to 9 percent slopes",14.31,Farmland of statewide importance,Well drained,B,6.0,3.5,0.21,20.7,41.6,37.4,21.0,6.7,0.24,3.0,Ninguna,0.0,0.0,200.0,0.0,50.0
+2474790,512E,"Marlean loam, 9 to 18 percent slopes",0.32,Not prime farmland,Well drained,B,14.0,3.5,0.21,20.7,41.6,37.4,21.0,6.7,0.24,3.0,Ninguna,0.0,0.0,200.0,0.0,18.0
+2474791,8B,"Judson silty clay loam, 2 to 5 percent slopes",21.99,All areas are prime farmland,Well drained,C,3.9,3.6,0.13,20.37,4.1,66.0,29.9,6.5,0.32,5.0,Ninguna,5.0,0.0,200.0,0.0,84.0
+3051726,W,Water,763.06,Not prime farmland,,,,,,,,,,,,,,0.0,0.0,200.0,0.0,
+3051727,RIVER,"Water, rivers and streams",2006.86,Not prime farmland,,,1.0,0.25,0.03,4.5,92.0,1.9,6.0,6.5,,,,5.0,0.0,200.0,0.0,
+3051728,WL,"Water, waste lagoon",123.55,Not prime farmland,,,0.1,1.12,0.11,16.5,42.0,43.0,15.0,6.8,,,,0.0,95.0,200.0,0.0,
+3051729,2153,"Shandep clay loam, 0 to 2 percent slopes, ponded, occasionally flooded",729.28,Not prime farmland,Very poorly drained,C/D,0.6,7.75,0.13,23.79,32.7,39.0,28.3,6.52,0.2,4.0,Occasional,100.0,100.0,200.0,0.0,21.0
+3051730,5010,"Pits, sand and gravel",410.52,Not prime farmland,Excessively drained,,5.7,,,,,,,,,,Ninguna,0.0,0.0,200.0,0.0,
+3051731,5030,"Pits, limestone quarry",414.42,Not prime farmland,,,5.7,,,,,,,,,,,0.0,0.0,200.0,0.0,
+3051732,5040,"Anthroportic Udorthents, 2 to 9 percent slopes",446.15,Not prime farmland,Moderately well drained,C,6.0,0.5,0.2,30.0,37.5,37.5,25.0,6.05,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,5.0
+3176102,682,"Maxfield silt loam, 0 to 2 percent slopes",2542.23,Prime farmland if drained,Poorly drained,C/D,1.1,6.77,0.14,16.97,15.4,59.3,25.3,6.74,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,83.0
+3386609,8041,"Sparta loamy sand, terrace, 0 to 2 percent slopes, rarely flooded",5.86,Farmland of statewide importance,Excessively drained,A,1.0,1.49,0.15,21.7,82.16,11.44,6.4,6.21,0.1,5.0,Rare,0.0,0.0,200.0,0.0,48.0
+3386621,8041B,"Sparta loamy sand, terrace, 2 to 5 percent slopes, rarely flooded",375.46,Farmland of statewide importance,Excessively drained,A,3.0,1.49,0.15,21.7,82.16,11.44,6.4,6.21,0.1,5.0,Rare,0.0,0.0,200.0,0.0,43.0
+3386646,8041C,"Sparta loamy sand, terrace, 5 to 9 percent slopes, rarely flooded",10.05,Farmland of statewide importance,Excessively drained,A,6.0,1.47,0.15,22.1,83.11,10.69,6.2,6.2,0.1,5.0,Rare,0.0,0.0,200.0,0.0,37.0
+403338,109C,"Backbone fine sandy loam, 2 to 9 percent slopes",195.04,Farmland of statewide importance,Well drained,B,6.0,1.32,0.14,9.67,66.88,23.65,9.47,6.79,0.24,2.0,Ninguna,0.0,0.0,76.0,95.0,30.0
+403339,110B,"Lamont fine sandy loam, 2 to 5 percent slopes",549.72,All areas are prime farmland,Well drained,A,4.0,0.75,0.15,22.15,64.22,27.65,8.13,5.87,0.28,4.0,Ninguna,0.0,0.0,200.0,0.0,52.0
+403340,110C,"Lamont fine sandy loam, 5 to 9 percent slopes",305.8,Farmland of statewide importance,Well drained,A,7.0,0.75,0.15,22.15,64.22,27.65,8.13,5.87,0.28,4.0,Ninguna,0.0,0.0,200.0,0.0,47.0
+403341,118,"Garwin silty clay loam, 0 to 2 percent slopes",1684.96,Prime farmland if drained,Poorly drained,C/D,1.0,5.66,0.16,26.37,2.1,67.51,30.39,6.46,0.32,5.0,Ninguna,0.0,5.0,200.0,5.0,90.0
+403342,119,"Muscatine silty clay loam, 0 to 2 percent slopes",2111.35,All areas are prime farmland,Somewhat poorly drained,C/D,1.0,5.04,0.23,28.97,2.95,66.93,30.12,5.64,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,100.0
+403343,11B,"Colo-Ely complex, 0 to 5 percent slopes",2430.06,Prime farmland if drained,Poorly drained,C/D,2.4,4.48,0.17,26.11,5.25,65.58,29.18,6.5,0.28,5.0,Ninguna,5.0,0.0,200.0,0.0,86.0
+403344,121,"Tama silt loam, 0 to 2 percent slopes",307.7,All areas are prime farmland,Well drained,C,1.0,4.0,0.23,29.82,9.1,65.4,25.5,6.2,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,100.0
+403345,120B,"Tama silt loam, 2 to 5 percent slopes",1179.27,All areas are prime farmland,Well drained,C,4.0,3.5,0.23,29.82,9.1,65.4,25.5,6.2,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,95.0
+403346,133,"Colo silty clay loam, 0 to 2 percent slopes, occasionally flooded",2845.51,Prime farmland if drained and either protected from flooding or not frequently flooded during the growing season,Poorly drained,C/D,1.2,4.49,0.17,25.55,5.9,63.86,30.25,6.48,0.28,5.0,Occasional,95.0,0.0,200.0,0.0,78.0
+403347,135,"Coland clay loam, 0 to 2 percent slopes, occasionally flooded",18310.95,Prime farmland if drained,Poorly drained,C/D,1.0,5.25,0.11,18.63,30.1,41.15,28.75,6.35,0.17,5.0,Occasional,100.0,0.0,200.0,5.0,65.0
+403348,150B,"Hanska loam, 1 to 4 percent slopes",1150.64,Prime farmland if drained,Poorly drained,B/D,3.0,4.5,0.21,19.32,45.0,43.0,12.0,7.0,0.32,3.0,Ninguna,0.0,0.0,200.0,0.0,49.0
+403351,153,"Shandep clay loam, 0 to 1 percent slopes",1722.93,Prime farmland if drained,Very poorly drained,C/D,0.5,8.0,0.22,23.76,33.6,36.57,29.83,6.7,0.24,4.0,Ninguna,0.0,100.0,200.0,0.0,50.0
+403352,1585,"Spillville-Coland complex, 0 to 2 percent slopes, frequently flooded",7450.44,Not prime farmland,Somewhat poorly drained,C/D,1.0,5.44,0.14,20.1,35.17,39.06,25.78,6.52,0.17,5.0,Frequent,100.0,10.0,200.0,0.0,22.0
+403353,P162C,"Downs silt loam, paha, 5 to 9 percent slopes",242.34,Farmland of statewide importance,Well drained,C,7.0,2.49,0.19,26.71,5.13,75.12,19.75,6.12,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,85.0
+403354,P162C2,"Downs silt loam, paha, 5 to 9 percent slopes, eroded",1913.82,Farmland of statewide importance,Well drained,C,7.0,1.74,0.18,26.46,4.97,72.9,22.12,6.25,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,82.0
+403355,171,"Bassett loam, 0 to 2 percent slopes",175.01,All areas are prime farmland,Moderately well drained,B,1.0,3.43,0.2,26.39,41.4,37.1,21.16,6.21,0.24,5.0,Ninguna,0.0,0.0,200.0,5.0,87.0
+403356,171B,"Bassett loam, 2 to 5 percent slopes",3763.08,All areas are prime farmland,Moderately well drained,C,3.0,2.07,0.19,24.29,35.31,46.3,18.39,6.22,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,85.0
+403357,171C2,"Bassett loam, 5 to 9 percent slopes, eroded",1940.63,Farmland of statewide importance,Moderately well drained,C,6.9,1.43,0.18,23.5,36.09,45.25,18.66,6.21,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,77.0
+403358,171D2,"Bassett loam, 9 to 14 percent slopes, eroded",715.96,Farmland of statewide importance,Moderately well drained,C,11.0,1.37,0.17,23.34,36.93,44.4,18.67,6.18,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,54.0
+403359,171F,"Bassett loam, 14 to 25 percent slopes",153.22,Not prime farmland,Moderately well drained,C,19.0,2.08,0.19,24.48,34.78,46.52,18.69,6.23,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,33.0
+403360,173,"Hoopeston fine sandy loam, 0 to 2 percent slopes",3715.03,All areas are prime farmland,Somewhat poorly drained,A/D,1.1,2.65,0.14,18.54,55.4,31.6,13.9,6.21,0.24,3.0,Ninguna,0.0,0.0,200.0,0.0,59.0
+403361,173B,"Hoopeston fine sandy loam, 2 to 5 percent slopes",2869.86,All areas are prime farmland,Somewhat poorly drained,A/D,4.0,2.6,0.14,18.47,55.4,31.6,12.95,6.24,0.24,3.0,Ninguna,0.0,0.0,200.0,0.0,55.0
+403362,174,"Bolan loam, 0 to 2 percent slopes",649.17,All areas are prime farmland,Well drained,B,1.0,3.26,0.2,21.75,40.79,36.62,22.58,6.65,0.24,4.0,Ninguna,0.0,0.0,200.0,0.0,70.0
+403363,174B,"Bolan loam, 2 to 5 percent slopes",3243.33,All areas are prime farmland,Well drained,B,3.2,3.11,0.19,20.91,43.38,34.88,21.75,6.61,0.24,4.0,Ninguna,0.0,0.0,200.0,0.0,64.0
+403364,174C,"Bolan loam, 5 to 9 percent slopes",617.58,Farmland of statewide importance,Well drained,B,7.0,3.11,0.19,20.91,43.38,34.88,21.75,6.61,0.24,4.0,Ninguna,0.0,0.0,200.0,0.0,59.0
+403365,175,"Dickinson fine sandy loam, 0 to 2 percent slopes",854.76,All areas are prime farmland,Well drained,A,1.0,1.86,0.15,14.45,65.96,24.24,9.8,6.27,0.2,3.0,Ninguna,0.0,0.0,200.0,0.0,55.0
+403366,175B,"Dickinson fine sandy loam, 2 to 5 percent slopes",8091.86,All areas are prime farmland,Well drained,A,3.1,1.86,0.15,14.45,65.96,24.24,9.8,6.27,0.2,3.0,Ninguna,0.0,0.0,200.0,0.0,50.0
+403367,175C,"Dickinson fine sandy loam, 5 to 9 percent slopes",2078.29,Farmland of statewide importance,Well drained,A,7.0,1.82,0.15,14.26,66.06,24.14,9.8,6.27,0.2,3.0,Ninguna,0.0,0.0,200.0,0.0,45.0
+403368,177,"Saude loam, 0 to 2 percent slopes",10682.07,All areas are prime farmland,Well drained,B,1.0,3.34,0.21,16.86,43.1,37.65,19.25,6.46,0.2,3.0,Ninguna,0.0,0.0,71.0,95.0,60.0
+403369,177B,"Saude loam, 2 to 5 percent slopes",2128.3,All areas are prime farmland,Well drained,B,4.0,3.22,0.21,16.46,44.85,36.4,18.75,6.45,0.2,3.0,Ninguna,0.0,0.0,71.0,95.0,55.0
+403370,177C,"Saude loam, 5 to 9 percent slopes",460.06,Farmland of statewide importance,Well drained,B,7.0,3.15,0.2,16.16,46.1,35.6,18.3,6.43,0.2,3.0,Ninguna,0.0,0.0,71.0,90.0,50.0
+403371,178,"Waukee loam, 0 to 2 percent slopes",5635.69,All areas are prime farmland,Well drained,B,1.0,3.23,0.21,18.74,39.7,39.35,20.95,6.12,0.28,3.0,Ninguna,0.0,0.0,84.0,100.0,69.0
+403372,178B,"Waukee loam, 2 to 5 percent slopes",705.36,All areas are prime farmland,Well drained,B,3.0,3.17,0.21,18.65,40.2,38.9,20.9,6.12,0.28,3.0,Ninguna,0.0,0.0,84.0,100.0,64.0
+403373,184,"Klinger silty clay loam, 1 to 4 percent slopes",8583.54,All areas are prime farmland,Somewhat poorly drained,C/D,2.0,4.78,0.23,24.28,9.85,62.15,28.0,6.23,0.28,5.0,Ninguna,0.0,0.0,200.0,0.0,95.0
+403374,198B,"Floyd loam, 1 to 4 percent slopes",25177.29,All areas are prime farmland,Somewhat poorly drained,B/D,2.0,4.17,0.21,27.0,29.4,47.25,23.35,6.7,0.2,5.0,Ninguna,0.0,0.0,200.0,0.0,89.0
+403375,201B,"Coland, occasionally flooded-Terril complex, 1 to 4 percent slopes",739.55,Prime farmland if drained,Poorly drained,C/D,1.8,4.83,0.15,23.54,29.3,43.63,27.07,6.31,0.17,5.0,Occasional,60.0,0.0,200.0,0.0,78.0
+403376,213,"Rockton loam, 30 to 40 inches to limestone, till plain, 0 to 2 percent slopes",624.94,All areas are prime farmland,Well drained,C,1.0,3.25,0.14,10.47,40.0,38.5,21.5,6.58,0.24,2.0,Ninguna,0.0,0.0,89.0,100.0,54.0
+403377,213B,"Rockton loam, 30 to 40 inches to limestone, till plain, 2 to 5 percent slopes",2478.1,All areas are prime farmland,Well drained,C,3.0,3.25,0.14,10.47,40.0,38.5,21.5,6.58,0.24,2.0,Ninguna,0.0,0.0,89.0,100.0,49.0
+403378,214B,"Rockton loam, 20 to 30 inches to limestone, till plain, 2 to 5 percent slopes",1730.9,All areas are prime farmland,Well drained,C,3.0,3.24,0.14,8.21,40.15,38.23,21.62,6.62,0.24,2.0,Ninguna,0.0,0.0,66.0,100.0,47.0
+403379,214C,"Rockton loam, 20 to 30 inches to limestone, till plain, 5 to 9 percent slopes",488.04,Farmland of statewide importance,Well drained,C,7.0,3.23,0.14,7.97,40.3,37.95,21.75,6.66,0.24,2.0,Ninguna,0.0,0.0,66.0,100.0,40.0
+403380,214C2,"Rockton loam, 20 to 30 inches to limestone, till plain, 5 to 9 percent slopes, eroded",733.57,Farmland of statewide importance,Well drained,D,7.0,2.1,0.14,5.99,40.3,36.15,23.55,6.54,0.32,2.0,Ninguna,0.0,0.0,56.0,100.0,29.0
+403381,221B,"Klossner muck, 1 to 4 percent slopes",333.16,Farmland of statewide importance,Very poorly drained,B/D,1.0,74.17,0.38,38.07,30.0,45.0,25.0,6.7,0.28,1.0,Ninguna,5.0,0.0,200.0,0.0,48.0
+403384,241C2,"Saude-Burkhardt complex, 2 to 9 percent slopes, moderately eroded",1519.06,Farmland of statewide importance,Well drained,B,5.7,2.15,0.18,14.49,50.61,32.54,16.85,6.22,0.32,3.0,Ninguna,0.0,0.0,200.0,0.0,38.0
+403385,241E2,"Saude-Burkhardt complex, 9 to 18 percent slopes, moderately eroded",269.46,Farmland of statewide importance,Well drained,B,13.8,2.15,0.18,14.49,50.61,32.54,16.85,6.22,0.32,3.0,Ninguna,0.0,0.0,200.0,0.0,13.0
+403386,27B,"Terril loam, 2 to 5 percent slopes",1567.08,All areas are prime farmland,Moderately well drained,B,3.0,3.33,0.21,28.62,32.4,45.02,22.58,6.23,0.2,5.0,Ninguna,0.0,0.0,200.0,5.0,89.0
+403387,284,"Flagler sandy loam, 0 to 2 percent slopes",8002.3,Farmland of statewide importance,Somewhat excessively drained,A,1.0,2.6,0.13,11.29,65.35,19.76,15.28,6.49,0.15,3.0,Ninguna,0.0,0.0,200.0,0.0,56.0
+403388,284B,"Flagler sandy loam, 2 to 5 percent slopes",1473.8,Farmland of statewide importance,Somewhat excessively drained,A,4.0,2.02,0.13,11.03,65.38,19.73,14.9,6.49,0.17,3.0,Ninguna,0.0,0.0,200.0,0.0,51.0
+403389,284C,"Flagler sandy loam, 5 to 9 percent slopes",400.62,Farmland of statewide importance,Somewhat excessively drained,A,7.0,2.05,0.13,10.86,65.9,19.1,15.07,6.48,0.17,3.0,Ninguna,0.0,0.0,200.0,0.0,45.0
+403390,285C,"Burkhardt sandy loam, 2 to 9 percent slopes",568.62,Farmland of statewide importance,Excessively drained,A,6.0,1.98,0.13,9.06,67.4,23.6,9.0,6.18,0.2,2.0,Ninguna,0.0,0.0,200.0,0.0,13.0
+403391,350,"Waukegan silt loam, 0 to 2 percent slopes",747.05,All areas are prime farmland,Well drained,B,1.0,4.0,0.23,20.0,9.5,68.0,22.35,6.5,0.32,3.0,Ninguna,0.0,0.0,200.0,0.0,60.0
+403393,377B,"Dinsdale silty clay loam, 2 to 5 percent slopes",13801.53,All areas are prime farmland,Moderately well drained,C,3.0,3.11,0.18,23.19,10.21,62.04,27.75,6.29,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,94.0
+403394,377C2,"Dinsdale silty clay loam, 5 to 9 percent slopes, eroded",1106.14,Farmland of statewide importance,Moderately well drained,C,7.0,1.91,0.18,22.53,12.54,58.41,29.05,6.17,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,85.0
+403395,382,"Maxfield silty clay loam, 0 to 2 percent slopes",3060.46,Prime farmland if drained,Poorly drained,C/D,1.1,6.77,0.14,18.17,7.3,64.7,28.0,6.74,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,87.0
+403396,391B,"Clyde-Floyd complex, 1 to 4 percent slopes",12895.96,Prime farmland if drained,Poorly drained,C/D,1.4,9.47,0.23,28.63,23.05,49.89,27.05,6.7,0.24,5.0,Ninguna,5.0,0.0,200.0,0.0,87.0
+403397,394,"Ostrander loam, 0 to 2 percent slopes",1523.36,All areas are prime farmland,Well drained,C,1.1,3.42,0.19,23.7,34.99,44.73,20.27,6.2,0.24,5.0,Ninguna,0.0,0.0,200.0,5.0,94.0
+403398,394B,"Ostrander loam, 2 to 5 percent slopes",8604.46,All areas are prime farmland,Well drained,C,3.0,3.32,0.18,23.63,37.21,43.34,19.45,6.2,0.24,5.0,Ninguna,0.0,0.0,200.0,0.0,88.0
+403399,394C,"Ostrander loam, 5 to 9 percent slopes",491.01,Farmland of statewide importance,Well drained,C,7.0,3.29,0.18,23.49,37.46,43.24,19.3,6.18,0.24,5.0,Ninguna,0.0,0.0,200.0,0.0,83.0
+403400,394C2,"Ostrander loam, 5 to 9 percent slopes, eroded",2803.98,Farmland of statewide importance,Well drained,C,7.0,2.17,0.18,21.27,42.32,37.47,20.21,5.91,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,73.0
+403401,398,"Tripoli clay loam, 0 to 2 percent slopes",3897.55,Prime farmland if drained,Poorly drained,C/D,1.1,5.89,0.12,15.44,23.95,46.75,29.3,6.92,0.2,5.0,Ninguna,0.0,0.0,200.0,0.0,82.0
+403402,399,"Readlyn silt loam, 1 to 3 percent slopes",8720.43,All areas are prime farmland,Somewhat poorly drained,C/D,2.0,4.73,0.14,17.46,23.09,53.56,23.35,6.24,0.28,5.0,Ninguna,0.0,0.0,200.0,0.0,91.0
+403403,404,"Thorp silt loam, 0 to 1 percent slopes",253.42,Prime farmland if drained,Poorly drained,B/D,1.0,3.53,0.22,29.96,10.0,67.17,22.83,6.2,0.32,5.0,Ninguna,0.0,100.0,200.0,0.0,60.0
+403404,407B,"Schley silt loam, 1 to 4 percent slopes",748.53,Prime farmland if drained,Somewhat poorly drained,B/D,3.0,3.08,0.2,24.18,27.02,52.39,20.59,5.88,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,81.0
+403405,408B,"Olin sandy loam, 2 to 5 percent slopes",1576.33,All areas are prime farmland,Well drained,C,3.9,1.92,0.14,20.5,67.51,21.94,10.55,6.25,0.17,5.0,Ninguna,0.0,0.0,200.0,0.0,64.0
+403406,408C,"Olin sandy loam, 5 to 9 percent slopes",1260.76,Farmland of statewide importance,Well drained,C,7.0,1.81,0.14,20.61,70.08,20.12,9.8,6.23,0.17,5.0,Ninguna,0.0,0.0,200.0,0.0,59.0
+403407,412C,"Emeline loam, 2 to 9 percent slopes",933.22,Farmland of statewide importance,Somewhat excessively drained,D,7.7,3.03,0.16,4.25,42.83,33.25,23.92,7.24,0.24,1.0,Ninguna,0.0,0.0,23.0,100.0,7.0
+403408,412E,"Emeline loam, 9 to 18 percent slopes",367.89,Not prime farmland,Somewhat excessively drained,D,15.3,3.0,0.16,3.68,43.0,33.0,24.0,7.3,0.24,1.0,Ninguna,0.0,0.0,23.0,100.0,5.0
+403409,41B,"Sparta loamy sand, 2 to 5 percent slopes",4049.03,Prime farmland if irrigated,Excessively drained,A,4.0,1.47,0.15,22.1,83.11,10.69,6.2,6.2,0.1,5.0,Ninguna,0.0,0.0,200.0,0.0,42.0
+403410,41C,"Sparta loamy sand, 5 to 9 percent slopes",3242.81,Farmland of statewide importance,Excessively drained,A,7.0,1.47,0.15,22.1,83.11,10.69,6.2,6.2,0.1,5.0,Ninguna,0.0,0.0,200.0,0.0,37.0
+403411,41D,"Sparta loamy fine sand, 9 to 14 percent slopes",445.09,Not prime farmland,Excessively drained,A,12.0,1.47,0.11,13.17,82.99,10.57,6.44,6.21,0.24,5.0,Ninguna,0.0,0.0,200.0,0.0,8.0
+403412,428B,"Ely silty clay loam, 2 to 5 percent slopes",593.78,All areas are prime farmland,Somewhat poorly drained,C/D,3.9,4.5,0.17,26.46,4.1,67.8,28.1,6.5,0.32,5.0,Ninguna,5.0,0.0,200.0,0.0,88.0
+403413,43,"Bremer silty clay loam, 0 to 2 percent slopes, rarely flooded",1902.58,Prime farmland if drained,Poorly drained,D,1.0,4.45,0.22,28.9,6.73,60.55,32.72,6.25,0.28,5.0,Rare,0.0,0.0,200.0,0.0,79.0
+403414,430,"Ackmore silt loam, 0 to 2 percent slopes, occasionally flooded",64.3,All areas are prime farmland,Somewhat poorly drained,C/D,1.0,2.25,0.15,20.78,5.1,69.4,25.5,6.14,0.37,5.0,Occasional,100.0,0.0,200.0,0.0,70.0
+403415,457,"Du Page loam, 0 to 2 percent slopes",1572.96,All areas are prime farmland,Moderately well drained,B,1.0,3.79,0.2,24.12,33.4,43.65,22.95,7.83,0.24,5.0,Occasional,100.0,0.0,200.0,0.0,88.0
+403416,485,"Spillville loam, 0 to 2 percent slopes, occasionally flooded",5549.04,All areas are prime farmland,Somewhat poorly drained,B/D,1.0,4.87,0.14,20.33,40.32,37.26,22.42,6.68,0.17,5.0,Occasional,100.0,0.0,200.0,0.0,76.0
+403420,585,"Spillville-Coland complex, 0 to 2 percent slopes",3306.57,Prime farmland if drained,Poorly drained,B,1.0,4.5,0.19,27.08,43.41,34.74,21.85,6.53,0.24,5.0,Frequent,80.0,0.0,200.0,0.0,64.0
+403421,621,"Houghton muck, 1 to 4 percent slopes",187.39,Farmland of statewide importance,Very poorly drained,A/D,1.0,75.04,0.38,58.3,,,,,,2.0,Ninguna,0.0,0.0,200.0,0.0,35.0
+403422,63C,"Chelsea loamy fine sand, 2 to 9 percent slopes",361.55,Farmland of statewide importance,Excessively drained,A,5.0,0.75,0.11,15.2,87.33,8.33,4.33,6.0,0.05,5.0,Ninguna,0.0,0.0,200.0,0.0,14.0
+403423,662D,"Mt. Carroll silt loam, 9 to 14 percent slopes",250.54,Farmland of statewide importance,Well drained,B,12.0,2.83,0.23,31.43,11.7,69.8,18.62,6.5,0.37,5.0,Ninguna,0.0,0.0,200.0,5.0,57.0
+403424,662D3,"Mt. Carroll silt loam, 9 to 14 percent slopes, severely eroded",2781.31,Farmland of statewide importance,Well drained,B,12.0,1.46,0.23,31.14,11.55,69.68,18.88,6.48,0.49,4.0,Ninguna,0.0,0.0,200.0,5.0,47.0
+403425,662F,"Mt. Carroll silt loam, 14 to 25 percent slopes",552.3,Not prime farmland,Well drained,B,19.8,2.8,0.23,31.37,11.55,69.68,19.02,6.47,0.37,5.0,Ninguna,0.0,0.0,200.0,5.0,34.0
+403426,662F3,"Mt. Carroll silt loam, 14 to 25 percent slopes, severely eroded",311.67,Not prime farmland,Well drained,B,19.8,1.47,0.23,31.37,11.55,69.68,19.02,6.47,0.49,4.0,Ninguna,0.0,0.0,200.0,5.0,24.0
+403427,713B,"Winneshiek loam, 30 to 40 inches to limestone, till plain, 2 to 5 percent slopes",319.12,All areas are prime farmland,Well drained,C,3.0,2.32,0.15,12.62,36.08,45.46,18.47,6.49,0.28,2.0,Ninguna,0.0,0.0,86.0,95.0,46.0
+403428,714B,"Winneshiek loam, 20 to 30 inches to limestone, till plain, 2 to 5 percent slopes",317.53,All areas are prime farmland,Well drained,C,3.1,2.28,0.15,8.68,35.56,45.73,18.72,6.5,0.28,2.0,Ninguna,0.0,0.0,61.0,100.0,42.0
+403429,733,"Calco silty clay loam, 0 to 2 percent slopes",809.66,Prime farmland if drained,Poorly drained,C/D,1.0,5.92,0.22,31.61,8.54,61.35,30.1,7.83,0.32,5.0,Occasional,95.0,0.0,200.0,0.0,77.0
+403430,771B,"Waubeek silt loam, 2 to 5 percent slopes",325.57,All areas are prime farmland,Moderately well drained,C,3.9,2.37,0.2,25.91,8.4,69.78,21.82,6.4,0.43,5.0,Ninguna,0.0,0.0,200.0,0.0,89.0
+403431,777,"Wapsie loam, 0 to 2 percent slopes",231.69,All areas are prime farmland,Well drained,B,1.0,2.31,0.18,14.84,44.3,40.7,15.0,6.16,0.28,3.0,Ninguna,0.0,0.0,200.0,0.0,51.0
+403432,777B,"Wapsie loam, 2 to 5 percent slopes",378.62,All areas are prime farmland,Well drained,B,4.0,1.93,0.17,15.13,46.55,38.64,14.82,6.17,0.32,3.0,Ninguna,0.0,0.0,200.0,0.0,47.0
+403433,781B,"Lourdes loam, 2 to 5 percent slopes",818.02,All areas are prime farmland,Moderately well drained,C,4.0,2.25,0.14,15.44,29.33,47.2,23.47,5.65,0.28,5.0,Ninguna,0.0,0.0,200.0,0.0,68.0
+403434,781C2,"Lourdes loam, 5 to 9 percent slopes, moderately eroded",266.08,Farmland of statewide importance,Moderately well drained,C,6.6,1.3,0.18,24.28,36.96,39.94,23.1,5.48,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,69.0
+403435,782B,"Donnan loam, 2 to 5 percent slopes",975.02,All areas are prime farmland,Somewhat poorly drained,D,3.9,2.51,0.21,25.48,31.3,45.35,23.35,6.76,0.28,3.0,Ninguna,0.0,0.0,200.0,0.0,43.0
+403436,782C2,"Donnan loam, 5 to 9 percent slopes, moderately eroded",198.41,Farmland of statewide importance,Somewhat poorly drained,D,6.8,2.35,0.2,24.73,29.08,45.98,24.93,6.45,0.28,3.0,Ninguna,0.0,0.0,200.0,0.0,36.0
+403437,783B,"Cresco loam, 2 to 5 percent slopes",6523.18,All areas are prime farmland,Moderately well drained,C,4.0,3.56,0.13,14.89,32.58,41.42,26.0,6.67,0.2,5.0,Ninguna,0.0,0.0,200.0,0.0,73.0
+403438,783C,"Cresco loam, 5 to 9 percent slopes",468.96,Farmland of statewide importance,Moderately well drained,C,6.6,4.12,0.21,27.26,30.0,45.0,25.0,6.66,0.2,5.0,Ninguna,0.0,0.0,200.0,0.0,81.0
+403439,783C2,"Cresco loam, 5 to 9 percent slopes, moderately eroded",1603.87,Farmland of statewide importance,Moderately well drained,C,6.6,3.37,0.19,26.67,34.5,40.5,25.0,6.39,0.2,5.0,Ninguna,0.0,0.0,200.0,0.0,78.0
+403440,784B,"Riceville loam, 1 to 4 percent slopes",480.27,All areas are prime farmland,Somewhat poorly drained,C/D,3.0,2.75,0.19,16.56,30.51,44.24,25.25,5.24,0.24,5.0,Ninguna,0.0,0.0,200.0,0.0,69.0
+403441,798B,"Protivin loam, 1 to 4 percent slopes",6462.63,All areas are prime farmland,Somewhat poorly drained,C/D,2.9,4.75,0.14,15.48,25.15,49.05,25.8,5.59,0.2,5.0,Ninguna,0.0,0.0,200.0,0.0,61.0
+403442,83B,"Kenyon loam, 2 to 5 percent slopes",31159.87,All areas are prime farmland,Moderately well drained,C,3.0,2.95,0.19,25.15,35.24,43.65,21.11,5.82,0.28,5.0,Ninguna,0.0,0.0,200.0,0.0,90.0
+403443,83C,"Kenyon loam, 5 to 9 percent slopes",1518.0,Farmland of statewide importance,Moderately well drained,C,7.0,2.87,0.19,24.99,35.93,43.14,20.93,5.77,0.28,5.0,Ninguna,0.0,0.0,200.0,0.0,85.0
+403444,83C2,"Kenyon loam, 5 to 9 percent slopes, eroded",13229.95,Farmland of statewide importance,Moderately well drained,C,7.0,1.88,0.18,24.26,35.05,42.5,22.44,5.79,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,84.0
+403445,83D2,"Kenyon loam, 9 to 14 percent slopes, eroded",846.35,Farmland of statewide importance,Moderately well drained,C,11.0,1.88,0.18,24.26,35.05,42.5,22.44,5.79,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,61.0
+403446,84,"Clyde silty clay loam, 0 to 3 percent slopes",30364.67,Prime farmland if drained,Poorly drained,C/D,1.1,10.7,0.23,29.09,18.63,51.74,29.63,6.7,0.24,5.0,Ninguna,5.0,0.0,200.0,0.0,88.0
+403447,88,"Nevin silty clay loam, 0 to 2 percent slopes",1091.53,All areas are prime farmland,Somewhat poorly drained,C/D,1.0,5.15,0.22,30.07,7.1,64.9,28.07,6.51,0.28,5.0,Rare,0.0,0.0,200.0,0.0,95.0
+403448,976,"Raddle silt loam, 0 to 2 percent slopes",2020.11,All areas are prime farmland,Well drained,B,1.0,3.87,0.22,30.88,14.14,65.19,20.78,6.49,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,97.0
+403449,976B,"Raddle silt loam, 2 to 5 percent slopes",275.61,All areas are prime farmland,Well drained,B,4.0,3.84,0.22,30.88,14.14,65.19,20.78,6.49,0.32,5.0,Ninguna,0.0,0.0,200.0,0.0,92.0
+403450,981B,"Worthen silt loam, 2 to 5 percent slopes",488.86,All areas are prime farmland,Well drained,B,4.0,4.0,0.23,32.46,11.7,69.8,18.5,6.5,0.37,5.0,Ninguna,0.0,0.0,200.0,0.0,94.0

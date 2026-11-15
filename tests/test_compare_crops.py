@@ -17,7 +17,7 @@ class CompareCropsTests(TestCase):
         outcome_for.clear()
 
     def app(self):
-        at=AppTest.from_file(str(ROOT/'streamlit_app.py'),default_timeout=25).run()
+        at=_legacy_app_from_file(str(ROOT/'streamlit_app.py'),default_timeout=25).run()
         at.button(key='mobile_nav_rotations').click().run()
         self.assertFalse(at.exception)
         return at
@@ -113,3 +113,9 @@ class CompareCropsTests(TestCase):
         self.assertEqual(yield_interval(replace(out,yield_ci_high=float('nan'))),None)
         for image in (ROOT/'static'/'compare').glob('*.svg'):
             self.assertLess(image.stat().st_size,2500)
+
+
+def _legacy_app_from_file(*args,**kwargs):
+    app=AppTest.from_file(*args,**kwargs)
+    app.session_state["data_mode"]="legacy"
+    return app

@@ -271,3 +271,21 @@ Nitrogen doses remain pending; Mr Corn and existing navigation are preserved.
 
 See the [implementation and validation report](docs/feature-05-recommendations.md)
 for data gaps, tests and manual checks. This branch depends on Feature 04.
+
+## Research model and responsive map integration
+
+The default flow now reads the Butler model delivery from `feature/butler-model`
+(`9c2fa4e`): 167 satellite-derived fields, three climate groups and three rotation
+plans (1,503 outcomes). The map draws source GeoJSON with all MultiPolygons and
+interior rings, and opens the existing rotation cards. My Field, Compare Crops,
+Recommendations and Mr Corn share the selected field, climate and plan.
+
+The responsive sidebar/bottom dock, earth-tone themes and teal/gold accents are
+preserved. Outlines are derived from USDA CDL crop patterns; they are not verified
+ownership or cadastral boundaries. Model generation is not run or modified by
+the interface. The older `modelo/` delivery is retained as historical source and
+is no longer the default runtime input. Legacy demo functionality stays labelled
+and separate from model results.
+
+See the [Butler integration report](docs/butler-model-integration.md) and
+[source manifest](model/INTEGRATION.md) for provenance, limitations and validation.

@@ -56,6 +56,7 @@ class ChatWidgetIntegrationTests(unittest.TestCase):
 import streamlit as st
 from utils.types import FarmerPriorities
 from components.chat_widget import render_chat
+st.session_state.data_mode = 'legacy'
 if 'selected_plot_id' not in st.session_state:
     st.session_state.selected_plot_id = 'lote-norte'
     st.session_state.farmer_priorities = FarmerPriorities()

@@ -14,7 +14,7 @@ export default function(component) {
     root._renderedMessages = null;
   }
   root.querySelectorAll('img').forEach(img => { if (img.src !== data.avatar) img.src = data.avatar; });
-  q('.chat-context').textContent = `Let's talk about ${data.plot_name}`;
+  q('.chat-context').textContent = data.model_context || `Let's talk about ${data.plot_name}`;
   const controls = () => {
     send.disabled = busy || !enabled || !input.value.trim() || !navigator.onLine;
     input.disabled = busy || !enabled || !navigator.onLine;

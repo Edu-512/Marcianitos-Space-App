@@ -158,6 +158,12 @@ def _ground_log(plot_id: str) -> None:
 
 
 def run() -> None:
+    from utils import field_model as fm
+    if fm.enabled():
+        from components import model_views
+        model_views.home()
+        return
+
     plots = _load(lambda _: load_plots(), "") or []
     plot_id = st.session_state.get("selected_plot_id")
     plot = next((p for p in plots if p.id == plot_id), None)

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from utils import ai_chat
+from utils import ai_chat, field_model as fm
 from utils.chat_state import ChatSession
 from utils.data_sources import load_plots
 
@@ -21,7 +21,9 @@ _COMPONENT = st.components.v2.component(
 )
 
 def _context() -> str:
-    return repr(st.session_state.farmer_priorities)
+    if st.session_state.get("data_mode")=="legacy":
+        return repr(st.session_state.farmer_priorities)
+    return repr((st.session_state.farmer_priorities,st.session_state.get("data_mode","model"),st.session_state.get("selected_plan_id"),st.session_state.get("selected_climate_id")))
 
 
 def _sessions() -> dict[str, ChatSession]:
@@ -79,6 +81,7 @@ def render_chat() -> None:
             key=KEY,
             data={
                 "avatar": "./app/static/assistant/mr-corn-avatar.webp?v=1",
+                "model_context": (f"{plot.name if plot else plot_id} | {fm.CLIMATES.get(str(st.session_state.get('selected_climate_id')),'Normal year')} | {fm.PLANS.get(str(st.session_state.get('selected_plan_id')),'Choose a plan')}" if fm.enabled() else None),
                 "plot_id": plot_id,
                 "plot_name": plot.name if plot else plot_id,
                 "messages": conversation.messages,
