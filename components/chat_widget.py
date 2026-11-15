@@ -75,10 +75,6 @@ def render_chat() -> None:
             conversation.starting = False
             st.rerun()  # Enable the timer after a fragment-local submit callback.
         was_busy = conversation.busy
-        if conversation.busy:
-            if conversation.iterator is None:
-                conversation.iterator = ai_chat.run_chat_turn(conversation.history(), plot_id)
-            conversation.advance()
         _COMPONENT(
             key=KEY,
             data={
@@ -95,6 +91,13 @@ def render_chat() -> None:
             on_clear_change=_clear,
             on_open_change=_noop,
         )
+        # Send the visible panel before potentially slow network/model work.
+        # Otherwise Streamlit treats the previous component as stale and dims
+        # the entire overlay until advance() returns.
+        if conversation.busy:
+            if conversation.iterator is None:
+                conversation.iterator = ai_chat.run_chat_turn(conversation.history(), plot_id)
+            conversation.advance()
         if was_busy and not conversation.busy:
             st.rerun()  # Disable polling after the terminal event.
 

@@ -33,7 +33,12 @@ pip install -r requirements.txt
 streamlit run pwa_app.py
 ```
 
-La app abre en `http://localhost:8501`. La navegación es una barra responsiva de botones nativos (arriba en escritorio, abajo en móvil) y la opción activa se resalta con un pill redondeado; al cambiar de vista no hay recarga del navegador — el estado vive en la sesión. Debajo de la nav hay una barra de contexto persistente: selector de lote, popover **⚙ My Priorities** (pesos de agua/suelo/mercado, forraje, siembra sin labranza y presupuesto hídrico) y popover **? Satellite Guide**; cada página usa el lote y las prioridades seleccionados.
+La app abre en `http://localhost:8501`. La navegación principal vive en la
+barra lateral: **Explorar parcelas → Mi terreno → Comparar cultivos →
+Recomendaciones**. La primera vista es el mapa. El selector lateral conserva la
+parcela entre secciones mediante `selected_plot_id`; las prioridades y la guía
+siguen disponibles en el desplegable **Mis prioridades y guía de datos**.
+Don Surco y el punto de entrada PWA continúan disponibles.
 
 ## Contrato con el equipo del modelo (desarrollo en paralelo)
 
@@ -176,3 +181,60 @@ node --test --experimental-test-isolation=none tests/chat-widget.test.cjs tests/
 `jsdom` se instala ?nicamente como herramienta de pruebas dentro de `.venv`,
 que est? ignorado por Git. Comprueba los eventos del panel y el teclado sobre un
 DOM simulado; no sustituye una revisi?n visual en navegador o tel?fono real.
+
+
+## Feature 01: navegación principal
+
+- `components/navigation.py` concentra etiquetas, encabezados, rutas y destino de
+  cada botón de continuación, para facilitar traducciones posteriores.
+- Se reutilizan las funciones `run()` de las cuatro páginas, con `st.Page`,
+  `st.navigation` y enlaces nativos en una barra lateral con marca y contexto.
+  La sección activa también se indica por su nombre y número de paso.
+- `selected_plot_id` es el identificador compartido; `fs_plot_select` es solo
+  el control visual. Antes de montarlo se sincroniza con el identificador, y su
+  callback actualiza ese estado. Una selección futura desde el mapa puede escribir
+  el mismo identificador sin cambiar contratos. Si desaparece una parcela, se usa
+  la primera disponible con un aviso; sin parcelas se muestra un estado vacío.
+- El aviso de datos simulados es visible en todas las vistas. Butler County,
+  Iowa, es el caso de estudio previsto; las parcelas de demostración actuales
+  conservan su ubicación original y **no representan observaciones de Iowa**.
+- No se cambiaron `utils/types.py`, `utils/model_interface.py` ni las fuentes
+  simuladas. El simulador y los controles que ya existían se conservan; esta
+  feature no añade planes ni algoritmos nuevos.
+- Se conserva la paleta marrón/tierra aprobada y el texto base de 16 px. En
+  escritorio la navegación sigue en la barra lateral nativa. En teléfonos
+  (hasta 767 px) aparece una barra flotante inferior con icono sobre el nombre,
+  selección resaltada y espacio reservado para no tapar contenido. Su CSS queda
+  limitado a contenedores con claves propias. El selector de parcela sigue
+  accesible desde el menú lateral móvil; ambos temas se mantienen.
+- Las nuevas rutas de navegación reutilizan el encabezado PWA y la pantalla sin
+  conexión; esos cambios solo mantienen compatibilidad con la navegación nueva.
+
+### Comprobación manual
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run streamlit_app.py
+```
+
+1. Confirma que inicia en Explorar parcelas y que hay cuatro enlaces en el orden
+   indicado. En teléfonos, usa la barra flotante inferior; abre el menú lateral para cambiar de parcela.
+2. Cambia la parcela en el selector lateral.
+3. Usa **Analizar esta parcela**, **Comparar mis opciones**, **Ver recomendaciones**
+   y **Volver a comparar**. Comprueba el nombre de la parcela activa en cada vista.
+4. Navega libremente por los enlaces laterales; la parcela debe conservarse.
+5. Abre Mis prioridades y guía de datos; sus funciones existentes siguen accesibles.
+6. Revisa ambos temas y el aviso de datos simulados. No interpretes la demostración
+   como información real sobre Butler County.
+7. Para comprobar instalación PWA y URLs directas, usa `streamlit run pwa_app.py`.
+
+Pruebas de navegación y casos vacíos/inválidos:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+node --test --experimental-test-isolation=none tests/chat-widget.test.cjs tests/pwa-worker.test.cjs tests/navigation-pwa.test.cjs
+```
+
+Los contenidos de análisis conservan parte de sus textos en inglés. Su traducción
+completa, selección avanzada en el mapa y adaptación de datos a Iowa quedan fuera
+del alcance de esta feature. Persisten avisos de `use_container_width` en las
+visualizaciones heredadas; no se han reescrito esas vistas.
