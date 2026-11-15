@@ -80,7 +80,7 @@ def render_chat() -> None:
         _COMPONENT(
             key=KEY,
             data={
-                "avatar": "./app/static/assistant/mr-corn-avatar.webp?v=1",
+                "avatar": "./app/static/assistant/mr-corn-watermarked.webp?v=1",
                 "model_context": (f"{plot.name if plot else plot_id} | {fm.CLIMATES.get(str(st.session_state.get('selected_climate_id')),'Normal year')} | {fm.PLANS.get(str(st.session_state.get('selected_plan_id')),'Choose a plan')}" if fm.enabled() else None),
                 "plot_id": plot_id,
                 "plot_name": plot.name if plot else plot_id,

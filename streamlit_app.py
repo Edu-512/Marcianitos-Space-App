@@ -10,7 +10,7 @@ from utils.data_sources import load_plots
 from utils.types import FarmerPriorities
 from utils import field_model as fm
 from components.design_system import styles
-from components.branding import APP_NAME, APP_ICON, APP_LOGO
+from components.branding import APP_NAME, APP_ICON, render_mobile_brand
 
 st.set_page_config(
     page_title=f"{APP_NAME} - Adapting Farms with NASA Data",
@@ -19,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state="auto",
 )
 
-st.logo(str(APP_LOGO), icon_image=str(APP_ICON), size="large")
+render_mobile_brand()
 
 st.html(
     """

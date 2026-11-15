@@ -18,7 +18,7 @@ from utils.model_interface import compute_plot_risk, generate_recommendations
 from utils.types import PlotRisk, Recommendation
 
 
-AVATAR=Path(__file__).resolve().parents[1]/"static"/"assistant"/"mr-corn-avatar.webp"
+AVATAR=Path(__file__).resolve().parents[1]/"static"/"assistant"/"mr-corn-watermarked.webp"
 
 
 def _navigate(key: str) -> None:

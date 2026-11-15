@@ -8,7 +8,7 @@ from typing import Any, Callable
 import streamlit as st
 
 from utils.types import Plot
-from components.branding import APP_NAME
+from components.branding import APP_NAME, APP_LOGO
 
 @dataclass(frozen=True)
 class PageSpec:
@@ -85,8 +85,24 @@ def _select_plot(valid_ids: tuple[str, ...]) -> None:
     st.session_state.research_map_panel={"plot_id":st.session_state.selected_plot_id,"open":True,"expanded":False}
 
 
+
+def render_plot_search(plots: list[Plot], key: str, callback) -> None:
+    """Filter by field ID/name without replacing the active parcel while typing."""
+    query=st.text_input("Search fields",key=key+"_search",placeholder="e.g. Field 502 or 502",live=True)
+    term=(query or "").strip().casefold()
+    names={p.id:(p.name if p.name.casefold().startswith("field ") else f"Field {p.id} | {p.name}") for p in plots}
+    matches=[pid for pid,label in names.items() if not term or term in label.casefold()]
+    selected=st.session_state.selected_plot_id
+    options=matches if selected in matches else ([selected] if selected in names else [])+matches
+    if term:
+        st.caption(f"{len(matches)} matching field(s). Choose a result to change your plot." if matches else "No matching fields. Try an ID such as 502; your current plot stays selected.")
+    st.selectbox("Change plot" if key=="fs_plot_select" else "Choose a plot",options,
+                 format_func=lambda pid:names[pid],key=key,on_change=callback,args=(tuple(names),))
+
+
 def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) -> None:
     with st.sidebar:
+        st.image(str(APP_LOGO),width=88,alt="Know Your Farm emblem, AI-generated with Codex")
         st.title(APP_NAME)
         st.caption("Adapting Farms with NASA Data")
         st.space("small")
@@ -100,9 +116,7 @@ def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) ->
         if not plots:
             st.info("No plots are available to select.")
         else:
-            names={plot.id:plot.name for plot in plots}
-            st.selectbox("Change plot",list(names),format_func=lambda pid:names[pid],
-                         key="fs_plot_select",on_change=_select_plot,args=(tuple(names),))
+            render_plot_search(plots,"fs_plot_select",_select_plot)
             plot = next(p for p in plots if p.id == st.session_state.selected_plot_id)
             from utils import field_model as fm
             if fm.enabled():
@@ -245,7 +259,7 @@ def render_mobile_plot_selector(plots: list[Plot]) -> None:
 .st-key-fs_mobile_tools button {min-height:52px;min-width:156px;font-size:16px;padding:12px 18px;}
 @media(max-width:767px) {
  [data-testid="stSidebar"],[data-testid="stSidebarCollapsedControl"] { display:none!important; }
- .st-key-fs_mobile_tools { display:flex;justify-content:flex-end;position:fixed;right:1rem;left:auto;top:3.25rem;width:fit-content!important;z-index:145;max-width:calc(100% - 2rem); }
+ .st-key-fs_mobile_tools { display:flex;justify-content:flex-end;position:fixed;right:1rem;left:auto;top:7.75rem;width:fit-content!important;z-index:145;max-width:calc(100% - 2rem); }
  .st-key-fs_mobile_tools button {min-height:52px;min-width:156px;font-size:16px;padding:12px 18px;}
  .st-key-fs_mobile_navigation::before { content:"__JOURNEY_STATUS__";grid-column:1/-1;font-size:12px;font-weight:650;text-align:center; }
 }
@@ -255,6 +269,4 @@ def render_mobile_plot_selector(plots: list[Plot]) -> None:
             if not plots:
                 st.info("No profiles are available.")
             else:
-                names={p.id:p.name for p in plots}
-                st.selectbox("Choose a plot",list(names),format_func=lambda pid:names[pid],key="fs_mobile_plot_select",
-                             on_change=_mobile_select_plot,args=(tuple(names),))
+                render_plot_search(plots,"fs_mobile_plot_select",_mobile_select_plot)
