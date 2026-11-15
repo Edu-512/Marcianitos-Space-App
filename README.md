@@ -30,7 +30,7 @@ App_web/
 python -m venv .venv
 .venv\Scripts\activate        # Windows
 pip install -r requirements.txt
-streamlit run streamlit_app.py
+streamlit run pwa_app.py
 ```
 
 La app abre en `http://localhost:8501`. La navegación es una barra responsiva de botones nativos (arriba en escritorio, abajo en móvil) y la opción activa se resalta con un pill redondeado; al cambiar de vista no hay recarga del navegador — el estado vive en la sesión. Debajo de la nav hay una barra de contexto persistente: selector de lote, popover **⚙ My Priorities** (pesos de agua/suelo/mercado, forraje, siembra sin labranza y presupuesto hídrico) y popover **? Satellite Guide**; cada página usa el lote y las prioridades seleccionados.
@@ -46,3 +46,68 @@ Las páginas de `app_pages/` solo importan estas funciones: cuando el modelo est
 ## Datos simulados
 
 Todos los datos actuales son mocks deterministas (semilla estable por clave con `zlib.crc32`, no `hash()`). Se reemplazan en las funciones marcadas con `TODO(model team)`.
+
+
+## PWA: instalaci?n y publicaci?n
+
+El punto de entrada para la versi?n instalable es **`pwa_app.py`**. Envuelve la
+interfaz existente con `st.App` y a?ade las rutas del manifiesto, iconos y service
+worker en el mismo dominio. Ejecutar `streamlit_app.py` directamente conserva la
+interfaz, pero no activa la PWA. No se modifican los archivos instalados de Streamlit.
+
+### Validar en local
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run pwa_app.py
+```
+
+1. Abre `http://localhost:8501` en Chrome o Edge. Espera la primera carga.
+2. En DevTools ? Application, revisa Manifest y Service Workers: el worker debe
+   estar activado, con scope `/`, y el manifiesto sin errores de iconos.
+3. Usa la opci?n de instalaci?n del navegador. Debe abrirse como ventana independiente.
+4. Tras la primera visita conectada, activa Offline en DevTools y recarga la
+   pesta?a: aparecer? una pantalla con **Try again**. Desactiva Offline y reintenta.
+5. Revisa escritorio/m?vil y ambos temas, adem?s de navegar entre las cuatro vistas.
+
+La instalaci?n depende del navegador; no se fuerza un aviso emergente. En iPhone
+usa Safari ? Compartir ? A?adir a pantalla de inicio. En Android utiliza la opci?n
+Instalar aplicaci?n / A?adir a pantalla de inicio de Chrome.
+
+### Streamlit Community Cloud
+
+- Al publicar, selecciona la rama correspondiente y **Main file path: `pwa_app.py`**.
+  Si la aplicaci?n existente usa `streamlit_app.py`, configura una aplicaci?n nueva
+  con este punto de entrada si Cloud no permite editarlo.
+- Usa la URL HTTPS de la aplicaci?n (`https://<nombre>.streamlit.app/`), abierta
+  directamente en el navegador, para instalarla; no una vista incrustada en iframe.
+- La implementaci?n est? preparada para la ra?z del dominio, sin `server.baseUrlPath`.
+- Comprueba manifiesto, registro del worker e instalaci?n tambi?n en la URL publicada:
+  las pol?ticas o cambios del alojamiento pueden afectar las rutas personalizadas.
+- Community Cloud puede dormir la aplicaci?n por inactividad. Instalarla no mantiene
+  despierto el servidor. La PWA tampoco mantiene una sesi?n de Streamlit despu?s de
+  cerrar la aplicaci?n, recargarla o reiniciar el servidor.
+
+### Alcance sin conexi?n y actualizaciones
+
+Sin conexi?n se muestra una pantalla de aviso y reintento. Mapas, comparaciones,
+recomendaciones y controles de Streamlit necesitan conexi?n al servidor. Si se
+pierde conexi?n con una sesi?n ya abierta, Streamlit conserva su aviso de reconexi?n;
+la pantalla offline aparece al abrir o recargar la aplicaci?n sin red.
+
+Solo se guardan en cach? la pantalla offline y los iconos p?blicos. No se almacenan
+respuestas del modelo, parcelas, notas, credenciales, APIs ni sesiones. Las versiones
+nuevas del worker esperan al cierre de las ventanas anteriores; no fuerzan la recarga
+de una sesi?n activa. Al cambiar los recursos precargados, incrementa la versi?n
+`CACHE_NAME` en `pwa/service-worker.js`. Los iconos provisionales usan un brote y
+surcos agr?colas con la paleta tierra/verde de Field Shift.
+
+### Pruebas de PWA
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+node --test tests/pwa-worker.test.cjs
+```
+
+Node solo se necesita para las pruebas del service worker, no para ejecutar ni
+publicar la aplicaci?n. Las pruebas automatizadas no sustituyen la comprobaci?n de
+instalaci?n en el navegador y en Community Cloud.
