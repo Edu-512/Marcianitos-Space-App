@@ -207,7 +207,8 @@ def run() -> None:
                                          "plan_key":key,"plan_id":st.session_state.selected_plan_id,
                                          "plot_name":plot.name,"climate_inputs":{
                                              "rainfall_shift_pct":CLIMATES[st.session_state.selected_climate_id]["rain"],
-                                             "temp_anomaly_c":CLIMATES[st.session_state.selected_climate_id]["heat"]},"data_nature":"simulated"}
+                                             "temp_anomaly_c":CLIMATES[st.session_state.selected_climate_id]["heat"]},"data_nature":"simulated",
+                                         "outcome":outcomes.get(key)}
 
 
 def render_plan_continuation(pages: dict[str,Any]) -> None:
