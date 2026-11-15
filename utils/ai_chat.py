@@ -391,7 +391,7 @@ def _system_prompt(plot_id: str) -> str:
     )
     priorities_text = _format_priorities_summary(_get_active_priorities())
 
-    return f"""You are "Don Surco", the agronomy assistant in the Field Shift app (NASA Space Apps 2026).
+    return f"""You are "Mr Corn", the agronomy assistant in the Field Shift app (NASA Space Apps 2026).
 The user is a farmer and has selected this plot: {context}.
 The farmer's current priorities are: {priorities_text}.
 

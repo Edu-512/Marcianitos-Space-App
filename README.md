@@ -38,7 +38,7 @@ barra lateral: **Explore Plots → My Field → Compare Crops →
 Recommendations**. La primera vista es el mapa. El selector lateral conserva la
 parcela entre secciones mediante `selected_plot_id`; las prioridades y la guía
 siguen disponibles en el desplegable **Mis prioridades y guía de datos**.
-Don Surco y el punto de entrada PWA continúan disponibles.
+Mr Corn y el punto de entrada PWA continúan disponibles.
 
 ## Contrato con el equipo del modelo (desarrollo en paralelo)
 
@@ -118,7 +118,7 @@ publicar la aplicaci?n. Las pruebas automatizadas no sustituyen la comprobaci?n 
 instalaci?n en el navegador y en Community Cloud.
 
 
-## Don Surco: asistente flotante
+## Mr Corn: asistente flotante
 
 La rama `feature/don-surco-chat` reutiliza el backend de `legy`
 (`utils/ai_chat.py`) y lo presenta como un componente **CCv2 inline** en todas las
@@ -126,7 +126,7 @@ vistas. No a?ade una quinta opci?n a la navegaci?n. El frontend vive en
 `components/chat_frontend/` y se pasa al componente como cadenas de c?digo;
 no es un paquete CCv2 ni necesita Node/Vite para desplegar.
 
-- Burbuja con el granjero **Don Surco**, sombrero y espiga en la boca; abre un
+- Burbuja con el granjero **Mr Corn**, sombrero y espiga en la boca; abre un
   panel lateral que respeta los temas claro/oscuro y la navegaci?n inferior m?vil.
 - Escape, bot?n de cerrar, foco de teclado y movimiento reducido.
 - Historial separado por lote durante la sesi?n; se conserva al navegar.
@@ -157,12 +157,12 @@ no consumen la API. Si falta el SDK o la configuraci?n, la burbuja sigue disponi
 para revisar el dise?o, pero no permite enviar preguntas.
 
 Ejecuta `streamlit run pwa_app.py`. El avatar se sirve desde
-`/app/static/assistant/don-surco.png`; para ello se habilita el servidor est?tico
+`/app/static/assistant/mr-corn.png`; para ello se habilita el servidor est?tico
 nativo de Streamlit. Ese directorio contiene ?nicamente recursos p?blicos.
 
 ### Ilustraci?n
 
-`static/assistant/don-surco.png` se gener? con ImageGen integrado, con fondo
+`static/assistant/mr-corn.png` se gener? con ImageGen integrado, con fondo
 transparente. Prompt de producci?n: granjero caricaturesco adulto y amistoso,
 retrato de busto con sombrero de paja y banda terracota, bigote peque?o, camisa
 crema y overol verde; una espiga seca en la comisura de la boca, sin humo;
@@ -238,3 +238,14 @@ Los contenidos de análisis conservan parte de sus textos en inglés. Su traducc
 completa, selección avanzada en el mapa y adaptación de datos a Iowa quedan fuera
 del alcance de esta feature. Persisten avisos de `use_container_width` en las
 visualizaciones heredadas; no se han reescrito esas vistas.
+
+## Feature 03: My Field
+
+My Field now presents the selected demo plot, pending soil properties and crop
+history, existing simulated indicators and risk indices, and expandable technical
+sources, seasonal calendar, monthly history and local ground log. Interface text
+remains in English. No agricultural model or data contracts were changed.
+
+See [the implementation and validation report](docs/feature-03-my-field.md) for
+integration fields, limitations, tests and manual checks. Mr Corn uses the new
+transparent smiling corn avatar without the tractor without changing chat behavior.
