@@ -18,7 +18,7 @@ ordd={'Excessively drained':1,'Somewhat excessively drained':2,'Well drained':3,
 import rasterio
 from rasterio.features import rasterize
 import geopandas as gpd
-g=gpd.read_file('../ss/datos/shp/soilmu.shp').to_crs(5070)
+g=gpd.read_file('../ss/datos/spatial/soilmu_a_ia023.shp').to_crs(5070)
 with rasterio.open('datos/CDL_2018_19023.tif') as r: tr,shp=r.transform,(r.height,r.width)
 mp=dict(zip(s.mukey,s.drenaje.map(ordd)))
 dro=rasterize(((geom,int(0 if pd.isna(mp.get(k)) else (mp.get(k) or 0))) for geom,k in zip(g.geometry,g.MUKEY)),out_shape=shp,transform=tr,fill=0,dtype='uint8')

@@ -14,7 +14,7 @@ def interior(a,c): return ndimage.minimum_filter((a==c).astype(np.uint8),3)==1
 i25m=interior(a25,1); i24m=interior(a24,1); i24s=interior(a24,5); i25s=interior(a25,5)
 den=(i25m&(i24m|i24s)).sum(); print('  solo interior de campos: maiz tras maiz %.1f%% | tras soya %.1f%% (n pixeles %d) | soya tras soya %.1f%%'%(100*(i25m&i24m).sum()/den,100*(i25m&i24s).sum()/den,den,100*(i25s&i24s).sum()/(i25s&(i24m|i24s)).sum()))
 # suelo rasterizado
-g=gpd.read_file('../ss/datos/shp/soilmu.shp').to_crs(5070); s=pd.read_csv('../ss/suelo_con_area.csv',dtype={'mukey':str})
+g=gpd.read_file('../ss/datos/spatial/soilmu_a_ia023.shp').to_crs(5070); s=pd.read_csv('../ss/suelo_con_area.csv',dtype={'mukey':str})
 keys={k:i+1 for i,k in enumerate(sorted(g.MUKEY.unique()))}
 mu=rasterize(((geom,keys[k]) for geom,k in zip(g.geometry,g.MUKEY)),out_shape=shp,transform=tr,fill=0,dtype='uint16')
 print('pixeles con suelo:',(mu>0).sum(),'acres',round((mu>0).sum()*900/4046.86))
