@@ -238,3 +238,72 @@ Los contenidos de análisis conservan parte de sus textos en inglés. Su traducc
 completa, selección avanzada en el mapa y adaptación de datos a Iowa quedan fuera
 del alcance de esta feature. Persisten avisos de `use_container_width` en las
 visualizaciones heredadas; no se han reescrito esas vistas.
+
+
+## Feature 02: Explorar parcelas
+
+Se conserva el marco de la Feature 01: encabezado y aviso de demostración,
+barra lateral de escritorio, barra inferior móvil, temas tierra, Don Surco y
+botón **Analizar esta parcela**. No se añade otra navegación ni se cambia Mi terreno.
+
+La pantalla usa `load_plots()` y los seis polígonos generados que ya existen.
+No se descargan escenas satelitales ni se crean límites nuevos. La superficie
+registrada en hectáreas no se recalcula ni se valida usando esos polígonos
+simulados. Las coordenadas son las originales de la demo, no terrenos de Iowa.
+Si falta un polígono válido se representa la ubicación como punto; una ubicación
+inválida se omite del mapa, pero la parcela sigue seleccionable desde la lista.
+
+### Selección y visualización
+
+- En escritorio se aprovecha el selector lateral; en móvil aparece **Elegir parcela**
+  dentro de la pantalla. Ambos y el mapa actualizan `selected_plot_id`.
+- El callback nativo `on_select` de Pydeck lee objetos con IDs de capas estables
+  y valida la identidad de la parcela. No escribe sobre selectores ya montados:
+  el siguiente rerun sincroniza sus controles antes de dibujarlos.
+- El mapa marca la selección con nombre precedido de una marca y un borde doble.
+  Se conserva la clave del mapa y la vista inicial depende del conjunto de parcelas,
+  no de la parcela seleccionada, la capa ni el año. La estabilidad real de pan/zoom
+  depende también del navegador y debe comprobarse visualmente.
+- Por defecto muestra **Cultivos**, con una leyenda formada solo por los cultivos
+  registrados. **Parcelas** usa una representación uniforme. Las otras seis capas
+  conservadas son riesgo general, humedad, temperatura, vegetación, disponibilidad
+  de agua y riesgo de erosión. La tabla comparativa anterior sigue en un desplegable.
+- Los indicadores conservan el periodo de demostración 2021–2026. El año no
+  transforma el cultivo actual en un supuesto historial. No hay una capa de
+  fotografía RGB real ni imágenes NDVI: los colores representan valores simulados
+  por parcela. La escala numérica es relativa y mayor no significa siempre mejor.
+- Un indicador ausente no elimina la parcela: se representa en gris cuando se
+  elige esa capa. Las geometrías y colores se preparan en `components/parcel_map.py`,
+  que contiene solo lógica de presentación.
+
+El panel muestra nombre, ID, hectáreas, cultivo y coordenadas disponibles. No se
+infiere un historial de rotación a partir de un cultivo. No se añade el análisis
+científico detallado previsto para la Feature 03.
+
+### Diseño y verificación manual
+
+El diseño es vertical y el mapa se ajusta al ancho disponible. Las columnas del
+panel se apilan en pantallas pequeñas. El movimiento del mapa es optativo para no
+capturar el desplazamiento de la página; la selección por toque sigue disponible.
+Se reserva un margen local junto a controles y al botón de continuación móvil para
+el asistente, conservando el espacio inferior de la navegación existente.
+
+1. Ejecuta `streamlit run streamlit_app.py` (o `pwa_app.py` para la PWA).
+2. Elige Lote Sur en la lista. Deben coincidir el borde, la marca, el panel de
+   **8 ha** y ambos selectores (esos valores vienen del registro simulado existente).
+3. Toca o haz clic en otra parcela; confirma que el panel y la lista se actualizan.
+4. Pulsa **Analizar esta parcela**, verifica la parcela en Mi terreno y vuelve
+   con la navegación general. Cambia también la selección desde la barra lateral.
+5. Cambia las capas y el año; prueba mover/acercar la vista y comprueba que no se
+   recentra innecesariamente al seleccionar otra parcela.
+6. Comprueba escritorio, 360 px y 390 px, en ambos temas; verifica que Don Surco y
+   la barra inferior no tapen la lista, los controles o el botón principal.
+
+`tests/test_parcel_map.py` cubre geometrías, selección/callback, sincronización de
+listas, continuación, capas y datos ausentes. La API de agente de Streamlit no puede
+simular el clic de Pydeck (`action_unsupported`); ese gesto y el aspecto de WebGL
+necesitan validación en un navegador real, no se deducen de las pruebas headless.
+
+Para datos reales necesitaremos del equipo IDs estables, geometrías y CRS
+confirmados, procedencia y periodo de cada variable, ubicación descriptiva y, si
+existe, historial de cultivos con fechas. No se han cambiado los contratos actuales.
