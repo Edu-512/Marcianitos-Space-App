@@ -8,7 +8,7 @@ live in ``utils/`` (see README.md for the contract with the model team).
 
 import streamlit as st
 
-from components.navigation import DEFAULT_PAGE, PAGES, render_nav, run_page
+from components.navigation import DEFAULT_PAGE, PAGES, render_nav, render_nav_clearance, run_page
 from utils.data_sources import load_plots
 from utils.types import FarmerPriorities
 
@@ -106,3 +106,5 @@ spec = PAGES[st.session_state.page_key]
 st.title(spec.title, icon=spec.icon)
 
 run_page(st.session_state.page_key)
+
+render_nav_clearance()
