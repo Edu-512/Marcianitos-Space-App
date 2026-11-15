@@ -92,6 +92,18 @@ class ScenarioOutcome:
     evidence_summary: str = ""  # which satellite variables support this result
     information_gaps: str = ""  # what the data cannot tell us yet
     local_review_notes: str = ""  # ground checks a farmer should perform
+    # --- economics + risk from the Butler County model (added with defaults) --
+    # The model's ranges are 10th-90th percentile (an 80% range), so the
+    # yield_ci_* and margin_ci_* fields carry p10/p90 when it is the source.
+    revenue_usd_per_ha: float = 0.0
+    margin_usd_per_ha: float = 0.0
+    margin_ci_low: float = 0.0
+    margin_ci_high: float = 0.0
+    nitrogen_kg_per_ha: float = 0.0
+    prob_unplanted_pct: float = 0.0  # risk of not being able to plant
+    prob_big_loss_pct: float = 0.0  # probability of a yield drop larger than 20 %
+    scenario_climate_note: str = ""  # the scenario's weather, in plain language
+    erosion_t_per_ha: float = float("nan")  # soil loss per year, uncapped (NaN when not produced)
 
 
 @dataclass(frozen=True)

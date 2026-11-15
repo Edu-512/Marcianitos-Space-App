@@ -32,23 +32,27 @@ def _load(loader: Callable[[str], Any], plot_id: str) -> Any:
 
 def _summary(plot: Plot) -> None:
     with st.container(border=True):
-        st.markdown(":material/landscape: **Selected plot · simulated**")
+        st.markdown(":material/landscape: **Selected plot · Butler County, Iowa**")
         st.subheader(plot.name)
         grid = st.grid(2, min_column_width=200)
         with grid.cell():
-            st.metric("Recorded area", f"{plot.area_hectares:g} ha")
+            st.metric("Recorded area", f"{plot.area_hectares:.1f} ha")
         with grid.cell():
-            st.markdown("**Registered crop**")
+            st.markdown("**Crop pattern 2018–2025**")
             st.write(plot.current_crop or "Not available")
-        st.caption(f"Plot ID: {plot.id}")
-        st.write("Location: simulated coordinates; no verified field location is available.")
-        st.caption("Butler County, Iowa is the project's target study area. This example is not a verified Butler County field.")
-        st.write("Historical rotation pattern: not available.")
+        st.caption(f"Plot ID: {plot.id} · Center: {plot.lat:.4f}, {plot.lon:.4f}")
+        st.write(
+            "Field outline: an area of 40 acres or more with the same 2018–2025 crop pattern in the USDA "
+            "Cropland Data Layer. It is not a surveyed property line."
+        )
 
 
 def _indicators(snap: SatelliteSnapshot | None) -> None:
-    st.markdown("**Available demo indicators**")
-    st.caption(f"Simulated snapshot date: {snap.date if snap else 'Not available'}. This is not an actual observation date.")
+    st.markdown("**Satellite snapshot**")
+    st.caption(
+        f"Snapshot date: {snap.date if snap and snap.date else 'Not available'}. No plot-level satellite snapshot "
+        "has been connected yet; county weather from NASA POWER is used in Compare Crops."
+    )
     grid = st.grid(2, min_column_width=220)
     for label, field, decimals, unit, explanation in [
         ("Soil moisture", "soil_moisture_pct", 1, "%", "Water content in the soil; it does not describe the soil's water-storage capacity."),
@@ -64,15 +68,18 @@ def _indicators(snap: SatelliteSnapshot | None) -> None:
 
 def _risks(risk: PlotRisk | None) -> None:
     st.subheader("Things to consider", icon=":material/visibility:")
-    st.caption("Simulated model indices on a 0–1 scale. They are not future probabilities or confirmed field conditions.")
+    st.caption(
+        "Indices on a 0–1 scale from measured weather (NASA POWER, 2000–2025) and this plot's soil (SSURGO). "
+        "They are not probabilities or confirmed field conditions."
+    )
     if risk is None:
         st.info("Risk indicators could not be loaded. No risk level has been assumed.")
     grid = st.grid(2, min_column_width=220)
     for label, field, explanation in [
-        ("Overall risk index", "overall_risk", "Combines the existing demo model's signals; no action threshold is applied here."),
-        ("Drought index", "drought_risk", "Water shortages can affect growth. Review the moisture history and confirm conditions in the field."),
-        ("Heat stress index", "heat_stress_risk", "High temperatures can affect growth. Review the temperature history before drawing conclusions."),
-        ("Nutrient depletion index", "nutrient_depletion_risk", "Nutrient limitations can affect growth. This demo index is not a substitute for a soil test."),
+        ("Overall risk index", "overall_risk", "Weighted blend of the three indices below; no action threshold is applied here."),
+        ("Drought index", "drought_risk", "How dry Augusts get in this county (26 measured years), times how little water this field's soil can hold. Sandy, low-water soils score higher."),
+        ("Heat stress index", "heat_stress_risk", "From the average number of days above 35 °C (10 days = 1). County-wide: the same for every plot."),
+        ("Nutrient depletion index", "nutrient_depletion_risk", "From this plot's soil organic matter (6% or more = 0). Not a substitute for a soil test."),
     ]:
         with grid.cell():
             with st.container(border=True, height="stretch"):
@@ -83,29 +90,31 @@ def _risks(risk: PlotRisk | None) -> None:
 
 def _technical(plot: Plot, snap: SatelliteSnapshot | None, risk: PlotRisk | None) -> None:
     with st.expander("View technical details and sources", key="my_field_technical"):
-        st.write("Current source: deterministic mock data in utils/data_sources.py and the existing demo model in utils/model_interface.py.")
-        st.write("NASA measurements and USDA soil/crop records have not been connected to these values.")
+        st.write("Plot outlines, soils and plan results come from the Butler County delivery in the model/ folder.")
         rows = []
-        for obj, fields, units, source in [
-            (snap, ["soil_moisture_pct", "ndvi", "temperature_c", "water_availability_idx", "precipitation_mm"], ["%", "index", "°C", "0–1 index", "mm"], "Demo data generator"),
-            (risk, ["overall_risk", "drought_risk", "heat_stress_risk", "nutrient_depletion_risk"], ["0–1 index"] * 4, "Existing demo model"),
+        for obj, fields, units, source, nature, period in [
+            (snap, ["soil_moisture_pct", "ndvi", "temperature_c", "water_availability_idx", "precipitation_mm"],
+             ["%", "index", "°C", "0–1 index", "mm"], "Not connected", "Not available", "Not supplied"),
+            (risk, ["overall_risk", "drought_risk", "heat_stress_risk"], ["0–1 index"] * 3,
+             "NASA POWER (MERRA-2), county point 42.73 N, 92.79 W", "Measured weather", "2000–2025, daily"),
+            (risk, ["nutrient_depletion_risk"], ["0–1 index"],
+             "USDA NRCS SSURGO IA023 v33", "Soil survey", "Survey of 2026-09-08"),
         ]:
             for field, unit in zip(fields, units):
-                rows.append({"Variable":field, "Value":number(getattr(obj, field, None)), "Unit":unit,
-                             "Source":source, "Nature":"Simulated", "Date":snap.date if snap else "Not available",
-                             "Period / resolution":"Not supplied"})
-        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch", alt="Technical variables, units and simulated provenance for the active plot")
-        st.caption(f"Original demo coordinates: {plot.lat:g}, {plot.lon:g} (latitude, longitude). They do not establish a real Iowa location.")
-        st.caption("Snapshot dates are generated by the demo. Rainfall accumulation period and spatial resolution are not specified. Model indices are not calibrated forecasts.")
+                rows.append({"Variable": field, "Value": number(getattr(obj, field, None)), "Unit": unit,
+                             "Source": source, "Nature": nature, "Period / resolution": period})
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch", alt="Technical variables, units and provenance for the active plot")
+        st.caption(f"Plot center: {plot.lat:.5f}, {plot.lon:.5f} (latitude, longitude).")
+        st.caption("Weather is a single point for the whole county, so heat does not differ between plots. Drought also uses each field's soil water, so it does.")
 
 
 def _seasonal_and_history(plot_id: str) -> None:
-    calendar = st.expander("Seasonal vulnerability calendar · simulated", on_change="rerun", key="my_field_calendar")
+    calendar = st.expander("Seasonal vulnerability calendar", on_change="rerun", key="my_field_calendar")
     if calendar.open:
         with calendar:
             windows = _load(load_seasonal_windows, plot_id)
             if windows:
-                st.caption("Demo seasonal windows and severity labels come from the existing provider; they are not confirmed events in this plot.")
+                st.caption("Seasonal windows and severity labels come from the data provider; they are not confirmed events in this plot.")
                 st.altair_chart(seasonal_vulnerability_timeline(windows), width="stretch", alt="Simulated seasonal windows for the active plot")
                 months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
                 for w in windows:
@@ -113,12 +122,12 @@ def _seasonal_and_history(plot_id: str) -> None:
                     st.caption(w.plain_explanation)
             else:
                 st.info("No seasonal windows are available for this plot.")
-    history_box = st.expander("12-month indicator history · simulated", on_change="rerun", key="my_field_history")
+    history_box = st.expander("12-month indicator history", on_change="rerun", key="my_field_history")
     if history_box.open:
         with history_box:
             history = _load(load_plot_history, plot_id)
             if isinstance(history, pd.DataFrame) and not history.empty and "date" in history:
-                st.caption("Monthly demo indicators, not yearly crop records. Each variable keeps its own unit and scale.")
+                st.caption("Monthly indicators, not yearly crop records. Each variable keeps its own unit and scale.")
                 for field,label,unit in [("precipitation_mm","Precipitation","mm"),("soil_moisture_pct","Soil moisture","%"),("temperature_c","Temperature","°C"),("ndvi","Vegetation vigor (NDVI)","index")]:
                     if field in history:
                         st.line_chart(history, x="date", y=field, x_label="Month", y_label=f"{label} ({unit})", width="stretch", height=180, alt=f"Simulated monthly {label.lower()} for the active plot")

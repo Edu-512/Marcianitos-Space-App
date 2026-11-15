@@ -4,3 +4,7 @@ __pycache__/
 venv/
 .streamlit/secrets.toml
 .DS_Store
+
+# Model delivery archives (contents of model/ are versioned)
+model/*.zip
+field_shift_modelo.zip

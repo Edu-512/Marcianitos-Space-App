@@ -83,12 +83,12 @@ export default function(component) {
   };
   const friendlyKey = key => key.replaceAll('_', ' ').replaceAll('pct', '%');
   const flatten = (value, prefix = '') => {
-    if (!value || typeof value !== 'object') return [[prefix || 'Resultado', String(value ?? 'Sin datos')]];
+    if (!value || typeof value !== 'object') return [[prefix || 'Result', String(value ?? 'No data')]];
     return Object.entries(value).flatMap(([key, item]) => {
       const label = prefix ? `${prefix} · ${friendlyKey(key)}` : friendlyKey(key);
-      if (Array.isArray(item)) return [[label, item.map(v => typeof v === 'object' ? 'Consultar detalle del modelo' : String(v)).join(', ')]];
+      if (Array.isArray(item)) return [[label, item.map(v => typeof v === 'object' ? 'See details' : String(v)).join(', ')]];
       if (item && typeof item === 'object') return flatten(item, label);
-      return [[label, String(item ?? 'Sin datos')]];
+      return [[label, String(item ?? 'No data')]];
     }).slice(0, 18);
   };
   const digest = JSON.stringify(data.messages || []);
@@ -98,7 +98,7 @@ export default function(component) {
     const fragment = document.createDocumentFragment();
     (data.messages || []).forEach((message, index) => {
       const article = textNode('article', '', `message ${message.role}${message.error ? ' error' : ''}`);
-      article.append(textNode('p', message.role === 'user' ? 'YOU' : 'DON SURCO', 'message-label'));
+      article.append(textNode('p', message.role === 'user' ? 'YOU' : 'Mr Corn', 'message-label'));
       if (message.content) article.append(textNode('div', message.content, 'message-content'));
       (message.steps || []).forEach((step, stepIndex) => {
         const details = document.createElement('details');

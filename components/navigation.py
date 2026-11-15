@@ -103,10 +103,10 @@ def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) ->
                 args=(tuple(names),),
             )
             plot = next(p for p in plots if p.id == st.session_state.selected_plot_id)
-            st.caption(f"{plot.name} · {plot.area_hectares:g} ha · {plot.current_crop}")
+            st.caption(f"{plot.name} · {plot.area_hectares:.1f} ha · {plot.current_crop}")
         st.divider()
         st.caption("Case study: Butler County, Iowa.")
-        st.caption("Prototype with simulated plots and results.")
+        st.caption("Prototype built on USDA and NASA records, 2000–2025.")
 
 
 def render_continuation(pages: dict[str, Any], active_key: str) -> None:

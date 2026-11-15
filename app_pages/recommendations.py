@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import math
+
 import pandas as pd
 import streamlit as st
 
@@ -17,6 +19,14 @@ def _translate_category(category: str) -> str:
         "Riego": "Irrigation",
     }
     return mapping.get(category, category)
+
+
+def _known(value: float) -> bool:
+    """Unquantified numbers arrive as NaN; never display them as zero."""
+    try:
+        return math.isfinite(float(value))
+    except (TypeError, ValueError):
+        return False
 
 
 def run() -> None:
@@ -57,14 +67,15 @@ def run() -> None:
             st.caption(f"Category: **{category_en}** - {rec.rationale}")
 
             c1, c2, c3 = st.columns(3)
+            has_range = _known(rec.impact_ci_low) and _known(rec.impact_ci_high)
             c1.metric(
                 "Expected Impact",
-                f"+{rec.expected_impact_pct:.0f}%",
-                delta=f"90% CI: {rec.impact_ci_low:.0f}% to {rec.impact_ci_high:.0f}%",
+                f"{rec.expected_impact_pct:+.0f}%" if _known(rec.expected_impact_pct) else "Not estimated",
+                delta=f"Range: {rec.impact_ci_low:.0f}% to {rec.impact_ci_high:.0f}%" if has_range else None,
                 delta_color="off",
             )
-            c2.metric("Water Change", f"{rec.water_delta_mm:+.0f} mm")
-            c3.metric("Estimated Cost", f"${rec.cost_usd_per_ha:.0f} / ha")
+            c2.metric("Irrigation Change", f"{rec.water_delta_mm:+.0f} mm", help="Butler County farms are rain-fed.")
+            c3.metric("Estimated Cost", f"${rec.cost_usd_per_ha:,.0f} / ha" if _known(rec.cost_usd_per_ha) else "Not estimated")
 
             # Progressive disclosure: scientific detail on demand.
             with st.expander("Evidence, Gaps, and Local Verification"):
@@ -72,22 +83,23 @@ def run() -> None:
                 st.markdown(f"**Information Gaps:**\n{rec.information_gaps}")
                 st.markdown(f"**Local Verification Needed:**\n{rec.local_review_notes}")
 
-    # --- Expected impact per recommendation --------------------------------------
+    # --- Expected impact per recommendation (only the quantified ones) -----------
+    quantified = [rec for rec in recommendations if _known(rec.expected_impact_pct)]
+    if not quantified:
+        st.caption("None of these actions has a quantified impact for this field yet.")
+        return
+
     st.subheader("Expected Impact per Recommendation")
-    
     impact_df = pd.DataFrame(
         [
             {
                 "label": rec.title,
                 "impact": rec.expected_impact_pct,
-                "ci_low": rec.impact_ci_low,
-                "ci_high": rec.impact_ci_high,
+                "ci_low": rec.impact_ci_low if _known(rec.impact_ci_low) else rec.expected_impact_pct,
+                "ci_high": rec.impact_ci_high if _known(rec.impact_ci_high) else rec.expected_impact_pct,
             }
-            for rec in recommendations
+            for rec in quantified
         ]
     )
-    
-    st.altair_chart(
-        impact_with_ci(impact_df),
-        use_container_width=True,
-    )
+    st.altair_chart(impact_with_ci(impact_df), width="stretch")
+    st.caption("Each action's impact is described in its card; for a cover crop it is the cut in soil loss.")

@@ -1,4 +1,4 @@
-"""Rotation Lab: scenario comparison, climate What-If simulator and tradeoffs."""
+"""Rotation Lab: compare the three Butler County plans across measured year types."""
 
 from __future__ import annotations
 
@@ -16,9 +16,16 @@ from utils.model_interface import (
 #: The pinned monoculture baseline every comparison must include.
 BASELINE_ID = "maiz-continuo"
 
+#: Year types measured in 2000–2025, as the contract's (rainfall %, temperature °C) inputs.
+YEAR_TYPES = {
+    "Normal year": (0, 0.0),
+    "Dry and hot year": (-20, 2.0),
+    "Wet spring": (15, 0.0),
+}
+
 
 def run() -> None:
-    """Render scenario comparison, What-If climate sliders and tradeoff tabs."""
+    """Render the plan comparison, year-type selector and tradeoff tabs."""
     plot_id = st.session_state.selected_plot_id
     priorities = st.session_state.farmer_priorities
 
@@ -33,62 +40,74 @@ def run() -> None:
             st.exception(exc)
         return
 
+    st.caption(
+        "Three real options for Butler County. Corn and soybean are the crops grown here and the only ones "
+        "with yield, price and soil records behind them: fewer options, every number measured or sourced."
+    )
     st.caption(f"📌 **Fixed Baseline:** {baseline_name}")
 
     selected_others = st.pills(
-        "Scenarios to compare",
+        "Plans to compare",
         other_names,
         selection_mode="multi",
-        default=other_names[:3],
+        default=other_names,
     )
-    if selected_others is None:
-        selected_others = []
-    comparison_names = [baseline_name] + list(selected_others)
+    comparison_names = [baseline_name] + list(selected_others or [])
 
-    # --- What-If climate sliders -------------------------------------------------
-    st.subheader("Climate Simulator")
+    # --- Year type (replaces the two continuous climate sliders) ---------------
+    st.subheader("Type of Year")
     with st.container(border=True):
-        st.caption("Adjust expected seasonal weather to test how each rotation plan performs under stress.")
-        w1, w2 = st.columns(2)
-        with w1:
-            rainfall_shift = int(st.slider("Seasonal Rainfall Shift (%)", -30, 20, 0, step=5))
-        with w2:
-            temp_anomaly = float(st.slider("Temperature Anomaly (°C)", 0.0, 3.5, 0.0, step=0.1))
+        st.caption("Pick a kind of season. Each one groups past years (2000–2025) with similar measured weather.")
+        year_type = st.segmented_control(
+            "Type of year", list(YEAR_TYPES), default="Normal year", key="rot_year_type",
+            label_visibility="collapsed",
+        ) or "Normal year"
+        rainfall_shift, temp_anomaly = YEAR_TYPES[year_type]
 
-    # --- Comparison table (all outcomes computed under the climate shift) -------
-    st.subheader("Scenario Outcomes")
-    rows = []
-    
+    # --- One prediction per plan, reused by every section below ----------------
     try:
-        for name in comparison_names:
-            outcome = predict_scenario_outcome(
+        outcomes = {
+            name: predict_scenario_outcome(
                 plot_id, scenarios[name].id, rainfall_shift_pct=rainfall_shift, temp_anomaly_c=temp_anomaly
             )
-            fit = score_scenario_priority_fit(outcome, priorities)
-            rows.append(
-                {
-                    "Scenario": name,
-                    "Priority Match (%)": f"{fit:.0f}%",
-                    "Expected Yield (t/ha)": outcome.expected_yield_t_per_ha,
-                    "CI 90% Low": outcome.yield_ci_low,
-                    "CI 90% High": outcome.yield_ci_high,
-                    "Water Use (mm)": round(outcome.water_use_mm),
-                    "Nutrient Loss (%)": round(outcome.nutrient_loss_pct, 1),
-                    "Organic Matter Δ (%)": outcome.organic_matter_delta_pct,
-                    "Erosion Risk Score": outcome.erosion_risk_score,
-                    "Cost (USD/ha)": round(outcome.cost_usd_per_ha),
-                }
-            )
+            for name in comparison_names
+        }
     except Exception as exc:
-        st.error("Simulation failed. The prediction model may be offline.")
+        st.error("Results for this plot are not available right now.")
         with st.expander("Technical diagnostics"):
             st.exception(exc)
         return
 
-    comparison = pd.DataFrame(rows)
-    st.dataframe(comparison, use_container_width=True)
+    st.info(next(iter(outcomes.values())).scenario_climate_note, icon=":material/partly_cloudy_day:")
 
-    # --- Tabs: tradeoffs / uncertainty / why & local caveats ----------------------
+    st.subheader("Plan Outcomes")
+    st.caption(
+        "Harvest and money always go together. Low–high values are an 80% range: 8 in 10 similar past years "
+        "fell inside it. Costs include land rent."
+    )
+    rows = [
+        {
+            "Plan": name,
+            "Priority Match (%)": f"{score_scenario_priority_fit(o, priorities):.0f}%",
+            "Corn Yield (t/ha)": round(o.expected_yield_t_per_ha, 2),
+            "Yield Low (t/ha)": round(o.yield_ci_low, 2),
+            "Yield High (t/ha)": round(o.yield_ci_high, 2),
+            "Margin (USD/ha)": round(o.margin_usd_per_ha),
+            "Margin Low (USD/ha)": round(o.margin_ci_low),
+            "Margin High (USD/ha)": round(o.margin_ci_high),
+            "Revenue (USD/ha)": round(o.revenue_usd_per_ha),
+            "Cost (USD/ha)": round(o.cost_usd_per_ha),
+            "Nitrogen (kg/ha)": round(o.nitrogen_kg_per_ha),
+            "Erosion (% of tolerable limit)": round(o.erosion_risk_score * 100),
+            "Chance of Not Planting (%)": round(o.prob_unplanted_pct, 2),
+            "Chance of >20% Yield Drop (%)": round(o.prob_big_loss_pct, 1),
+        }
+        for name, o in outcomes.items()
+    ]
+    comparison = pd.DataFrame(rows)
+    st.dataframe(comparison, hide_index=True, width="stretch")
+
+    # --- Tabs: tradeoffs / uncertainty / why & local caveats ---------------------
     st.subheader("Detailed Analysis")
     tradeoffs_tab, uncertainty_tab, caveats_tab = st.tabs(
         ["Tradeoffs", "Yield Uncertainty", "Agronomic Evidence"]
@@ -96,40 +115,19 @@ def run() -> None:
 
     with tradeoffs_tab:
         st.caption(
-            "Higher bars for water use, nutrient loss, erosion, and cost indicate worse outcomes. "
-            "Higher bars for pest disruption indicate better resistance."
+            "Higher bars for margin and yield are better. Higher bars for cost, nitrogen, erosion and "
+            "planting risk are worse. Erosion is shown as a share of the tolerable soil loss (100% = at the limit)."
         )
-        chart_df = comparison.set_index("Scenario")
-        t1, t2, t3 = st.columns(3)
-        with t1:
-            st.caption("Water Use (mm)")
-            st.bar_chart(chart_df["Water Use (mm)"])
-        with t2:
-            st.caption("Nutrient Loss (%)")
-            st.bar_chart(chart_df["Nutrient Loss (%)"])
-        with t3:
-            st.caption("Organic Matter Change (%)")
-            st.bar_chart(chart_df["Organic Matter Δ (%)"])
-            
-        t4, t5, t6 = st.columns(3)
-        with t4:
-            st.caption("Erosion Risk Score")
-            st.bar_chart(chart_df["Erosion Risk Score"])
-        with t5:
-            st.caption("Estimated Cost (USD/ha)")
-            st.bar_chart(chart_df["Cost (USD/ha)"])
-        with t6:
-            st.caption("Pest Disruption Capacity")
-            pest = pd.Series(
-                [
-                    predict_scenario_outcome(
-                        plot_id, scenarios[n].id, rainfall_shift_pct=rainfall_shift, temp_anomaly_c=temp_anomaly
-                    ).pest_disruption_score
-                    for n in comparison_names
-                ],
-                index=comparison_names,
-            )
-            st.bar_chart(pest)
+        chart_df = comparison.set_index("Plan")
+        charts = [
+            "Margin (USD/ha)", "Corn Yield (t/ha)", "Cost (USD/ha)",
+            "Nitrogen (kg/ha)", "Erosion (% of tolerable limit)", "Chance of Not Planting (%)",
+        ]
+        for start in (0, 3):
+            for column, metric in zip(st.columns(3), charts[start:start + 3]):
+                with column:
+                    st.caption(metric)
+                    st.bar_chart(chart_df[metric])
 
     with uncertainty_tab:
         try:
@@ -140,28 +138,26 @@ def run() -> None:
                 )
                 trajectory["scenario"] = name
                 long_rows.append(trajectory[["date", "scenario", "median", "ci_low", "ci_high"]])
-                
+
             st.altair_chart(
                 yield_uncertainty_bands(pd.concat(long_rows, ignore_index=True)),
-                use_container_width=True,
+                width="stretch",
             )
             st.caption(
-                f"Shaded band: 90% confidence interval under adjusted climate "
-                f"(Rainfall: {rainfall_shift:+d}%, Temp: +{temp_anomaly:.1f}°C). "
-                "Bands narrow as they approach current actual observations."
+                f"{year_type}. Shaded band: 80% range of corn yield (t/ha). Only the harvest result (the last "
+                "point, October) comes from measured years; the curve before it is an approximation of how "
+                "the season builds toward that result."
             )
         except Exception:
-            st.info("Yield trajectory prediction is currently unavailable for these parameters.")
+            st.info("The yield path is not available for this plot.")
 
     with caveats_tab:
-        st.caption("Detailed rationale mapping predictions to field realities.")
-        for name in comparison_names:
-            outcome = predict_scenario_outcome(
-                plot_id, scenarios[name].id, rainfall_shift_pct=rainfall_shift, temp_anomaly_c=temp_anomaly
-            )
+        st.caption("Why each plan behaves as it does, what backs it and what it cannot tell you.")
+        for name, outcome in outcomes.items():
             with st.container(border=True):
                 st.markdown(f"### {name}")
-                st.markdown(f"**Agronomic Mechanism:**\n{outcome.agronomic_mechanism}")
-                st.markdown(f"**Satellite Evidence:**\n{outcome.evidence_summary}")
-                st.markdown(f"**Information Gaps:**\n{outcome.information_gaps}")
-                st.markdown(f"**Local Verification Needed:**\n{outcome.local_review_notes}")
+                st.markdown(f"**How it works:**\n{outcome.agronomic_mechanism}")
+                st.markdown(f"**Weather of this year type:**\n{outcome.scenario_climate_note}")
+                st.markdown(f"**Sources:**\n{outcome.evidence_summary}")
+                st.markdown(f"**Limits of this information:**\n{outcome.information_gaps}")
+                st.markdown(f"**Check in your field:**\n{outcome.local_review_notes}")

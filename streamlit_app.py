@@ -38,8 +38,8 @@ spec = PAGES[active_key]
 st.title(spec.heading, icon=spec.icon)
 st.write(spec.description)
 st.info(
-    "Demo mode: plots, indicators, and results are simulated. "
-    "They are not real observations from Butler County, Iowa.",
+    "Plots, soils and results come from USDA and NASA records for Butler County, Iowa. "
+    "They show likely ranges, not guarantees: check your own field before deciding.",
     icon=":material/info:",
 )
 if load_error:
@@ -72,11 +72,11 @@ with st.expander("My priorities and data guide", expanded=False):
             p_col1, p_col2, p_col3 = st.columns(3)
             with p_col1:
                 st.button(
-                    "Save water",
+                    "Plant on time",
                     width="stretch",
                     on_click=apply_priority_preset,
                     args=(0.85, 0.50, 0.40),
-                    help="Prioritize drought resilience and low water usage.",
+                    help="Prioritize plans with a lower risk of not being able to plant in a wet spring.",
                 )
             with p_col2:
                 st.button(
@@ -92,19 +92,19 @@ with st.expander("My priorities and data guide", expanded=False):
                     width="stretch",
                     on_click=apply_priority_preset,
                     args=(0.35, 0.45, 0.90),
-                    help="Focus on high-margin market crops.",
+                    help="Focus on the plans that leave the most money per hectare.",
                 )
 
             st.divider()
             st.markdown("**Priorities (0 = low, 1 = high)**")
             water_w = st.slider(
-                "Water conservation",
+                "Planting reliability",
                 0.0,
                 1.0,
                 float(priorities.water_conservation_weight),
                 step=0.05,
                 key="fs_water_w",
-                help="Higher values favor drought-tolerant crops and reduced irrigation.",
+                help="Higher values favor plans with a lower chance of not being able to plant after a wet spring.",
             )
             soil_w = st.slider(
                 "Soil health",
@@ -113,7 +113,7 @@ with st.expander("My priorities and data guide", expanded=False):
                 float(priorities.soil_health_weight),
                 step=0.05,
                 key="fs_soil_w",
-                help="Higher values favor cover crops, nitrogen fixation, and low erosion.",
+                help="Higher values favor plans with less soil erosion.",
             )
             profit_w = st.slider(
                 "Income",
@@ -122,7 +122,7 @@ with st.expander("My priorities and data guide", expanded=False):
                 float(priorities.profit_market_weight),
                 step=0.05,
                 key="fs_profit_w",
-                help="Higher values prioritize immediate cash return per hectare.",
+                help="Higher values favor plans with a higher margin per hectare.",
             )
 
             st.divider()
@@ -131,7 +131,7 @@ with st.expander("My priorities and data guide", expanded=False):
                 "I need livestock forage",
                 bool(priorities.forage_priority),
                 key="fs_forage",
-                help="Only recommend crops that can double as livestock feed or grazing.",
+                help="Forage value is not estimated for the corn and soybean plans yet, so this does not change results.",
             )
             no_till = st.toggle(
                 "I have no-till equipment",
@@ -139,20 +139,17 @@ with st.expander("My priorities and data guide", expanded=False):
                 key="fs_no_till",
                 help="Enable recommendations that require direct seeding into crop residue.",
             )
-            limit_water = st.toggle(
+            # Butler County is rain-fed: there is no irrigation demand to cap, so
+            # the control stays visible but disabled and the cap is never set.
+            st.toggle(
                 "Set an irrigation water limit",
-                priorities.max_water_budget_mm is not None,
+                False,
                 key="fs_budget_on",
+                disabled=True,
+                help="Butler County farms are rain-fed, so there is no irrigation demand to limit.",
             )
-            budget = st.number_input(
-                "Irrigation limit (mm per season)",
-                min_value=50.0,
-                value=float(priorities.max_water_budget_mm or 250.0),
-                step=10.0,
-                disabled=not limit_water,
-                key="fs_budget_mm",
-                help="1 mm of water equals 10 cubic meters (10,000 liters) per hectare.",
-            )
+            st.caption("Not available: Butler County farms are rain-fed (no irrigation).")
+            limit_water, budget = False, None
 
     # Rebuild the frozen dataclass so every page reads one consistent object.
     st.session_state.farmer_priorities = FarmerPriorities(
@@ -161,7 +158,7 @@ with st.expander("My priorities and data guide", expanded=False):
         profit_market_weight=float(profit_w),
         forage_priority=bool(forage),
         has_no_till_equipment=bool(no_till),
-        max_water_budget_mm=float(budget) if limit_water else None,
+        max_water_budget_mm=float(budget) if limit_water and budget is not None else None,
     )
 
     with col_guide:
@@ -169,20 +166,26 @@ with st.expander("My priorities and data guide", expanded=False):
         with st.popover("Satellite data guide", width="stretch"):
             st.markdown(
                 """
-    ### Understanding Your NASA Data
+    ### Where These Numbers Come From
 
-    * **Crop Vigor - NDVI (MODIS / Landsat)**
-      Measures how green and dense your crop canopy is. A sudden drop usually warns of water stress, heat damage, or nutrient deficiency.
+    * **Weather - NASA POWER (2000–2025)**
+      Daily temperature, rainfall and root-zone soil wetness for one point at the center of Butler County. Past years are grouped into normal, dry-and-hot and wet-spring seasons.
 
-    * **Root-Zone Moisture (SMAP)**
-      Estimates how much water is available in the top soil layer (approx. 1 square km area average). Great for spotting regional dry-down trends.
+    * **Yields and prices - USDA NASS QuickStats (2000–2025)**
+      County corn and soybean yields across Iowa show how much harvests swing in each kind of year.
 
-    * **Crop Water Loss - Evapotranspiration (POWER / ECOSTRESS)**
-      Shows how fast your field is losing water through soil evaporation and plant transpiration. Spikes during hot, windy days.
+    * **Soil - USDA NRCS SSURGO**
+      Sand, water the soil can hold, slope and organic matter under each field.
+
+    * **Fields - USDA Cropland Data Layer (2018–2025)**
+      Satellite crop maps give each field's outline and its corn–soybean pattern.
+
+    * **Costs and nitrogen - Iowa State University Extension**
+      Production costs (including land rent) and nitrogen rates.
 
     ---
     **Why walk the field before acting?**
-    Satellites view your farm in large grid squares (pixels) and average the whole area. They tell you **where to look**, but final decisions (exact fertilizer rate or irrigation timing) should always be confirmed with a shovel or soil probe on the ground.
+    Weather comes from one point for the whole county and satellite maps average large squares. They tell you **where to look**, but final decisions should always be confirmed on the ground.
                 """
             )
 
@@ -190,7 +193,7 @@ with st.expander("My priorities and data guide", expanded=False):
     # --- Active Context Summary Bar (Native Streamlit implementation) -------------
     def render_active_context_summary(prio: FarmerPriorities) -> None:
         parts = [
-            f"Water: {int(prio.water_conservation_weight * 100)}%",
+            f"Planting: {int(prio.water_conservation_weight * 100)}%",
             f"Soil: {int(prio.soil_health_weight * 100)}%",
             f"Income: {int(prio.profit_market_weight * 100)}%",
         ]

@@ -1,23 +1,28 @@
 """Data access layer for plot and satellite data.
 
-All functions return typed objects from :mod:`utils.types`. They currently
-generate deterministic mock data so the interface can be developed in parallel
-with the model. Replace each body with real NASA sources (POWER, SMAP, MODIS,
-GPM, ECOSTRESS, GRACE-FO, SRTM) without changing signatures or return types —
-the pages only depend on these functions.
+All functions return typed objects from :mod:`utils.types`. Plots come from the
+Butler County, Iowa model delivery (``model/``): real field shapes derived from
+the USDA Cropland Data Layer, with SSURGO soil and NASA POWER weather behind the
+model results. Signatures are unchanged — the pages only depend on these
+functions.
+
+The delivery has no plot-level satellite snapshot, monthly history, seasonal
+windows or yearly map composites. Those functions return explicit "not
+available" values (NaN / empty) instead of invented numbers.
 """
 
 from __future__ import annotations
 
-import math
 import zlib
-from datetime import date
 
-import numpy as np
 import pandas as pd
 import streamlit as st
 
+from model.loader import load_demo_profiles, load_parcels, pattern_label
+from model.units import acres_to_ha
 from utils.types import Plot, RotationScenario, SatelliteSnapshot, SeasonalWindow
+
+_NAN = float("nan")
 
 
 def stable_seed(key: str) -> int:
@@ -25,61 +30,68 @@ def stable_seed(key: str) -> int:
     return zlib.crc32(key.encode("utf-8")) & 0xFFFFFFFF
 
 
-def _make_polygon(lat: float, lon: float, area_hectares: float) -> tuple[tuple[float, float], ...]:
-    """Deterministic irregular parcel boundary around (lat, lon), scaled by area.
-
-    A square-equivalent side of ``sqrt(area)`` km is jittered at the corners and
-    edge midpoints so parcels look like real fields, not perfect rectangles.
-    """
-    rng = np.random.default_rng(stable_seed(f"polygon:{lat}:{lon}"))
-    side_km = math.sqrt(area_hectares)
-    half_lat = side_km / 2 / 111.0
-    half_lon = side_km / 2 / (111.0 * math.cos(math.radians(lat)))
-
-    def _jitter(scale: float) -> float:
-        return float(rng.uniform(-0.35, 0.35)) * scale
-
-    corners = [
-        (lat - half_lat + _jitter(half_lat), lon - half_lon + _jitter(half_lon)),
-        (lat - half_lat + _jitter(half_lat), lon + half_lon + _jitter(half_lon)),
-        (lat + half_lat + _jitter(half_lat), lon + half_lon + _jitter(half_lon)),
-        (lat + half_lat + _jitter(half_lat), lon - half_lon + _jitter(half_lon)),
-    ]
-    verts: list[tuple[float, float]] = []
-    for i in range(4):
-        a, b = corners[i], corners[(i + 1) % 4]
-        verts.append(corners[i])
-        verts.append(((a[0] + b[0]) / 2 + _jitter(half_lat), (a[1] + b[1]) / 2 + _jitter(half_lon)))
-    return tuple((round(v[0], 6), round(v[1], 6)) for v in verts)
-
-
-_PLOT_BASES = (
-    ("lote-norte", "North Field", 23.48, -102.62, 12, "Maize"),
-    ("lote-sur", "South Field", 23.31, -102.47, 8, "Sorghum"),
-    ("lote-este", "East Field", 23.42, -102.35, 15, "Wheat"),
-    ("lote-oeste", "West Field", 23.36, -102.71, 10, "Beans"),
-    ("lote-alto", "Upper Field", 23.55, -102.49, 6, "Alfalfa"),
-    ("lote-bajo", "Lower Field", 23.28, -102.58, 9, "Maize"),
-)
-
-_PLOTS = tuple(
-    Plot(id=i, name=n, lat=la, lon=lo, area_hectares=a, current_crop=c, polygon=_make_polygon(la, lo, a))
-    for (i, n, la, lo, a, c) in _PLOT_BASES
-)
-
+# Only corn and soybean: the crops grown in Butler County and the only ones the
+# model has data for. ``maiz-continuo`` stays as the pinned baseline id.
 _ROTATION_SCENARIOS = (
-    RotationScenario(id="maiz-continuo", name="Continuous Maize (No Rotation)", crops=("Maize", "Maize", "Maize")),
-    RotationScenario(id="maiz-frijol-sorgo", name="Maize → Beans → Sorghum", crops=("Maize", "Beans", "Sorghum")),
-    RotationScenario(id="sorgo-trigo-cobertura", name="Sorghum → Wheat → Cover Crop", crops=("Sorghum", "Wheat", "Cover Crop")),
-    RotationScenario(id="trigo-maiz-alfalfa", name="Wheat → Maize → Alfalfa", crops=("Wheat", "Maize", "Alfalfa")),
-    RotationScenario(id="sorgo-frijol-cobertura", name="Sorghum → Beans → Cover Crop", crops=("Sorghum", "Beans", "Cover Crop")),
+    RotationScenario(id="maiz-continuo", name="Continuous Corn (No Rotation)",
+                     crops=("Corn", "Corn", "Corn")),
+    RotationScenario(id="maiz-soya", name="Corn → Soybean",
+                     crops=("Corn", "Soybean")),
+    RotationScenario(id="maiz-soya-cobertura", name="Corn → Soybean + Cover Crop",
+                     crops=("Corn", "Soybean", "Cover Crop")),
 )
+
+
+def _ring_area_and_centroid(ring: list[list[float]]) -> tuple[float, float, float]:
+    """Shoelace area (signed, degrees²) and centroid (lon, lat) of one ring."""
+    area2 = cx = cy = 0.0
+    for (x0, y0), (x1, y1) in zip(ring, ring[1:] + ring[:1]):
+        cross = x0 * y1 - x1 * y0
+        area2 += cross
+        cx += (x0 + x1) * cross
+        cy += (y0 + y1) * cross
+    if abs(area2) < 1e-18:  # degenerate ring: fall back to the vertex mean
+        n = len(ring) or 1
+        return 0.0, sum(p[0] for p in ring) / n, sum(p[1] for p in ring) / n
+    return area2 / 2, cx / (3 * area2), cy / (3 * area2)
+
+
+def _main_outer_ring(geometry: dict) -> list[list[float]]:
+    """Outer ring of a Polygon, or of the largest part of a MultiPolygon.
+
+    ``Plot.polygon`` holds a single ring; 25 of the 167 plots are MultiPolygons.
+    Their smaller parts stay in the GeoJSON for the map to draw.
+    """
+    if geometry["type"] == "Polygon":
+        return geometry["coordinates"][0]
+    parts = [poly[0] for poly in geometry["coordinates"]]
+    return max(parts, key=lambda ring: abs(_ring_area_and_centroid(ring)[0]))
+
+
+def _plot_from_feature(plot_id: str, feature: dict, profile: str | None) -> Plot:
+    props = feature["properties"]
+    ring = _main_outer_ring(feature["geometry"])
+    _, lon, lat = _ring_area_and_centroid([list(p[:2]) for p in ring])
+    name = f"{profile} · Field {plot_id}" if profile else f"Field {plot_id}"
+    return Plot(
+        id=plot_id,
+        name=name,
+        lat=lat,
+        lon=lon,
+        area_hectares=acres_to_ha(props["acres"]),
+        current_crop=pattern_label(props["patron"]),
+        polygon=tuple((float(p[1]), float(p[0])) for p in ring),
+    )
 
 
 @st.cache_data(ttl="1h")
 def load_plots() -> list[Plot]:
-    """All farm plots in the study area."""
-    return list(_PLOTS)
+    """All 167 Butler County plots: the five showcase plots first, then by id."""
+    parcels = load_parcels()
+    profiles = load_demo_profiles()
+    showcase = [pid for pid in profiles if pid in parcels]
+    rest = sorted((pid for pid in parcels if pid not in profiles), key=int)
+    return [_plot_from_feature(pid, parcels[pid], profiles.get(pid)) for pid in showcase + rest]
 
 
 @st.cache_data(ttl="1h")
@@ -92,118 +104,43 @@ def load_rotation_scenarios() -> list[RotationScenario]:
 def load_satellite_snapshot(plot_id: str) -> SatelliteSnapshot:
     """Latest satellite-derived indicators for one plot.
 
-    TODO(model team): replace with real NASA POWER / SMAP / MODIS values.
+    The model delivery has no plot-level snapshot: every value is NaN (shown as
+    "Not available") and the date is empty. NASA POWER weather is county-level
+    and lives in the scenario climate blocks instead.
     """
-    rng = np.random.default_rng(stable_seed(f"snapshot:{plot_id}"))
     return SatelliteSnapshot(
         plot_id=plot_id,
-        date=date.today().isoformat(),
-        precipitation_mm=float(rng.uniform(40, 160)),
-        soil_moisture_pct=float(rng.uniform(8, 35)),
-        temperature_c=float(rng.uniform(24, 38)),
-        ndvi=float(rng.uniform(0.2, 0.75)),
-        water_availability_idx=float(rng.uniform(0.1, 0.9)),
+        date="",
+        precipitation_mm=_NAN,
+        soil_moisture_pct=_NAN,
+        temperature_c=_NAN,
+        ndvi=_NAN,
+        water_availability_idx=_NAN,
     )
 
 
 @st.cache_data(ttl="15m")
 def load_plot_history(plot_id: str, months: int = 12) -> pd.DataFrame:
-    """Monthly satellite history for one plot (last ``months`` months).
+    """Monthly satellite history for one plot. Not in the delivery: empty frame.
 
     Columns: date, precipitation_mm, soil_moisture_pct, temperature_c, ndvi.
-
-    TODO(model team): replace with real time series from NASA sources.
     """
-    base = load_satellite_snapshot(plot_id)
-    rng = np.random.default_rng(stable_seed(f"history:{plot_id}"))
-
-    end = date.today()
-    year, month = end.year, end.month
-    dates: list[str] = []
-    for i in range(months - 1, -1, -1):
-        m = month - i
-        y = year
-        while m <= 0:
-            m += 12
-            y -= 1
-        dates.append(date(y, m, 1).isoformat())
-
-    return pd.DataFrame(
-        {
-            "date": dates,
-            "precipitation_mm": np.round(np.clip(base.precipitation_mm / months + rng.normal(0, 8, months), 0, None), 1),
-            "soil_moisture_pct": np.round(np.clip(base.soil_moisture_pct + rng.normal(0, 3, months), 2, None), 1),
-            "temperature_c": np.round(np.clip(base.temperature_c + rng.normal(0, 2.5, months), 0, None), 1),
-            "ndvi": np.round(np.clip(base.ndvi + rng.normal(0, 0.05, months), 0, 1), 3),
-        }
-    )
+    return pd.DataFrame(columns=["date", "precipitation_mm", "soil_moisture_pct", "temperature_c", "ndvi"])
 
 
 @st.cache_data(ttl="15m")
 def load_seasonal_windows(plot_id: str) -> list[SeasonalWindow]:
-    """Deterministic bare-soil and climate-hazard windows across the year.
-
-    TODO(model team): replace with real hazard modeling (POWER, GPM, SMAP).
-    """
-    rng = np.random.default_rng(stable_seed(f"windows:{plot_id}"))
-
-    def _month(n: int) -> str:
-        return f"{((n - 1) % 12) + 1:02d}"
-
-    bare_start = 3 + int(rng.integers(0, 2))  # Mar/Apr post-harvest fallow
-    bare_len = 2 + int(rng.integers(0, 2))  # 2-3 months uncovered
-    heat_severity = ["Moderate", "High"][int(rng.integers(0, 2))]
-    frost_severity = "Low" if rng.random() < 0.7 else "Moderate"
-
-    return [
-        SeasonalWindow(
-            start_month=_month(bare_start),
-            end_month=_month(bare_start + bare_len - 1),
-            window_type="Bare Soil (Erosion Risk)",
-            severity=["Low", "Moderate", "High"][int(rng.integers(0, 3))],
-            plain_explanation=(
-                "After harvest, the soil is left uncovered; heavy rain can wash away "
-                "the fertile topsoil. Planting a cover crop helps close this window."
-            ),
-        ),
-        SeasonalWindow(
-            start_month="06",
-            end_month="08",
-            window_type="Peak Heat Stress",
-            severity=heat_severity,
-            plain_explanation=(
-                "Peak heat coincides with the crop's most sensitive growth stage; dry soils "
-                "intensify stress and reduce yields."
-            ),
-        ),
-        SeasonalWindow(
-            start_month="12",
-            end_month="01",
-            window_type="Frost Risk",
-            severity=frost_severity,
-            plain_explanation=(
-                "Light frost during the cool season can affect late planting and regrowth. "
-                "Risk in this area is low, but not zero."
-            ),
-        ),
-    ]
+    """Bare-soil and climate-hazard windows. Not in the delivery: empty list."""
+    return []
 
 
 @st.cache_data(ttl="15m")
 def load_historical_map_snapshot(plot_id: str, year: int) -> dict[str, float]:
-    """Annual satellite indicators for one plot (multi-year scrubbing, 2021-2026).
+    """Annual indicators for the map's year scrubber. Not in the delivery: NaN.
 
     Keys: overall_risk, soil_moisture_pct, temperature_c, ndvi, water_trend_idx, erosion_risk.
-
-    TODO(model team): replace with real yearly composites (SMAP, MODIS, GRACE-FO, SRTM).
+    The map is rebuilt on real soil layers in a later stage.
     """
-    rng = np.random.default_rng(stable_seed(f"histmap:{plot_id}:{year}"))
-    drift = year - 2021  # slow multi-year trend so scrubbing shows visible change
-    return {
-        "overall_risk": round(float(np.clip(0.35 + 0.04 * drift + rng.uniform(-0.1, 0.1), 0.05, 0.95)), 2),
-        "soil_moisture_pct": round(float(np.clip(22 - 0.8 * drift + rng.uniform(-3, 3), 6, 40)), 1),
-        "temperature_c": round(float(np.clip(30 + 0.15 * drift + rng.uniform(-1.5, 1.5), 20, 42)), 1),
-        "ndvi": round(float(np.clip(0.5 - 0.02 * drift + rng.uniform(-0.08, 0.08), 0.1, 0.9)), 2),
-        "water_trend_idx": round(float(np.clip(0.6 - 0.05 * drift + rng.uniform(-0.08, 0.08), 0.05, 0.95)), 2),
-        "erosion_risk": round(float(np.clip(0.3 + 0.03 * drift + rng.uniform(-0.1, 0.1), 0.05, 0.95)), 2),
-    }
+    return {key: _NAN for key in (
+        "overall_risk", "soil_moisture_pct", "temperature_c", "ndvi", "water_trend_idx", "erosion_risk",
+    )}
