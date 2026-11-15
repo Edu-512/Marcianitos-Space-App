@@ -7,5 +7,5 @@ Verifica y resume el CSV diario de NASA POWER (MERRA-2) en el punto 42.73 N, 92.
 | `verificacion_csv_power.py` | 28 comprobaciones de calidad (fechas, faltantes, física, años secos y húmedos conocidos). Salida en `salida/` |
 | `analisis_clima_para_modelo.py` | Variables derivadas (ET0, VPD, balance hídrico, grados-día, heladas), normales y extremos. Salida en `salida_clima/` |
 
-Datos: `datos/POWER_Point_Daily_20000101_20251231_042d73N_092d79W_LST.csv` (ver `datos/PENDIENTE.md`).
-El mismo CSV lo usa `modelo/calibracion/r4_clima.py` para armar los escenarios.
+Datos: estos dos scripts usan `datos/POWER_..._LST.csv` (5 variables, pendiente: ver `datos/PENDIENTE.md`).
+El modelo usa otro archivo de la misma carpeta, `datos/POWER_..._LST_1.csv` (4 variables, incluido).

@@ -1,10 +1,10 @@
-# Falta: CSV diario de NASA POWER
+# Falta: CSV de NASA POWER con 5 variables
 
-Nombre esperado: `POWER_Point_Daily_20000101_20251231_042d73N_092d79W_LST.csv`
+Aquí ya está `POWER_Point_Daily_20000101_20251231_042d73N_092d79W_LST_1.csv` (T2M, T2M_MAX, PRECTOTCORR, GWETROOT),
+que es el que usa el modelo (`modelo/calibracion/r4_clima.py`).
 
-Se baja en https://power.larc.nasa.gov/data-access-viewer/ con:
-- Punto: latitud 42.73, longitud -92.79 (Butler County)
-- Diario, 2000-01-01 a 2025-12-31, comunidad Agroclimatology, formato CSV
-- Parámetros: T2M_MAX, T2M_MIN, T2MDEW, GWETROOT, PRECTOTCORR (y T2M si lo usaron)
+Los dos scripts de esta carpeta usan otro archivo con más variables:
+`POWER_Point_Daily_20000101_20251231_042d73N_092d79W_LST.csv`, con T2M_MAX, **T2M_MIN**, **T2MDEW**, GWETROOT y PRECTOTCORR.
 
-Pedirlo a quien hizo el análisis de clima y confirmar los parámetros exactos.
+Se baja en https://power.larc.nasa.gov/data-access-viewer/ con el mismo punto (42.73, -92.79), diario, 2000-2025,
+comunidad Agroclimatology, CSV, marcando esas cinco variables. Pedirlo a quien hizo el análisis de clima o bajarlo.
