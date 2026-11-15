@@ -54,12 +54,12 @@ def _make_polygon(lat: float, lon: float, area_hectares: float) -> tuple[tuple[f
 
 
 _PLOT_BASES = (
-    ("lote-norte", "Lote Norte", 23.48, -102.62, 12, "Maíz"),
-    ("lote-sur", "Lote Sur", 23.31, -102.47, 8, "Sorgo"),
-    ("lote-este", "Lote Este", 23.42, -102.35, 15, "Trigo"),
-    ("lote-oeste", "Lote Oeste", 23.36, -102.71, 10, "Frijol"),
-    ("lote-alto", "Lote Alto", 23.55, -102.49, 6, "Alfalfa"),
-    ("lote-bajo", "Lote Bajo", 23.28, -102.58, 9, "Maíz"),
+    ("lote-norte", "North Field", 23.48, -102.62, 12, "Maize"),
+    ("lote-sur", "South Field", 23.31, -102.47, 8, "Sorghum"),
+    ("lote-este", "East Field", 23.42, -102.35, 15, "Wheat"),
+    ("lote-oeste", "West Field", 23.36, -102.71, 10, "Beans"),
+    ("lote-alto", "Upper Field", 23.55, -102.49, 6, "Alfalfa"),
+    ("lote-bajo", "Lower Field", 23.28, -102.58, 9, "Maize"),
 )
 
 _PLOTS = tuple(
@@ -68,11 +68,11 @@ _PLOTS = tuple(
 )
 
 _ROTATION_SCENARIOS = (
-    RotationScenario(id="maiz-continuo", name="Maíz continuo (sin rotación)", crops=("Maíz", "Maíz", "Maíz")),
-    RotationScenario(id="maiz-frijol-sorgo", name="Maíz → Frijol → Sorgo", crops=("Maíz", "Frijol", "Sorgo")),
-    RotationScenario(id="sorgo-trigo-cobertura", name="Sorgo → Trigo → Cobertura", crops=("Sorgo", "Trigo", "Cultivo de cobertura")),
-    RotationScenario(id="trigo-maiz-alfalfa", name="Trigo → Maíz → Alfalfa", crops=("Trigo", "Maíz", "Alfalfa")),
-    RotationScenario(id="sorgo-frijol-cobertura", name="Sorgo → Frijol → Cobertura", crops=("Sorgo", "Frijol", "Cultivo de cobertura")),
+    RotationScenario(id="maiz-continuo", name="Continuous Maize (No Rotation)", crops=("Maize", "Maize", "Maize")),
+    RotationScenario(id="maiz-frijol-sorgo", name="Maize → Beans → Sorghum", crops=("Maize", "Beans", "Sorghum")),
+    RotationScenario(id="sorgo-trigo-cobertura", name="Sorghum → Wheat → Cover Crop", crops=("Sorghum", "Wheat", "Cover Crop")),
+    RotationScenario(id="trigo-maiz-alfalfa", name="Wheat → Maize → Alfalfa", crops=("Wheat", "Maize", "Alfalfa")),
+    RotationScenario(id="sorgo-frijol-cobertura", name="Sorghum → Beans → Cover Crop", crops=("Sorghum", "Beans", "Cover Crop")),
 )
 
 
@@ -162,8 +162,8 @@ def load_seasonal_windows(plot_id: str) -> list[SeasonalWindow]:
             window_type="Bare Soil (Erosion Risk)",
             severity=["Low", "Moderate", "High"][int(rng.integers(0, 3))],
             plain_explanation=(
-                "Tras la cosecha el suelo queda sin cobertura; cada lluvia fuerte arranca "
-                "la capa fértil. Sembrar un cultivo de cobertura cierra esta ventana."
+                "After harvest, the soil is left uncovered; heavy rain can wash away "
+                "the fertile topsoil. Planting a cover crop helps close this window."
             ),
         ),
         SeasonalWindow(
@@ -172,8 +172,8 @@ def load_seasonal_windows(plot_id: str) -> list[SeasonalWindow]:
             window_type="Peak Heat Stress",
             severity=heat_severity,
             plain_explanation=(
-                "El calor pico coincide con la etapa más sensible del cultivo; los suelos "
-                "secos multiplican el estrés y reducen el rinde."
+                "Peak heat coincides with the crop's most sensitive growth stage; dry soils "
+                "intensify stress and reduce yields."
             ),
         ),
         SeasonalWindow(
@@ -182,8 +182,8 @@ def load_seasonal_windows(plot_id: str) -> list[SeasonalWindow]:
             window_type="Frost Risk",
             severity=frost_severity,
             plain_explanation=(
-                "Heladas ligeras en la temporada fría; afectan siembras tardías y rebrotes. "
-                "En esta zona el riesgo es bajo pero no nulo."
+                "Light frost during the cool season can affect late planting and regrowth. "
+                "Risk in this area is low, but not zero."
             ),
         ),
     ]

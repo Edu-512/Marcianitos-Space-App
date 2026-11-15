@@ -48,19 +48,25 @@ _MAX_HISTORY_MESSAGES = 20    # only recent turns are sent to the model (context
 
 # TODO(data team): replace with a real market price source (SADER / PRODEPA / USDA).
 _MOCK_CROP_PRICES_USD_PER_TONNE: dict[str, float] = {
-    "Maíz": 145.0,
-    "Frijol": 980.0,
-    "Sorgo": 160.0,
-    "Trigo": 210.0,
+    "Maize": 145.0,
+    "Beans": 980.0,
+    "Sorghum": 160.0,
+    "Wheat": 210.0,
     "Alfalfa": 320.0,
 }
 
 _CROP_ALIASES: dict[str, str] = {
-    "maiz": "Maíz",
-    "maíz": "Maíz",
-    "frijol": "Frijol",
-    "sorgo": "Sorgo",
-    "trigo": "Trigo",
+    "corn": "Maize",
+    "maize": "Maize",
+    "maiz": "Maize",
+    "maíz": "Maize",
+    "bean": "Beans",
+    "beans": "Beans",
+    "frijol": "Beans",
+    "sorghum": "Sorghum",
+    "sorgo": "Sorghum",
+    "wheat": "Wheat",
+    "trigo": "Wheat",
     "alfalfa": "Alfalfa",
 }
 
@@ -108,34 +114,34 @@ def tool_get_plot_status(plot_id: str) -> dict:
     """Current state of a plot: satellite indicators + aggregated risks."""
     plots = {p.id: p for p in load_plots()}
     if plot_id not in plots:
-        return {"error": f"Parcela desconocida: {plot_id}. IDs válidos: {sorted(plots)}"}
+        return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
     plot = plots[plot_id]
     snap = load_satellite_snapshot(plot_id)
     risk = compute_plot_risk(plot_id)
     return {
-        "parcela": {
+        "plot": {
             "id": plot.id,
-            "nombre": plot.name,
+            "name": plot.name,
             "area_ha": plot.area_hectares,
-            "cultivo_actual": plot.current_crop,
+            "current_crop": plot.current_crop,
         },
-        "fecha_dato_satelital": snap.date,
+        "satellite_data_date": snap.date,
         "ndvi": round(snap.ndvi, 3),
-        "humedad_suelo_pct": round(snap.soil_moisture_pct, 1),
-        "temperatura_c": round(snap.temperature_c, 1),
-        "precipitacion_mm": round(snap.precipitation_mm, 1),
-        "indice_disponibilidad_agua": round(snap.water_availability_idx, 2),
-        "riesgo_sequia_0_1": round(risk.drought_risk, 2),
-        "riesgo_calor_0_1": round(risk.heat_stress_risk, 2),
-        "riesgo_nutrientes_0_1": round(risk.nutrient_depletion_risk, 2),
-        "riesgo_general_0_1": round(risk.overall_risk, 2),
+        "soil_moisture_pct": round(snap.soil_moisture_pct, 1),
+        "temperature_c": round(snap.temperature_c, 1),
+        "precipitation_mm": round(snap.precipitation_mm, 1),
+        "water_availability_index": round(snap.water_availability_idx, 2),
+        "drought_risk_0_1": round(risk.drought_risk, 2),
+        "heat_risk_0_1": round(risk.heat_stress_risk, 2),
+        "nutrient_risk_0_1": round(risk.nutrient_depletion_risk, 2),
+        "overall_risk_0_1": round(risk.overall_risk, 2),
     }
 
 
 def tool_list_rotation_scenarios() -> list[dict]:
     """All rotation scenarios available for evaluation."""
     return [
-        {"id": s.id, "nombre": s.name, "cultivos": list(s.crops)}
+        {"id": s.id, "name": s.name, "crops": list(s.crops)}
         for s in load_rotation_scenarios()
     ]
 
@@ -149,14 +155,14 @@ def tool_predict_scenario_outcome(
     """Expected outcome of a rotation on a plot, including farmer priority fit score."""
     plots = {p.id for p in load_plots()}
     if plot_id not in plots:
-        return {"error": f"Parcela desconocida: {plot_id}. IDs válidos: {sorted(plots)}"}
+        return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
 
     valid_scenarios = {s.id for s in load_rotation_scenarios()}
     if scenario_id not in valid_scenarios:
         return {
             "error": (
-                f"Escenario desconocido: '{scenario_id}'. "
-                f"IDs válidos: {sorted(valid_scenarios)}"
+                f"Unknown scenario: '{scenario_id}'. "
+                f"Valid scenario IDs: {sorted(valid_scenarios)}"
             )
         }
 
@@ -168,21 +174,21 @@ def tool_predict_scenario_outcome(
     priority_fit = score_scenario_priority_fit(outcome, priorities)
 
     return {
-        "escenario": scenario_id,
-        "parcela": plot_id,
-        "ajuste_a_prioridades_0_100": priority_fit,
-        "cambio_lluvia_pct": clamped_rain,
-        "anomalia_calor_c": clamped_temp,
-        "rendimiento_esperado_t_ha": round(outcome.expected_yield_t_per_ha, 2),
-        "ci90_rendimiento": [round(outcome.yield_ci_low, 2), round(outcome.yield_ci_high, 2)],
-        "agua_irrigacion_mm": round(outcome.water_use_mm, 1),
-        "perdida_nutrientes_pct": round(outcome.nutrient_loss_pct, 1),
-        "costo_usd_ha": round(outcome.cost_usd_per_ha, 0),
-        "riesgo_erosion_0_1": round(outcome.erosion_risk_score, 2),
-        "delta_materia_organica_pct": round(outcome.organic_matter_delta_pct, 1),
-        "mecanismo_agronomico": outcome.agronomic_mechanism,
-        "evidencia_satelital": outcome.evidence_summary,
-        "brechas_informacion": outcome.information_gaps,
+        "scenario": scenario_id,
+        "plot": plot_id,
+        "priority_fit_score_0_100": priority_fit,
+        "rainfall_shift_pct": clamped_rain,
+        "temperature_anomaly_c": clamped_temp,
+        "expected_yield_t_ha": round(outcome.expected_yield_t_per_ha, 2),
+        "yield_ci90": [round(outcome.yield_ci_low, 2), round(outcome.yield_ci_high, 2)],
+        "irrigation_water_mm": round(outcome.water_use_mm, 1),
+        "nutrient_loss_pct": round(outcome.nutrient_loss_pct, 1),
+        "cost_usd_ha": round(outcome.cost_usd_per_ha, 0),
+        "erosion_risk_0_1": round(outcome.erosion_risk_score, 2),
+        "organic_matter_delta_pct": round(outcome.organic_matter_delta_pct, 1),
+        "agronomic_mechanism": outcome.agronomic_mechanism,
+        "satellite_evidence": outcome.evidence_summary,
+        "information_gaps": outcome.information_gaps,
     }
 
 
@@ -190,21 +196,21 @@ def tool_get_action_recommendations(plot_id: str) -> list[dict] | dict:
     """Decision-support recommendations aligned with the farmer's active priorities."""
     plots = {p.id for p in load_plots()}
     if plot_id not in plots:
-        return {"error": f"Parcela desconocida: {plot_id}. IDs válidos: {sorted(plots)}"}
+        return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
 
     priorities = _get_active_priorities()
     recs = generate_recommendations(plot_id, priorities)
     return [
         {
-            "accion": r.title,
-            "categoria": r.category,
-            "motivo": r.rationale,
-            "impacto_esperado_pct": r.expected_impact_pct,
-            "ci90_impacto_pct": [r.impact_ci_low, r.impact_ci_high],
-            "cambio_agua_mm": r.water_delta_mm,
-            "costo_usd_ha": r.cost_usd_per_ha,
-            "evidencia_satelital": r.evidence_summary,
-            "verificacion_local": r.local_review_notes,
+            "action": r.title,
+            "category": r.category,
+            "rationale": r.rationale,
+            "expected_impact_pct": r.expected_impact_pct,
+            "impact_ci90_pct": [r.impact_ci_low, r.impact_ci_high],
+            "water_change_mm": r.water_delta_mm,
+            "cost_usd_ha": r.cost_usd_per_ha,
+            "satellite_evidence": r.evidence_summary,
+            "local_verification": r.local_review_notes,
         }
         for r in recs
     ]
@@ -216,14 +222,14 @@ def tool_get_crop_price(crop: str) -> dict:
     if canonical not in _MOCK_CROP_PRICES_USD_PER_TONNE:
         return {
             "error": (
-                f"Sin precio para '{crop}'. Cultivos disponibles: "
+                f"No price is available for '{crop}'. Available crops: "
                 f"{sorted(_MOCK_CROP_PRICES_USD_PER_TONNE)}"
             )
         }
     return {
-        "cultivo": canonical,
-        "precio_usd_por_tonelada": _MOCK_CROP_PRICES_USD_PER_TONNE[canonical],
-        "fuente": "tabla simulada (demo)",
+        "crop": canonical,
+        "price_usd_per_tonne": _MOCK_CROP_PRICES_USD_PER_TONNE[canonical],
+        "source": "simulated demo table",
     }
 
 
@@ -236,11 +242,11 @@ _TOOL_FUNCTIONS: dict[str, Callable[..., Any]] = {
 }
 
 _TOOL_LABELS: dict[str, str] = {
-    "get_plot_status": "Consultando estado del lote",
-    "list_rotation_scenarios": "Listando rotaciones disponibles",
-    "predict_scenario_outcome": "Simulando escenario de rotación",
-    "get_action_recommendations": "Consultando plan de acción y recomendaciones",
-    "get_crop_price": "Consultando precio de mercado",
+    "get_plot_status": "Checking plot conditions",
+    "list_rotation_scenarios": "Listing available crop rotations",
+    "predict_scenario_outcome": "Simulating a crop rotation",
+    "get_action_recommendations": "Checking the action plan and recommendations",
+    "get_crop_price": "Checking market prices",
 }
 
 #: JSON schemas for the Gemini function declarations (OpenAPI subset).
@@ -250,9 +256,9 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
     {
         "name": "get_plot_status",
         "description": (
-            "Estado actual de una parcela: indicadores satelitales (NDVI, humedad del suelo, "
-            "temperatura, precipitación) y riesgos agregados de 0 a 1 (sequía, calor, nutrientes). "
-            "Úsalo para preguntas como '¿cómo se encuentra mi parcela?' o '¿mi cultivo está bien?'"
+            "Current plot conditions: satellite indicators (NDVI, soil moisture, temperature, precipitation) "
+            "and aggregate 0–1 risks (drought, heat, nutrients). Use for questions such as "
+            "'How is my plot doing?' or 'Is my crop healthy?'"
         ),
         "parameters_json_schema": {
             "type": "object",
@@ -260,8 +266,8 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
                 "plot_id": {
                     "type": "string",
                     "description": (
-                        "ID de la parcela, por ejemplo 'lote-norte'. Si el usuario no especifica, "
-                        "usa la parcela seleccionada indicada en las instrucciones."
+                        "Plot ID, such as 'lote-norte'. If the user does not specify one, "
+                        "use the selected plot from the instructions."
                     ),
                 },
             },
@@ -271,37 +277,37 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
     {
         "name": "list_rotation_scenarios",
         "description": (
-            "Lista todas las rotaciones de cultivos disponibles para evaluar, con su ID y la "
-            "secuencia de cultivos por temporada."
+            "List all crop rotation scenarios available for evaluation, with their IDs and "
+            "crop sequences by season."
         ),
     },
     {
         "name": "predict_scenario_outcome",
         "description": (
-            "Resultado esperado de una rotación en una parcela: puntaje de ajuste a las prioridades "
-            "del agricultor (0 a 100), rendimiento con intervalo de confianza 90%, agua, nutrientes, "
-            "costo y mecanismo agronómico. Soporta escenarios What-If: rainfall_shift_pct es el cambio "
-            "porcentual de lluvia estacional (-30 a +20; positivo = más lluvia, ej. +20 para lluvias "
-            "intensas prolongadas) y temp_anomaly_c la anomalía de temperatura en °C (0 a 3.5)."
+            "Expected outcome of a crop rotation on a plot: farmer-priority fit score (0–100), "
+            "yield with a 90% confidence interval, water, nutrients, cost, and agronomic mechanism. "
+            "Supports what-if scenarios: rainfall_shift_pct is the seasonal rainfall change "
+            "(-30 to +20; positive means more rain, e.g. +20 for prolonged heavy rainfall), and "
+            "temp_anomaly_c is the temperature anomaly in °C (0 to 3.5)."
         ),
         "parameters_json_schema": {
             "type": "object",
             "properties": {
                 "plot_id": {
                     "type": "string",
-                    "description": "ID de la parcela, por ejemplo 'lote-norte'.",
+                    "description": "Plot ID, such as 'lote-norte'.",
                 },
                 "scenario_id": {
                     "type": "string",
-                    "description": "ID del escenario de rotación (obtén los IDs con list_rotation_scenarios).",
+                    "description": "Rotation scenario ID (retrieve IDs with list_rotation_scenarios).",
                 },
                 "rainfall_shift_pct": {
                     "type": "number",
-                    "description": "Cambio porcentual de lluvia estacional, -30 a +20. 0 = sin cambio.",
+                    "description": "Seasonal rainfall change in percent, -30 to +20. 0 = no change.",
                 },
                 "temp_anomaly_c": {
                     "type": "number",
-                    "description": "Anomalía de temperatura en °C, 0 a 3.5. 0 = sin cambio.",
+                    "description": "Temperature anomaly in °C, 0 to 3.5. 0 = no change.",
                 },
             },
             "required": ["plot_id", "scenario_id"],
@@ -310,16 +316,16 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
     {
         "name": "get_action_recommendations",
         "description": (
-            "Obtiene las recomendaciones agronómicas y de fertilizantes para una parcela, "
-            "filtradas según las prioridades y presupuesto hídrico del agricultor. "
-            "Úsalo cuando pregunten qué acciones tomar, qué fertilizante aplicar o cómo reducir riesgos."
+            "Get agronomic and fertilizer recommendations for a plot, filtered by the farmer's "
+            "priorities and water budget. Use when asked what actions to take, which fertilizer "
+            "to apply, or how to reduce risks."
         ),
         "parameters_json_schema": {
             "type": "object",
             "properties": {
                 "plot_id": {
                     "type": "string",
-                    "description": "ID de la parcela, por ejemplo 'lote-norte'.",
+                    "description": "Plot ID, such as 'lote-norte'.",
                 },
             },
             "required": ["plot_id"],
@@ -328,15 +334,15 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
     {
         "name": "get_crop_price",
         "description": (
-            "Precio de mercado actual de un cultivo en USD por tonelada (tabla simulada para la demo). "
-            "Úsalo para preguntas como '¿a qué precio está el maíz?'"
+            "Current crop market price in USD per tonne (simulated demo table). "
+            "Use for questions such as 'What is the price of maize?'"
         ),
         "parameters_json_schema": {
             "type": "object",
             "properties": {
                 "crop": {
                     "type": "string",
-                    "description": "Nombre del cultivo, por ejemplo 'Maíz', 'Frijol', 'Sorgo', 'Trigo' o 'Alfalfa'.",
+                    "description": "Crop name, such as 'Maize', 'Beans', 'Sorghum', 'Wheat', or 'Alfalfa'.",
                 },
             },
             "required": ["crop"],
@@ -362,55 +368,62 @@ def _build_tool() -> Any:
 
 def _format_priorities_summary(priorities: FarmerPriorities) -> str:
     budget_text = (
-        f"{priorities.max_water_budget_mm:.0f} mm/temporada"
+        f"{priorities.max_water_budget_mm:.0f} mm/season"
         if priorities.max_water_budget_mm is not None
-        else "sin límite"
+        else "no limit"
     )
     return (
-        f"ahorro de agua={priorities.water_conservation_weight:.2f}, "
-        f"salud de suelo={priorities.soil_health_weight:.2f}, "
-        f"rentabilidad={priorities.profit_market_weight:.2f}, "
-        f"valor forrajero={'sí' if priorities.forage_priority else 'no'}, "
-        f"siembra directa (no-till)={'sí' if priorities.has_no_till_equipment else 'no'}, "
-        f"tope de riego={budget_text}"
+        f"water conservation={priorities.water_conservation_weight:.2f}, "
+        f"soil health={priorities.soil_health_weight:.2f}, "
+        f"profitability={priorities.profit_market_weight:.2f}, "
+        f"forage value={'yes' if priorities.forage_priority else 'no'}, "
+        f"no-till equipment={'yes' if priorities.has_no_till_equipment else 'no'}, "
+        f"irrigation cap={budget_text}"
     )
 
 
 def _system_prompt(plot_id: str) -> str:
     plot = next((p for p in load_plots() if p.id == plot_id), None)
     context = (
-        f"{plot.name} ({plot_id}), {plot.area_hectares:.0f} ha, cultivo actual: {plot.current_crop}"
+        f"{plot.name} ({plot_id}), {plot.area_hectares:.0f} ha, current crop: {plot.current_crop}"
         if plot
-        else f"ID desconocido: {plot_id}"
+        else f"Unknown ID: {plot_id}"
     )
     priorities_text = _format_priorities_summary(_get_active_priorities())
 
-    return f"""Eres "Don Surco", el asistente agronómico de la app Field Shift (NASA Space Apps 2026).
-El usuario es un granjero y tiene seleccionada la parcela: {context}.
-Prioridades actuales del agricultor: {priorities_text}.
+    return f"""You are "Don Surco", the agronomy assistant in the Field Shift app (NASA Space Apps 2026).
+The user is a farmer and has selected this plot: {context}.
+The farmer's current priorities are: {priorities_text}.
 
-Reglas estrictas:
-1. Responde siempre en español, con lenguaje claro y sencillo; explica cualquier término técnico.
-2. NUNCA inventes cifras, precios o mediciones: todo número debe salir de tus herramientas. Si una herramienta no devuelve el dato que necesitas, dilo con honestidad.
-3. Cita brevemente la evidencia satelital relevante (NDVI, humedad del suelo, etc.) cuando respalde una afirmación.
-4. Cuando los resultados incluyan incertidumbre (intervalos de confianza), menciónala en lenguaje llano.
-5. Cuando te pidan recomendar rotaciones según sus prioridades, lista los escenarios con list_rotation_scenarios, evalúa los más relevantes con predict_scenario_outcome y compara su campo "ajuste_a_prioridades_0_100".
-6. Cuando te pregunten qué acciones tomar o qué fertilizante usar, consulta get_action_recommendations y recuerda mencionar la verificación en campo.
-7. Para preguntas hipotéticas ("¿y si lloviera más?", "¿si hace más calor?"), usa predict_scenario_outcome (máximo +20% de lluvia o +3.5 °C) y explica el mecanismo agronómico que devuelve la herramienta.
-8. Los precios provienen de una tabla simulada para la demo; indícalo brevemente cuando cites un precio.
-9. Si la pregunta está fuera del alcance de tus herramientas, dilo y sugiere qué dato faltaría.
-10. Sé conciso: entre 3 y 10 líneas por respuesta; usa viñetas cuando ayuden a leer."""
+Strict rules:
+1. Always respond in English, using clear, plain language; explain technical terms.
+2. NEVER invent figures, prices, or measurements: every number must come from your tools. If a tool does not return the information you need, say so honestly.
+3. Briefly cite relevant satellite evidence (NDVI, soil moisture, etc.) when it supports a claim.
+4. Explain uncertainty, including confidence intervals, in plain language.
+5. When asked to recommend rotations based on the farmer's priorities, list scenarios with list_rotation_scenarios, evaluate the most relevant ones with predict_scenario_outcome, and compare their "priority_fit_score_0_100".
+6. When asked what actions to take or which fertilizer to use, call get_action_recommendations and remind the user to verify conditions in the field.
+7. For hypothetical questions (for example, more rain or higher temperatures), use predict_scenario_outcome (maximum +20% rainfall or +3.5 °C) and explain the agronomic mechanism returned by the tool.
+8. Prices come from a simulated demo table; briefly note this when citing a price.
+9. If a question is outside the scope of your tools, say so and suggest what information is missing.
+10. Be concise: answer in 3 to 10 lines and use bullets when they improve readability."""
 
 
 def _build_generate_config(plot_id: str, model_name: str) -> Any:
-    """Build GenerateContentConfig tuned for fast tool-calling orchestration."""
+    """Build GenerateContentConfig tuned for Gemini 3.x / 2.5 tool-calling orchestration."""
     config_kwargs: dict[str, Any] = {
         "system_instruction": _system_prompt(plot_id),
-        "temperature": 0.3,
         "tools": [_build_tool()],
     }
-    if "2.5" in model_name and hasattr(types, "ThinkingConfig"):
+    # Gemini 3.x models use thinking_level (LOW avoids premature tool-chain stops while keeping latency low).
+    if ("3." in model_name or "gemini-3" in model_name) and hasattr(types, "ThinkingConfig") and hasattr(types, "ThinkingLevel"):
+        config_kwargs["thinking_config"] = types.ThinkingConfig(
+            thinking_level=types.ThinkingLevel.LOW
+        )
+    elif "2.5" in model_name and hasattr(types, "ThinkingConfig"):
         config_kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
+        config_kwargs["temperature"] = 0.3
+    else:
+        config_kwargs["temperature"] = 0.3
     return types.GenerateContentConfig(**config_kwargs)
 
 
@@ -425,7 +438,7 @@ def run_chat_turn(history: list[dict], plot_id: str) -> Iterator[ChatEvent]:
     if not AI_READY:
         yield ChatEvent(
             "error",
-            payload="El paquete `google-genai` no está instalado. Ejecuta `pip install google-genai` y reinicia la app.",
+            payload="The `google-genai` package is not installed. Run `pip install google-genai` and restart the app.",
         )
         return
 
@@ -434,8 +447,8 @@ def run_chat_turn(history: list[dict], plot_id: str) -> Iterator[ChatEvent]:
         yield ChatEvent(
             "error",
             payload=(
-                "Falta la API key de Google AI Studio. Agrégala en `.streamlit/secrets.toml` bajo "
-                "`[google] api_key` (o en la variable de entorno `GOOGLE_API_KEY`) y reinicia la app."
+                "The Google AI Studio API key is missing. Add it to `.streamlit/secrets.toml` under "
+                "`[google] api_key` (or set the `GOOGLE_API_KEY` environment variable), then restart the app."
             ),
         )
         return
@@ -468,12 +481,12 @@ def run_chat_turn(history: list[dict], plot_id: str) -> Iterator[ChatEvent]:
                 code = getattr(exc, "code", "4xx")
                 yield ChatEvent(
                     "error",
-                    payload=f"Error de API ({code} - {status}): {detail}",
+                    payload=f"API error ({code} - {status}): {detail}",
                 )
             else:
                 yield ChatEvent(
                     "error",
-                    payload=f"No pude contactar al modelo ({exc.__class__.__name__}): {exc}",
+                    payload=f"Could not contact the model ({exc.__class__.__name__}): {exc}",
                 )
             return
 
@@ -483,12 +496,12 @@ def run_chat_turn(history: list[dict], plot_id: str) -> Iterator[ChatEvent]:
         text = "".join(p.text for p in parts if p.text).strip()
 
         if not function_calls:
-            yield ChatEvent("final", payload=text or "No obtuve una respuesta del modelo. Inténtalo de nuevo.")
+            yield ChatEvent("final", payload=text or "The model returned no response. Please try again.")
             return
 
         # Execute each requested tool locally, then feed the results back to the model.
         if candidate is None or candidate.content is None:
-            yield ChatEvent("error", payload="El modelo no devolvi? contenido v?lido. Intenta de nuevo.")
+            yield ChatEvent("error", payload="The model returned no valid content. Please try again.")
             return
         contents.append(candidate.content)
         responses = []
@@ -500,7 +513,7 @@ def run_chat_turn(history: list[dict], plot_id: str) -> Iterator[ChatEvent]:
             args = dict(call.args or {})
             fn = _TOOL_FUNCTIONS.get(name)
             try:
-                result = fn(**args) if fn else {"error": f"Herramienta desconocida: {name}"}
+                result = fn(**args) if fn else {"error": f"Unknown tool: {name}"}
             except Exception as exc:  # let the model handle tool failures gracefully
                 result = {"error": str(exc)}
             yield ChatEvent("tool", label=_TOOL_LABELS.get(name, name), payload=result)
@@ -509,5 +522,5 @@ def run_chat_turn(history: list[dict], plot_id: str) -> Iterator[ChatEvent]:
 
     yield ChatEvent(
         "error",
-        payload="La consulta requirió demasiados pasos; intenta una pregunta más específica.",
+        payload="The request required too many steps. Try asking a more specific question.",
     )

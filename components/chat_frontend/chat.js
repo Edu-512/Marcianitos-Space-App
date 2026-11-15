@@ -14,15 +14,15 @@
     root._renderedMessages = null;
   }
   root.querySelectorAll('img').forEach(img => { if (img.src !== data.avatar) img.src = data.avatar; });
-  q('.chat-context').textContent = `Hablemos de ${data.plot_name}`;
+  q('.chat-context').textContent = `Let's talk about ${data.plot_name}`;
   const controls = () => {
     send.disabled = busy || !enabled || !input.value.trim() || !navigator.onLine;
     input.disabled = busy || !enabled || !navigator.onLine;
     q('.clear').disabled = busy || !data.messages?.length;
     root.querySelectorAll('[data-prompt]').forEach(button => { button.disabled = busy || !enabled || !navigator.onLine; });
-    status.textContent = !navigator.onLine ? 'Sin conexión. Vuelve a conectarte para charlar.' :
-      !enabled ? 'El asistente no está disponible por el momento. Puedes seguir explorando tu campo.' :
-      busy ? 'Don Surco está consultando tu campo…' : 'Listo para echarte una mano.';
+    status.textContent = !navigator.onLine ? 'You are offline. Reconnect to chat.' :
+      !enabled ? 'The assistant is temporarily unavailable. You can keep exploring your field.' :
+      busy ? 'Don Surco is checking your field…' : 'Ready to help.';
   };
   const setOpen = (open, emit = true) => {
     const changed = root.classList.contains('is-open') !== open;
@@ -98,7 +98,7 @@
     const fragment = document.createDocumentFragment();
     (data.messages || []).forEach((message, index) => {
       const article = textNode('article', '', `message ${message.role}${message.error ? ' error' : ''}`);
-      article.append(textNode('p', message.role === 'user' ? 'TÚ' : 'DON SURCO', 'message-label'));
+      article.append(textNode('p', message.role === 'user' ? 'YOU' : 'DON SURCO', 'message-label'));
       if (message.content) article.append(textNode('div', message.content, 'message-content'));
       (message.steps || []).forEach((step, stepIndex) => {
         const details = document.createElement('details');

@@ -1,4 +1,4 @@
-﻿const { test } = require('node:test');
+const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
@@ -14,7 +14,7 @@ function worker(fetchImpl) {
     self: { registration: { scope: 'https://field.example/' }, clients: { claim: async () => {} },
       addEventListener: (name, handler) => { events[name] = handler; } },
     caches: { open: async () => cache,
-      keys: async () => ['field-shift-pwa:/:v0', 'field-shift-pwa:/:v1', 'another-app'],
+      keys: async () => ['field-shift-pwa:/:v0', 'field-shift-pwa:/:v2', 'another-app'],
       delete: async name => removed.push(name) },
     fetch: fetchImpl,
   });

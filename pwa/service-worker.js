@@ -1,7 +1,10 @@
 /* Only the public offline screen and icons are cached. Never farm/session data. */
 const ROOT = new URL(self.registration.scope);
 const CACHE_PREFIX = `field-shift-pwa:${ROOT.pathname}:`;
-const CACHE_NAME = `${CACHE_PREFIX}v1`;
+const CACHE_NAME = `${CACHE_PREFIX}v2`;
+// Native Streamlit navigation now has four public page URLs.
+const NAVIGATION_PATHS = new Set(["", "index.html", "explorar", "mi-terreno", "comparar", "recomendaciones"]
+  .map(path => new URL(path || "./", ROOT).pathname));
 const OFFLINE_URL = new URL("pwa/offline.html", ROOT).href;
 const PUBLIC_FILES = [
   OFFLINE_URL,
@@ -31,7 +34,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || url.origin !== ROOT.origin) return;
   if (request.mode !== "navigate") return;
   // Leave Streamlit HTTP APIs, static assets and WebSockets to the network.
-  if (url.pathname !== ROOT.pathname && url.pathname !== `${ROOT.pathname}index.html`) return;
+  if (!NAVIGATION_PATHS.has(url.pathname)) return;
   event.respondWith((async () => {
     try {
       const response = await fetch(request);

@@ -111,7 +111,7 @@ class Recommendation:
 
     id: str
     title: str
-    category: str  # "Fertilizante" | "Práctica agronómica"
+    category: str  # "Fertilizer" | "Agronomic Practice"
     rationale: str  # which detected anomaly drives this recommendation
     expected_impact_pct: float  # expected yield / health improvement (%)
     impact_ci_low: float

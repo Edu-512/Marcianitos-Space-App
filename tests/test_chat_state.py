@@ -61,16 +61,24 @@ if 'selected_plot_id' not in st.session_state:
     st.session_state.farmer_priorities = FarmerPriorities()
 render_chat()
 """
+        from components.chat_widget import _COMPONENT as real_component
+        render_order = []
+        def mount_panel(*args, **kwargs):
+            render_order.append("panel")
+            return real_component(*args, **kwargs)
         def fake_turn(history, plot_id):
+            render_order.append("model")
             yield ChatEvent('tool', label='Consultando humedad', payload={'humedad':22})
             yield ChatEvent('final', payload='Respuesta simulada para ' + plot_id)
         with patch('components.chat_widget._available', return_value=True), patch(
             'components.chat_widget.ai_chat.run_chat_turn', side_effect=fake_turn
-        ) as runner:
+        ) as runner, patch('components.chat_widget._COMPONENT', side_effect=mount_panel):
             at = AppTest.from_string(script, default_timeout=15).run()
             state = at.session_state['don_surco_conversations']['lote-norte']
             self.assertTrue(state.begin('Pregunta', 'request-test', repr(at.session_state['farmer_priorities'])))
+            render_order.clear()
             at.run()
+            self.assertEqual(render_order[:2], ["panel", "model"])
             self.assertTrue(state.busy)
             self.assertEqual(len(state.messages[-1]['steps']), 1)
             at.run()
