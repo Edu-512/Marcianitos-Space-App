@@ -405,7 +405,7 @@ Strict rules:
 
 
 def _build_generate_config(plot_id: str, model_name: str) -> Any:
-    """Build GenerateContentConfig tuned for Gemini 3.x / 2.5 tool-calling orchestration."""
+    """Build GenerateContentConfig tuned for Gemini 3.5 Flash Lite tool-calling orchestration."""
     config_kwargs: dict[str, Any] = {
         "system_instruction": _system_prompt(plot_id),
         "tools": [_build_tool()],
