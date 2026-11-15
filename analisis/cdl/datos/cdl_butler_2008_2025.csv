@@ -1,0 +1,454 @@
+anio,codigo,categoria,pixeles,acres
+2008,1,Corn,725180,161276.1
+2008,5,Soybeans,465730,103575.9
+2008,12,Sweet Corn,1,0.2
+2008,24,Winter Wheat,14,3.1
+2008,28,Oats,53,11.8
+2008,36,Alfalfa,4905,1090.8
+2008,37,Other Hay/Non Alfalfa,100,22.2
+2008,44,Hemp,6,1.3
+2008,53,Peas,1,0.2
+2008,61,Fallow/Idle Cropland,5837,1298.1
+2008,111,Open Water,8790,1954.8
+2008,121,Developed/Open Space,96566,21475.8
+2008,122,Developed/Low Intensity,21140,4701.4
+2008,123,Developed/Medium Intensity,3267,726.6
+2008,124,Developed/High Intensity,430,95.6
+2008,131,Barren,370,82.3
+2008,141,Deciduous Forest,37704,8385.2
+2008,142,Evergreen Forest,18,4.0
+2008,176,Grass/Pasture,249516,55491.0
+2008,190,Woody Wetlands,49379,10981.6
+2008,195,Herbaceous Wetlands,4351,967.6
+2009,1,Corn,746146,165938.9
+2009,5,Soybeans,470386,104611.3
+2009,12,Sweet Corn,43,9.6
+2009,21,Barley,4,0.9
+2009,24,Winter Wheat,8,1.8
+2009,26,Dbl Crop WinWht/Soybeans,1,0.2
+2009,28,Oats,856,190.4
+2009,36,Alfalfa,3600,800.6
+2009,37,Other Hay/Non Alfalfa,403,89.6
+2009,61,Fallow/Idle Cropland,16,3.6
+2009,111,Open Water,9930,2208.4
+2009,121,Developed/Open Space,98424,21889.0
+2009,122,Developed/Low Intensity,20274,4508.8
+2009,123,Developed/Medium Intensity,3008,669.0
+2009,124,Developed/High Intensity,607,135.0
+2009,131,Barren,318,70.7
+2009,141,Deciduous Forest,37949,8439.7
+2009,142,Evergreen Forest,15,3.3
+2009,143,Mixed Forest,1,0.2
+2009,152,Shrubland,2,0.4
+2009,176,Grass/Pasture,232212,51642.7
+2009,190,Woody Wetlands,47144,10484.6
+2009,195,Herbaceous Wetlands,2011,447.2
+2010,1,Corn,728953,162115.2
+2010,5,Soybeans,502256,111699.0
+2010,21,Barley,4,0.9
+2010,23,Spring Wheat,1,0.2
+2010,24,Winter Wheat,6,1.3
+2010,27,Rye,193,42.9
+2010,28,Oats,2299,511.3
+2010,36,Alfalfa,7752,1724.0
+2010,37,Other Hay/Non Alfalfa,1304,290.0
+2010,44,Other Crops,12,2.7
+2010,58,Clover/Wildflowers,4,0.9
+2010,59,Sod/Grass Seed,2,0.4
+2010,60,Switchgrass,1,0.2
+2010,63,Forest,76,16.9
+2010,87,Wetlands,102,22.7
+2010,111,Open Water,9268,2061.2
+2010,121,Developed/Open Space,87723,19509.1
+2010,122,Developed/Low Intensity,15077,3353.0
+2010,123,Developed/Medium Intensity,2012,447.5
+2010,124,Developed/High Intensity,512,113.9
+2010,131,Barren,699,155.5
+2010,141,Deciduous Forest,46992,10450.8
+2010,142,Evergreen Forest,39,8.7
+2010,176,Grass/Pasture,223068,49609.1
+2010,190,Woody Wetlands,42310,9409.5
+2010,195,Herbaceous Wetlands,2689,598.0
+2010,205,Triticale,1,0.2
+2010,241,Dbl Crop Corn/Soybeans,1,0.2
+2011,1,Corn,782136,173942.9
+2011,5,Soybeans,443544,98641.8
+2011,21,Barley,2,0.4
+2011,23,Spring Wheat,1,0.2
+2011,24,Winter Wheat,30,6.7
+2011,26,Dbl Crop WinWht/Soybeans,1,0.2
+2011,27,Rye,3,0.7
+2011,28,Oats,1331,296.0
+2011,36,Alfalfa,11210,2493.0
+2011,37,Other Hay/Non Alfalfa,6872,1528.3
+2011,58,Clover/Wildflowers,7,1.6
+2011,59,Sod/Grass Seed,1,0.2
+2011,61,Fallow/Idle Cropland,5,1.1
+2011,111,Open Water,8429,1874.6
+2011,121,Developed/Open Space,104637,23270.7
+2011,122,Developed/Low Intensity,14562,3238.5
+2011,123,Developed/Medium Intensity,2312,514.2
+2011,124,Developed/High Intensity,381,84.7
+2011,131,Barren,1012,225.1
+2011,141,Deciduous Forest,39711,8831.5
+2011,142,Evergreen Forest,55,12.2
+2011,176,Grass/Pasture,204496,45478.8
+2011,190,Woody Wetlands,47807,10632.0
+2011,195,Herbaceous Wetlands,4806,1068.8
+2011,205,Triticale,5,1.1
+2012,1,Corn,759169,168835.1
+2012,5,Soybeans,421652,93773.1
+2012,21,Barley,1,0.2
+2012,24,Winter Wheat,2,0.4
+2012,28,Oats,912,202.8
+2012,36,Alfalfa,9052,2013.1
+2012,37,Other Hay/Non Alfalfa,3235,719.4
+2012,111,Open Water,8681,1930.6
+2012,121,Developed/Open Space,102217,22732.5
+2012,122,Developed/Low Intensity,17785,3955.3
+2012,123,Developed/Medium Intensity,2463,547.8
+2012,124,Developed/High Intensity,457,101.6
+2012,131,Barren,745,165.7
+2012,141,Deciduous Forest,45753,10175.2
+2012,142,Evergreen Forest,32,7.1
+2012,152,Shrubland,22,4.9
+2012,176,Grass/Pasture,252752,56210.7
+2012,190,Woody Wetlands,43567,9689.1
+2012,195,Herbaceous Wetlands,4859,1080.6
+2013,1,Corn,756793,168306.7
+2013,4,Sorghum,1,0.2
+2013,5,Soybeans,431078,95869.4
+2013,21,Barley,5,1.1
+2013,24,Winter Wheat,481,107.0
+2013,27,Rye,9,2.0
+2013,28,Oats,340,75.6
+2013,36,Alfalfa,8078,1796.5
+2013,37,Other Hay/Non Alfalfa,829,184.4
+2013,53,Peas,2,0.4
+2013,111,Open Water,8845,1967.1
+2013,121,Developed/Open Space,103970,23122.4
+2013,122,Developed/Low Intensity,16848,3746.9
+2013,123,Developed/Medium Intensity,2124,472.4
+2013,124,Developed/High Intensity,460,102.3
+2013,131,Barren,671,149.2
+2013,141,Deciduous Forest,39823,8856.4
+2013,142,Evergreen Forest,185,41.1
+2013,143,Mixed Forest,3,0.7
+2013,176,Grass/Pasture,249655,55521.9
+2013,190,Woody Wetlands,48204,10720.3
+2013,195,Herbaceous Wetlands,4946,1100.0
+2013,241,Dbl Crop Corn/Soybeans,6,1.3
+2014,1,Corn,730170,162385.9
+2014,5,Soybeans,475408,105728.2
+2014,12,Sweet Corn,9,2.0
+2014,23,Spring Wheat,2,0.4
+2014,24,Winter Wheat,4,0.9
+2014,27,Rye,63,14.0
+2014,28,Oats,1035,230.2
+2014,36,Alfalfa,11102,2469.0
+2014,37,Other Hay/Non Alfalfa,1412,314.0
+2014,44,Other Crops,9,2.0
+2014,111,Open Water,9282,2064.3
+2014,121,Developed/Open Space,95677,21278.1
+2014,122,Developed/Low Intensity,21391,4757.2
+2014,123,Developed/Medium Intensity,3740,831.8
+2014,124,Developed/High Intensity,631,140.3
+2014,131,Barren,498,110.8
+2014,141,Deciduous Forest,41249,9173.6
+2014,142,Evergreen Forest,101,22.5
+2014,152,Shrubland,16,3.6
+2014,176,Grass/Pasture,225779,50212.0
+2014,190,Woody Wetlands,47730,10614.9
+2014,195,Herbaceous Wetlands,8048,1789.8
+2015,1,Corn,719447,160001.2
+2015,4,Sorghum,136,30.2
+2015,5,Soybeans,498874,110946.9
+2015,24,Winter Wheat,18,4.0
+2015,26,Dbl Crop WinWht/Soybeans,1,0.2
+2015,27,Rye,271,60.3
+2015,28,Oats,3698,822.4
+2015,29,Millet,16,3.6
+2015,36,Alfalfa,9801,2179.7
+2015,37,Other Hay/Non Alfalfa,652,145.0
+2015,58,Clover/Wildflowers,2,0.4
+2015,59,Sod/Grass Seed,9,2.0
+2015,61,Fallow/Idle Cropland,40,8.9
+2015,111,Open Water,9498,2112.3
+2015,121,Developed/Open Space,97180,21612.3
+2015,122,Developed/Low Intensity,20020,4452.3
+2015,123,Developed/Medium Intensity,3809,847.1
+2015,124,Developed/High Intensity,675,150.1
+2015,131,Barren,582,129.4
+2015,141,Deciduous Forest,47337,10527.5
+2015,142,Evergreen Forest,144,32.0
+2015,176,Grass/Pasture,200203,44524.1
+2015,190,Woody Wetlands,50304,11187.3
+2015,195,Herbaceous Wetlands,10639,2366.1
+2016,1,Corn,787118,175050.8
+2016,5,Soybeans,440129,97882.3
+2016,12,Sweet Corn,30,6.7
+2016,28,Oats,557,123.9
+2016,36,Alfalfa,6014,1337.5
+2016,37,Other Hay/Non Alfalfa,870,193.5
+2016,58,Clover/Wildflowers,1,0.2
+2016,60,Switchgrass,1,0.2
+2016,61,Fallow/Idle Cropland,10,2.2
+2016,111,Open Water,10234,2276.0
+2016,121,Developed/Open Space,96411,21441.3
+2016,122,Developed/Low Intensity,20793,4624.3
+2016,123,Developed/Medium Intensity,3728,829.1
+2016,124,Developed/High Intensity,596,132.5
+2016,131,Barren,866,192.6
+2016,141,Deciduous Forest,42526,9457.6
+2016,142,Evergreen Forest,91,20.2
+2016,152,Shrubland,7,1.6
+2016,176,Grass/Pasture,199876,44451.4
+2016,190,Woody Wetlands,54986,12228.6
+2016,195,Herbaceous Wetlands,8512,1893.0
+2017,1,Corn,749961,166787.3
+2017,5,Soybeans,473057,105205.3
+2017,21,Barley,26,5.8
+2017,24,Winter Wheat,108,24.0
+2017,27,Rye,421,93.6
+2017,28,Oats,1492,331.8
+2017,36,Alfalfa,9415,2093.8
+2017,37,Other Hay/Non Alfalfa,1152,256.2
+2017,47,Misc Vegs & Fruits,1,0.2
+2017,61,Fallow/Idle Cropland,81,18.0
+2017,111,Open Water,9823,2184.6
+2017,121,Developed/Open Space,96265,21408.8
+2017,122,Developed/Low Intensity,20939,4656.7
+2017,123,Developed/Medium Intensity,3807,846.7
+2017,124,Developed/High Intensity,638,141.9
+2017,131,Barren,489,108.8
+2017,141,Deciduous Forest,45372,10090.5
+2017,142,Evergreen Forest,131,29.1
+2017,152,Shrubland,1,0.2
+2017,176,Grass/Pasture,197445,43910.7
+2017,190,Woody Wetlands,49055,10909.6
+2017,195,Herbaceous Wetlands,13667,3039.5
+2017,243,Cabbage,10,2.2
+2018,1,Corn,747130,166157.7
+2018,4,Sorghum,4,0.9
+2018,5,Soybeans,477213,106129.6
+2018,27,Rye,145,32.2
+2018,28,Oats,2607,579.8
+2018,36,Alfalfa,13551,3013.7
+2018,37,Other Hay/Non Alfalfa,1385,308.0
+2018,59,Sod/Grass Seed,5,1.1
+2018,60,Switchgrass,6,1.3
+2018,61,Fallow/Idle Cropland,26,5.8
+2018,68,Apples,21,4.7
+2018,111,Open Water,9751,2168.6
+2018,121,Developed/Open Space,96076,21366.8
+2018,122,Developed/Low Intensity,20859,4638.9
+2018,123,Developed/Medium Intensity,3745,832.9
+2018,124,Developed/High Intensity,659,146.6
+2018,131,Barren,851,189.3
+2018,141,Deciduous Forest,44096,9806.7
+2018,142,Evergreen Forest,103,22.9
+2018,143,Mixed Forest,10,2.2
+2018,152,Shrubland,37,8.2
+2018,176,Grass/Pasture,190814,42436.0
+2018,190,Woody Wetlands,52108,11588.5
+2018,195,Herbaceous Wetlands,12154,2703.0
+2019,1,Corn,807185,179513.6
+2019,5,Soybeans,438415,97501.1
+2019,24,Winter Wheat,46,10.2
+2019,27,Rye,235,52.3
+2019,28,Oats,8087,1798.5
+2019,36,Alfalfa,13281,2953.6
+2019,37,Other Hay/Non Alfalfa,1456,323.8
+2019,58,Clover/Wildflowers,1,0.2
+2019,61,Fallow/Idle Cropland,11583,2576.0
+2019,111,Open Water,10329,2297.1
+2019,121,Developed/Open Space,52270,11624.6
+2019,122,Developed/Low Intensity,24819,5519.6
+2019,123,Developed/Medium Intensity,4067,904.5
+2019,124,Developed/High Intensity,809,179.9
+2019,131,Barren,2365,526.0
+2019,141,Deciduous Forest,46826,10413.9
+2019,142,Evergreen Forest,139,30.9
+2019,143,Mixed Forest,6620,1472.3
+2019,152,Shrubland,22,4.9
+2019,176,Grass/Pasture,160514,35697.5
+2019,190,Woody Wetlands,58264,12957.6
+2019,195,Herbaceous Wetlands,26023,5787.4
+2020,1,Corn,830430,184683.2
+2020,4,Sorghum,2,0.4
+2020,5,Soybeans,433163,96333.1
+2020,12,Sweet Corn,1,0.2
+2020,21,Barley,2,0.4
+2020,27,Rye,302,67.2
+2020,28,Oats,3350,745.0
+2020,29,Millet,15,3.3
+2020,36,Alfalfa,15524,3452.5
+2020,37,Other Hay/Non Alfalfa,1225,272.4
+2020,58,Clover/Wildflowers,1,0.2
+2020,59,Sod/Grass Seed,1,0.2
+2020,61,Fallow/Idle Cropland,1,0.2
+2020,111,Open Water,10411,2315.4
+2020,121,Developed/Open Space,52275,11625.7
+2020,122,Developed/Low Intensity,24822,5520.3
+2020,123,Developed/Medium Intensity,4067,904.5
+2020,124,Developed/High Intensity,809,179.9
+2020,131,Barren,2127,473.0
+2020,141,Deciduous Forest,44868,9978.4
+2020,142,Evergreen Forest,155,34.5
+2020,143,Mixed Forest,3919,871.6
+2020,152,Shrubland,35,7.8
+2020,176,Grass/Pasture,160467,35687.0
+2020,190,Woody Wetlands,59441,13219.4
+2020,195,Herbaceous Wetlands,25942,5769.4
+2020,225,Dbl Crop WinWht/Corn,1,0.2
+2021,1,Corn,725353,161314.6
+2021,4,Sorghum,3,0.7
+2021,5,Soybeans,480135,106779.5
+2021,12,Sweet Corn,1,0.2
+2021,24,Winter Wheat,10,2.2
+2021,27,Rye,263,58.5
+2021,28,Oats,3676,817.5
+2021,36,Alfalfa,12098,2690.5
+2021,37,Other Hay/Non Alfalfa,795,176.8
+2021,58,Clover/Wildflowers,1,0.2
+2021,60,Switchgrass,12,2.7
+2021,111,Open Water,9622,2139.9
+2021,121,Developed/Open Space,41602,9252.1
+2021,122,Developed/Low Intensity,34654,7706.9
+2021,123,Developed/Medium Intensity,10709,2381.6
+2021,124,Developed/High Intensity,1677,373.0
+2021,131,Barren,2067,459.7
+2021,141,Deciduous Forest,36775,8178.6
+2021,142,Evergreen Forest,72,16.0
+2021,143,Mixed Forest,2151,478.4
+2021,152,Shrubland,50,11.1
+2021,176,Grass/Pasture,239388,53238.6
+2021,190,Woody Wetlands,56338,12529.3
+2021,195,Herbaceous Wetlands,15904,3537.0
+2022,1,Corn,714735,158953.2
+2022,5,Soybeans,481349,107049.4
+2022,24,Winter Wheat,13,2.9
+2022,27,Rye,589,131.0
+2022,28,Oats,2931,651.8
+2022,29,Millet,1,0.2
+2022,36,Alfalfa,12988,2888.5
+2022,37,Other Hay/Non Alfalfa,571,127.0
+2022,44,Other Crops,1,0.2
+2022,60,Switchgrass,14,3.1
+2022,111,Open Water,9975,2218.4
+2022,121,Developed/Open Space,41698,9273.4
+2022,122,Developed/Low Intensity,34637,7703.1
+2022,123,Developed/Medium Intensity,10709,2381.6
+2022,124,Developed/High Intensity,1677,373.0
+2022,131,Barren,2399,533.5
+2022,141,Deciduous Forest,35778,7956.8
+2022,142,Evergreen Forest,166,36.9
+2022,143,Mixed Forest,2570,571.6
+2022,152,Shrubland,31,6.9
+2022,176,Grass/Pasture,248405,55243.9
+2022,190,Woody Wetlands,55678,12382.5
+2022,195,Herbaceous Wetlands,16419,3651.5
+2022,205,Triticale,22,4.9
+2023,1,Corn,704538,156685.5
+2023,4,Sorghum,1,0.2
+2023,5,Soybeans,481728,107133.7
+2023,21,Barley,5,1.1
+2023,23,Spring Wheat,2,0.4
+2023,24,Winter Wheat,9,2.0
+2023,27,Rye,200,44.5
+2023,28,Oats,2860,636.0
+2023,36,Alfalfa,11377,2530.2
+2023,37,Other Hay/Non Alfalfa,476,105.9
+2023,44,Other Crops,2,0.4
+2023,53,Peas,23,5.1
+2023,58,Clover/Wildflowers,7,1.6
+2023,111,Open Water,9635,2142.8
+2023,121,Developed/Open Space,41738,9282.3
+2023,122,Developed/Low Intensity,34625,7700.4
+2023,123,Developed/Medium Intensity,10709,2381.6
+2023,124,Developed/High Intensity,1677,373.0
+2023,131,Barren,1893,421.0
+2023,141,Deciduous Forest,35436,7880.8
+2023,142,Evergreen Forest,125,27.8
+2023,143,Mixed Forest,1945,432.6
+2023,152,Shrubland,23,5.1
+2023,176,Grass/Pasture,264758,58880.8
+2023,190,Woody Wetlands,55095,12252.8
+2023,195,Herbaceous Wetlands,14465,3216.9
+2023,205,Triticale,4,0.9
+2024,1,Corn,703275,156404.6
+2024,4,Sorghum,53,11.8
+2024,5,Soybeans,506563,112656.9
+2024,6,Sunflowers,60,13.3
+2024,12,Sweet Corn,245,54.5
+2024,21,Barley,414,92.1
+2024,23,Spring Wheat,10,2.2
+2024,24,Winter Wheat,419,93.2
+2024,27,Rye,475,105.6
+2024,28,Oats,3089,687.0
+2024,29,Millet,92,20.5
+2024,36,Alfalfa,10903,2424.8
+2024,37,Other Hay/Non Alfalfa,253,56.3
+2024,42,Dry Beans,2,0.4
+2024,44,Other Crops,92,20.5
+2024,47,Misc Vegs & Fruits,36,8.0
+2024,58,Clover/Wildflowers,52,11.6
+2024,59,Sod/Grass Seed,7,1.6
+2024,60,Switchgrass,6,1.3
+2024,61,Fallow/Idle Cropland,1034,230.0
+2024,69,Grapes,18,4.0
+2024,70,Christmas Trees,408,90.7
+2024,71,Other Tree Crops,59,13.1
+2024,111,Open Water,8769,1950.2
+2024,121,Developed/Open Space,36774,8178.3
+2024,122,Developed/Low Intensity,35605,7918.4
+2024,123,Developed/Medium Intensity,6173,1372.8
+2024,124,Developed/High Intensity,2288,508.8
+2024,131,Barren,2481,551.8
+2024,141,Deciduous Forest,43475,9668.6
+2024,142,Evergreen Forest,1447,321.8
+2024,143,Mixed Forest,342,76.1
+2024,152,Shrubland,5,1.1
+2024,176,Grass/Pasture,256284,56996.2
+2024,190,Woody Wetlands,43984,9781.8
+2024,195,Herbaceous Wetlands,7983,1775.4
+2024,205,Triticale,51,11.3
+2024,221,Strawberries,3,0.7
+2024,229,Pumpkins,127,28.2
+2025,1,Corn,747092,166149.3
+2025,4,Sorghum,523,116.3
+2025,5,Soybeans,438372,97491.6
+2025,6,Sunflowers,1,0.2
+2025,12,Sweet Corn,353,78.5
+2025,13,Pop or Orn Corn,220,48.9
+2025,23,Spring Wheat,1,0.2
+2025,24,Winter Wheat,34,7.6
+2025,27,Rye,938,208.6
+2025,28,Oats,4705,1046.4
+2025,29,Millet,186,41.4
+2025,36,Alfalfa,16716,3717.5
+2025,37,Other Hay/Non Alfalfa,22678,5043.5
+2025,43,Potatoes,1,0.2
+2025,44,Other Crops,10,2.2
+2025,53,Peas,112,24.9
+2025,58,Clover/Wildflowers,410,91.2
+2025,59,Sod/Grass Seed,195,43.4
+2025,60,Switchgrass,340,75.6
+2025,61,Fallow/Idle Cropland,42,9.3
+2025,68,Apples,3,0.7
+2025,70,Christmas Trees,3,0.7
+2025,71,Other Tree Crops,54,12.0
+2025,111,Open Water,10243,2278.0
+2025,121,Developed/Open Space,35041,7792.9
+2025,122,Developed/Low Intensity,56919,12658.5
+2025,123,Developed/Medium Intensity,9237,2054.3
+2025,124,Developed/High Intensity,1346,299.3
+2025,131,Barren,7840,1743.6
+2025,141,Deciduous Forest,28051,6238.4
+2025,142,Evergreen Forest,1281,284.9
+2025,143,Mixed Forest,9226,2051.8
+2025,152,Shrubland,2171,482.8
+2025,176,Grass/Pasture,209273,46541.2
+2025,190,Woody Wetlands,48775,10847.3
+2025,195,Herbaceous Wetlands,20952,4659.6
+2025,229,Pumpkins,12,2.7
