@@ -12,7 +12,7 @@ button:focus-visible,textarea:focus-visible,.chat-body:focus-visible { outline: 
 .fab-badge { position:absolute;bottom:0;right:-2px;width:23px;height:23px;border-radius:50%;background:var(--st-text-color);color:var(--st-background-color);font-size:16px;display:grid;place-items:center; }
 .fab-name { position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%);white-space:nowrap;padding:7px 12px;background:var(--st-background-color);color:var(--st-text-color);border:1px solid var(--st-border-color);border-radius:999px;font-size:12px;font-weight:650;box-shadow:0 4px 16px #0001; }
 .surco-scrim { position:fixed;inset:0;background:#0004;z-index:190;backdrop-filter:blur(2px); }
-.surco-panel { position:fixed;top:4.25rem;bottom:1.25rem;right:1.25rem;width:min(420px,calc(100vw - 2.5rem));display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--st-border-color);border-radius:24px;background:var(--st-background-color);box-shadow:0 24px 80px #0004;z-index:200;transform:translateX(calc(100% + 2rem));visibility:hidden;opacity:0;transition:transform 260ms cubic-bezier(.2,.8,.2,1),opacity 180ms ease,visibility 260ms; }
+.surco-panel { position:fixed;top:4.75rem;bottom:1.25rem;right:1.25rem;width:min(420px,calc(100vw - 2.5rem));display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--st-border-color);border-radius:24px;background:var(--st-background-color);box-shadow:0 24px 80px #0004;z-index:200;transform:translateX(calc(100% + 2rem));visibility:hidden;opacity:0;transition:transform 260ms cubic-bezier(.2,.8,.2,1),opacity 180ms ease,visibility 260ms; }
 .assistant-root.is-open .surco-panel { transform:translateX(0);visibility:visible;opacity:1; }
 .assistant-root.is-open .surco-fab { visibility:hidden; }
 .chat-header { display:flex;align-items:center;gap:12px;padding:18px 16px 16px;background:linear-gradient(135deg,var(--st-secondary-background-color),var(--st-background-color));border-bottom:1px solid var(--st-border-color); }
@@ -57,7 +57,7 @@ footer { font-size:9px;text-align:center;padding:0 14px 14px;opacity:.7; }
 @media(max-width:767px) {
  .surco-fab { width:66px;height:66px;right:1rem;bottom:calc(8rem + env(safe-area-inset-bottom,0px)); }
  .fab-name { display:none; }
- .surco-panel { top:max(1rem,env(safe-area-inset-top,0px));bottom:calc(7.5rem + env(safe-area-inset-bottom,0px));left:.5rem;right:.5rem;width:auto;border-radius:20px;max-height:calc(100dvh - 9rem); }
+ .surco-panel { top:max(4.5rem,calc(env(safe-area-inset-top,0px) + 3rem));bottom:calc(7.5rem + env(safe-area-inset-bottom,0px));left:.5rem;right:.5rem;width:auto;border-radius:20px;max-height:calc(100dvh - 9rem); }
  .chat-header { padding:12px; }
  .chat-toolbar { padding:4px 12px; }
  .chat-body { padding:12px; }
