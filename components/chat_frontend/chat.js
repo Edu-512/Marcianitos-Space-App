@@ -1,4 +1,4 @@
-﻿export default function(component) {
+export default function(component) {
   const { parentElement, data, setStateValue, setTriggerValue } = component;
   const root = parentElement.querySelector('.assistant-root');
   if (!root) return;
@@ -22,7 +22,7 @@
     root.querySelectorAll('[data-prompt]').forEach(button => { button.disabled = busy || !enabled || !navigator.onLine; });
     status.textContent = !navigator.onLine ? 'You are offline. Reconnect to chat.' :
       !enabled ? 'The assistant is temporarily unavailable. You can keep exploring your field.' :
-      busy ? 'Don Surco is checking your field…' : 'Ready to help.';
+      busy ? 'Mr Corn is checking your field…' : 'Ready to help.';
   };
   const setOpen = (open, emit = true) => {
     const changed = root.classList.contains('is-open') !== open;

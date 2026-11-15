@@ -78,7 +78,7 @@ def render_chat() -> None:
         _COMPONENT(
             key=KEY,
             data={
-                "avatar": "./app/static/assistant/don-surco.png",
+                "avatar": "./app/static/assistant/mr-corn-avatar.webp?v=1",
                 "plot_id": plot_id,
                 "plot_name": plot.name if plot else plot_id,
                 "messages": conversation.messages,
