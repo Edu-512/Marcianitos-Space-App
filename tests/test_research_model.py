@@ -172,3 +172,16 @@ class ResearchModelTests(TestCase):
         self.assertEqual(state.selected_plot_id,'467')
         self.assertEqual(state.research_map_camera['plot_id'],'467')
         self.assertTrue(state.research_map_panel['open'])
+    def test_pan_before_click_acknowledgment_preserves_manual_selection(self):
+        class State(dict):
+            def __getattr__(self,key):return self[key]
+            def __setattr__(self,key,value):self[key]=value
+        state=State(selected_plot_id='806',selected_climate_id='normal',selected_plan_id=None)
+        state[field_map.KEY]={'camera':{'center':[42.7,-92.8],'zoom':14,'plot_id':'467','source_plot_id':'806','climate_id':'normal','plan_id':None}}
+        with patch.object(field_map.st,'session_state',state):field_map._camera()
+        self.assertEqual(state.selected_plot_id,'467')
+        self.assertEqual(state.research_map_camera['plot_id'],'467')
+        # A delayed old map event must not undo a newer selector choice.
+        state.selected_plot_id='1413'
+        with patch.object(field_map.st,'session_state',state):field_map._camera()
+        self.assertEqual(state.selected_plot_id,'1413')

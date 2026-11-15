@@ -2,10 +2,11 @@ export default function({parentElement,data,setTriggerValue,setStateValue}) {
  const root=parentElement.querySelector('.field-scene');if(!root)return;
  root.bridge={data,setTriggerValue,setStateValue};
  const q=s=>root.querySelector(s), panel=q('.field-panel');
- const emit=(action)=>root.bridge.setTriggerValue('action',{plot_id:root.pid,climate_id:root.climate,plan_id:root.plan,expanded:root.expanded,action});
+ const emit=(action)=>root.bridge.setTriggerValue('action',{plot_id:root.pid,climate_id:root.climate,plan_id:root.plan,expanded:root.expanded,source_plot_id:root.serverSelected,action});
  const number=(v,d=1)=>Number.isFinite(Number(v))?Number(v).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d}):'Not available';
  const element=(tag,text,cls)=>{const el=document.createElement(tag);el.textContent=text;if(cls)el.className=cls;return el;};
  if(!root.map){
+  root.serverSelected=data.selected;root.serverClimate=data.climate;root.serverPlan=data.plan;
   root.pid=data.selected;root.climate=data.climate;root.plan=data.plan;root.panelOpen=Boolean(data.view?.open && data.view.plot_id===data.selected);root.expanded=Boolean(data.view?.expanded);
   try {
    const map=root.map=L.map(q('.field-canvas'),{zoomControl:true,scrollWheelZoom:false,attributionControl:false});
@@ -16,7 +17,7 @@ export default function({parentElement,data,setTriggerValue,setStateValue}) {
    root.layer=L.geoJSON(data.geometry,{style:feature=>({color:feature.properties.plot_id===root.pid?'#b17b28':'#245e59',weight:feature.properties.plot_id===root.pid?3:1.4,fillColor:'#398c86',fillOpacity:.35}),onEachFeature:(feature,layer)=>{layer.on('click',()=>selectPlot(feature.properties.plot_id));}}).addTo(map);
    if(data.camera && (!data.camera.plot_id || data.camera.plot_id===data.selected))map.setView(data.camera.center,data.camera.zoom);else focusPlot();
    root.layer.eachLayer(layer=>{const el=layer.getElement();if(el){el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label',layer.feature.properties.name+' · satellite-derived field');el.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();selectPlot(layer.feature.properties.plot_id);}};}});
-   map.on('moveend',()=>{const center=map.getCenter();const camera={center:[center.lat,center.lng],zoom:map.getZoom(),plot_id:root.pid};const serialized=JSON.stringify(camera);if(root.lastCamera!==serialized){root.lastCamera=serialized;root.bridge.setStateValue('camera',camera);}});
+   map.on('moveend',()=>{const center=map.getCenter();const camera={center:[center.lat,center.lng],zoom:map.getZoom(),plot_id:root.pid,source_plot_id:root.serverSelected,climate_id:root.climate,plan_id:root.plan,expanded:root.expanded};const serialized=JSON.stringify(camera);if(root.lastCamera!==serialized){root.lastCamera=serialized;root.bridge.setStateValue('camera',camera);}});
    root.resize=new ResizeObserver(()=>map.invalidateSize());root.resize.observe(root);
    q('.fit').onclick=()=>focusPlot();
    q('.basemap').onchange=ev=>{for(const tile of Object.values(root.tiles))if(map.hasLayer(tile))map.removeLayer(tile);if(root.tiles[ev.target.value])root.tiles[ev.target.value].addTo(map);q('.scene-status').textContent='';};
@@ -50,7 +51,14 @@ export default function({parentElement,data,setTriggerValue,setStateValue}) {
   }
   if(root.layer)root.layer.setStyle(feature=>({color:feature.properties.plot_id===root.pid?'#b17b28':'#245e59',weight:feature.properties.plot_id===root.pid?3:1.4}));
  }
- if(root.pid!==data.selected){root.pid=data.selected;root.panelOpen=true;root.expanded=false;focusPlot();}
- root.climate=data.climate;root.plan=data.plan;renderPanel();
+ // Camera reruns may carry the old backend selection while the click is in flight.
+ // Hydrate only a genuinely new server value, never reapply its unchanged default.
+ if(root.serverSelected!==data.selected){
+  root.serverSelected=data.selected;
+  if(root.pid!==data.selected){root.pid=data.selected;root.panelOpen=true;root.expanded=false;focusPlot();}
+ }
+ if(root.serverClimate!==data.climate){root.serverClimate=data.climate;root.climate=data.climate;}
+ if(root.serverPlan!==data.plan){root.serverPlan=data.plan;root.plan=data.plan;}
+ renderPanel();
  return ()=>queueMicrotask(()=>{if(!root.isConnected){root.resize?.disconnect();root.map?.remove();root.map=null;}});
 }

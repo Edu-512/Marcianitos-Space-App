@@ -85,7 +85,7 @@ Los índices generales de riesgo se muestran en detalles como índices simulados
 ## 12. Pruebas funcionales
 
 - Suite Python completa: **33 pruebas aprobadas** (26 anteriores y siete nuevas).
-- Suite JavaScript de chat/PWA/rutas: **10 aprobadas**.
+- Suite JavaScript de chat y rutas.
 - Mypy sobre los cuatro módulos implicados: sin errores.
 - Compilación y `git diff --check`: sin errores.
 - Nuevas comprobaciones: entrada directa y navegación real, resultado guardado sin nueva predicción, regreso y clima conservado, checklist por parcela/plan/clima con marcado/desmarcado, acciones vacías/fallidas, contexto o resultado incorrecto, conservación de más de tres acciones, HTML escapado, intervalos ausentes y navegación a Explore Plots.
@@ -130,4 +130,3 @@ Antes de ampliar personalización, acordar con el equipo de modelo un proveedor 
 5. Abrir fuentes, límites, riesgo e impactos. Confirmar unidades, alcance general, campos pendientes y que la dosis de nitrógeno no se inventa.
 6. Usar Change my planting plan, Compare Again y Explore another plot; comprobar navegación y contexto. Abrir Mr Corn con su icono flotante.
 7. Revisar escritorio y 390/360 px, ambos temas y teclado. Comprobar foco, legibilidad, rangos, ausencia de desbordamiento y que dock/Mr Corn no oculten acciones.
-8. Para comprobar la PWA, usar `pwa_app.py` como antes. Esta feature no añade funcionamiento científico sin conexión.

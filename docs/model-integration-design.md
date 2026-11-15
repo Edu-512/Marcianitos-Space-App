@@ -50,10 +50,9 @@ La única excepción CSS de compatibilidad con Streamlit es ocultar el sidebar y
 ## Validación
 
 - 39 pruebas Python: regresiones del demo y nuevas pruebas de 5×3×3 resultados, navegación, selección, climas, checklist y herramientas del asistente.
-- 12 pruebas JavaScript de mapa, chatbot y PWA. El runner se ejecut? mediante `node -e` cargando los cuatro archivos: el aislamiento por procesos de `node --test` no est? permitido por el entorno (`spawn EPERM`). Las del mapa usan JSDOM y Leaflet simulado: comprueban eventos, tarjetas, estado y cámara, no el renderizado geográfico real.
+- Pruebas JavaScript de mapa y chatbot. Las del mapa usan JSDOM y Leaflet simulado: comprueban eventos, tarjetas, estado y cámara, no el renderizado geográfico real.
 - Comprobación de tipos y compilación de los módulos modificados.
-- Aplicación PWA real iniciada en localhost: recorrido Explore Plots → My Field → Compare Crops → Recommendations, selector móvil de perfil, año seco y primavera húmeda, selección de cobertura y revisión de checklist, regreso al mapa; todas las respuestas `ready`, sin excepciones.
-- HTTP local: salud, avatar WebP, manifest y service worker responden 200 con sus tipos MIME esperados.
+- Aplicación iniciada en localhost: recorrido Explore Plots → My Field → Compare Crops → Recommendations, selector móvil de perfil, año seco y primavera húmeda, selección de cobertura y revisión de checklist, regreso al mapa; todas las respuestas `ready`, sin excepciones.
 - No se hicieron llamadas de pago a Gemini ni se imprimieron credenciales.
 - No fue posible validar visualmente escritorio/móvil: el host de acceso al navegador no está disponible. La API de agente no evalúa CSS ni renderiza el componente. El sitio público no se actualizó; los cambios solo existen en esta rama local.
 
@@ -62,7 +61,7 @@ La única excepción CSS de compatibilidad con Streamlit es ocultar el sidebar y
 Ejecutar desde el repositorio:
 
 ```powershell
-.\.venv\Scripts\python.exe -m streamlit run pwa_app.py
+.\.venv\Scripts\python.exe -m streamlit run streamlit_app.py
 ```
 
 1. Abrir la URL local indicada por Streamlit. Explorar debe mostrar los cinco perfiles ilustrativos.
@@ -72,5 +71,3 @@ Ejecutar desde el repositorio:
 5. Abrir y cerrar las tablas plegables. Confirmar que la tabla del demo tiene su propia advertencia.
 6. Probar anchos 360, 390, 768 y 1440 px: sin sidebar ni botón de apertura en teléfono, dock fijo y chatbot sin superposición; lateral visible en escritorio. Revisar temas claro/oscuro, teclado, zoom y etiquetas.
 7. Abrir Mr Corn y consultar por el plan seleccionado: debe recibir perfil, clima y plan. La respuesta externa requiere las credenciales existentes y conexión.
-
-La PWA necesita servidor para ejecutar Streamlit y conexión para teselas/chatbot; estos cambios no convierten el modelo Python en una aplicación offline.

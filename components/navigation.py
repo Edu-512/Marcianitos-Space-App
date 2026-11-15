@@ -1,4 +1,4 @@
-"""Native sidebar navigation and shared plot selection for Field Shift."""
+"""Native sidebar navigation and shared plot selection for Know Your Farm."""
 from __future__ import annotations
 
 import importlib
@@ -8,6 +8,7 @@ from typing import Any, Callable
 import streamlit as st
 
 from utils.types import Plot
+from components.branding import APP_NAME
 
 @dataclass(frozen=True)
 class PageSpec:
@@ -86,7 +87,7 @@ def _select_plot(valid_ids: tuple[str, ...]) -> None:
 
 def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) -> None:
     with st.sidebar:
-        st.title("Field Shift")
+        st.title(APP_NAME)
         st.caption("Adapting Farms with NASA Data")
         st.space("small")
         st.markdown("**Your Journey**")

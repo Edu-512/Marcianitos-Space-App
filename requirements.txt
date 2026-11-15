@@ -4,8 +4,5 @@ pandas>=2.2
 numpy>=1.26
 altair>=5.5
 pydeck>=0.9
-# Explicit dependency for PWA routes served alongside Streamlit.
-starlette>=1,<2
-
 # Chatbot backend integrated from legy (Gemini).
 google-genai>=1.0

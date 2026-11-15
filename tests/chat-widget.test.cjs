@@ -7,10 +7,19 @@ const dir = path.join(__dirname, '../components/chat_frontend');
 const html = fs.readFileSync(path.join(dir, 'chat.html'), 'utf8');
 const source = fs.readFileSync(path.join(dir, 'chat.js'), 'utf8');
 
-function setup(overrides = {}) {
-  const dom = new JSDOM(`<main>${html}</main>`, { url:'http://localhost:8769/', runScripts:'outside-only', pretendToBeVisual:true });
+function setup(overrides = {}, { mobile = false } = {}) {
+  const dom = new JSDOM(`<div data-testid="stMain" style="overflow-y:auto;overscroll-behavior-y:contain"><main>${html}</main></div>`, { url:'http://localhost:8769/', runScripts:'outside-only', pretendToBeVisual:true });
   const w = dom.window;
   w.requestAnimationFrame = callback => callback();
+  w.matchMedia = query => ({ matches:mobile && query.includes('max-width: 767px') });
+  if (mobile) {
+    const listeners = new Map();
+    w.visualViewport = {
+      height:560, offsetTop:12,
+      addEventListener:(type, callback) => listeners.set(type, callback),
+      removeEventListener:type => listeners.delete(type),
+    };
+  }
   w.eval(source.replace('export default function(component)', 'window.mountChat = function(component)'));
   const events = [];
   const data = { avatar:'./avatar.png', plot_id:'lote-norte', plot_name:'North Field', messages:[], busy:false, enabled:true, open:false, ...overrides };
@@ -23,7 +32,7 @@ function setup(overrides = {}) {
       setTriggerValue:(name,value) => events.push({ name,value }) });
   };
   render({});
-  return { dom, w, data, events, render, q:selector => w.document.querySelector(selector) };
+  return { dom, w, data, events, render, q:selector => w.document.querySelector(selector), main:w.document.querySelector('[data-testid="stMain"]') };
 }
 
 test('bubble opens panel, Escape closes it, and focus returns to bubble', () => {
@@ -73,6 +82,38 @@ test('tool output is expandable and all external content is text, never executab
   t.render({ messages:[...t.data.messages, { role:'user', content:'Gracias' }] });
   assert.equal(t.q('.tool-step').open, true);
   assert.equal(t.q('.tool-step img'), null);
+  t.dom.window.close();
+});
+
+test('tool steps render before the assistant response', () => {
+  const t = setup({ messages:[{ role:'assistant', content:'The answer', steps:[{ label:'Checking the plot', payload:{ status:'complete' } }] }] });
+  const article = t.q('.message.assistant');
+  assert.deepEqual([...article.children].map(element => element.className || element.tagName.toLowerCase()), [
+    'message-label', 'tool-step', 'message-content',
+  ]);
+  t.dom.window.close();
+});
+
+test('mobile chat locks page scroll, fits the visual viewport, and restores page styles on close', () => {
+  const t = setup({}, { mobile:true });
+  t.main.scrollTop = 72;
+  t.q('.surco-fab').click();
+  t.q('textarea').focus();
+  assert.equal(t.q('.assistant-root').classList.contains('keyboard-open'), true);
+  assert.equal(t.main.style.getPropertyValue('overflow-y'), 'hidden');
+  assert.equal(t.main.style.getPropertyValue('overscroll-behavior-y'), 'none');
+  assert.equal(t.q('.assistant-root').style.getPropertyValue('--visual-viewport-height'), '560px');
+  assert.equal(t.q('.assistant-root').style.getPropertyValue('--visual-viewport-offset-top'), '12px');
+
+  t.main.scrollTop = 140;
+  t.main.dispatchEvent(new t.w.Event('scroll'));
+  assert.equal(t.main.scrollTop, 72);
+
+  t.q('.close').click();
+  assert.equal(t.q('.assistant-root').classList.contains('keyboard-open'), false);
+  assert.equal(t.main.style.getPropertyValue('overflow-y'), 'auto');
+  assert.equal(t.main.style.getPropertyValue('overscroll-behavior-y'), 'contain');
+  assert.equal(t.main.scrollTop, 72);
   t.dom.window.close();
 });
 

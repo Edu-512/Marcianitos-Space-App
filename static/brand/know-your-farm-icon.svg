@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title"><title id="title">Know Your Farm: a sprout, sun and cultivated fields</title><rect x="2" y="2" width="60" height="60" rx="16" fill="#FFF3E8" stroke="#8D4925" stroke-width="3"/>
+<circle cx="47" cy="17" r="6" fill="#C58B32"/>
+<path d="M31 35V24" fill="none" stroke="#174631" stroke-width="4" stroke-linecap="round"/>
+<path d="M31 29C21 30 17 24 18 17C26 17 32 21 31 29ZM32 25C32 17 37 13 43 13C44 20 39 25 32 25Z" fill="#174631"/>
+<path d="M12 42Q32 29 52 42M14 51Q32 39 50 51" fill="none" stroke="#174631" stroke-width="5" stroke-linecap="round"/>
+<path d="M27 56Q32 52 37 56" fill="none" stroke="#8D4925" stroke-width="4" stroke-linecap="round"/></svg>

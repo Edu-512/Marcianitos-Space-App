@@ -39,10 +39,9 @@ Una prueba con la biblioteca Leaflet real detectó que el enlace de teclado se r
 ## Validación
 
 - Suite Python: 43 pruebas, incluyendo los 1,503 resultados, igualdad exacta con la exportación, asociación de IDs, preservación de geometría, selección de un campo no destacado y descarte de contextos antiguos.
-- Suite JavaScript: 13 pruebas de mapa, chat y PWA. Una usa Leaflet 1.9.4 real dentro de JSDOM y comprueba 167 trazados SVG, geometrías exactas con fragmentos/huecos, clic y teclado. Las demás del mapa comprueban tarjetas, eventos y cámara.
+- Suite JavaScript de mapa y chat. Una usa Leaflet 1.9.4 real dentro de JSDOM y comprueba 167 trazados SVG, geometrías exactas con fragmentos/huecos, clic y teclado. Las demás del mapa comprueban tarjetas, eventos y cámara.
 - Mypy: 13 módulos modificados, sin errores, con `--explicit-package-bases --follow-imports=silent --ignore-missing-imports`. Se mantiene sin modificar la limitación de tipado preexistente de utils/model_interface.py descrita en el informe anterior.
 - Compilación Python y git diff --check sin errores de código/espacios.
-- PWA local: selector de 167 campos; Field 25 → My Field → Compare Crops → Wet spring → Rotation with cover → Recommendations → Explore Plots; todas las respuestas listas, sin excepciones. Tabla del modelo expandida: 501 filas.
 - 17 archivos importados se comparan byte a byte con el commit fuente. No se carga el pickle ni se ejecuta gen.py.
 - No se realizan llamadas de pago al chatbot, commits, pushes ni despliegues.
 
@@ -51,7 +50,7 @@ JSDOM no sustituye la revisión visual en un navegador real ni valida la disponi
 ## Comprobación manual
 
 ```powershell
-.\.venv\Scripts\python.exe -m streamlit run pwa_app.py
+.\.venv\Scripts\python.exe -m streamlit run streamlit_app.py
 ```
 
 1. Abrir Explore Plots y pulsar Fit plots: deben aparecer los contornos de los 167 campos, sin cuadrados artificiales.

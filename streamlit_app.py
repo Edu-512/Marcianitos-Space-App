@@ -1,4 +1,4 @@
-"""Field Shift: native navigation, shared parcel context and existing views."""
+"""Know Your Farm: native navigation, shared parcel context and existing views."""
 import streamlit as st
 
 from components.navigation import (
@@ -10,11 +10,31 @@ from utils.data_sources import load_plots
 from utils.types import FarmerPriorities
 from utils import field_model as fm
 from components.design_system import styles
+from components.branding import APP_NAME, APP_ICON, APP_LOGO
 
 st.set_page_config(
-    page_title="Field Shift - Adapting Farms with NASA Data",
+    page_title=f"{APP_NAME} - Adapting Farms with NASA Data",
+    page_icon=str(APP_ICON),
     layout="wide",
     initial_sidebar_state="auto",
+)
+
+st.logo(str(APP_LOGO), icon_image=str(APP_ICON), size="large")
+
+st.html(
+    """
+    <style>
+    [data-testid="stMainBlockContainer"] {
+      padding: clamp(2rem, 6vh, 4rem) clamp(1.25rem, 4vw, 3.5rem) 2rem;
+    }
+    @media (max-width: 767px) {
+      [data-testid="stMainBlockContainer"] {
+        padding: 1.5rem clamp(0.75rem, 4vw, 1rem)
+          calc(8rem + env(safe-area-inset-bottom, 0px));
+      }
+    }
+    </style>
+    """
 )
 
 if "farmer_priorities" not in st.session_state:

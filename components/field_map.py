@@ -13,9 +13,15 @@ _COMPONENT=st.components.v2.component('research_field_map',html=(FRONT/'map.html
 
 def _action() -> None:
     event=st.session_state.get(KEY,{}).get('action')
+    _apply_selection(event)
+
+
+def _apply_selection(event) -> None:
     if not isinstance(event,dict):return
     if not isinstance(event.get('plot_id'),str) or not isinstance(event.get('climate_id'),str):return
     if event['plot_id'] not in fm.records() or event['climate_id'] not in fm.CLIMATES:return
+    current=st.session_state.get('selected_plot_id')
+    if event.get('source_plot_id',current) not in (current,event['plot_id']):return
     changed=st.session_state.get('selected_plot_id')!=event['plot_id']
     st.session_state.selected_plot_id=event['plot_id']
     if changed:st.session_state.selected_plan_id=None;st.session_state.comparison_context={}
@@ -32,6 +38,15 @@ def _camera() -> None:
     try:
         lat,lon=value['center'];zoom=value['zoom']
         if all(math.isfinite(float(x)) for x in [lat,lon,zoom]) and -85<lat<85 and -180<=lon<=180 and 0<=zoom<=22:
+            pid=value.get('plot_id',st.session_state.selected_plot_id)
+            if pid not in fm.records():return
+            if pid!=st.session_state.selected_plot_id:
+                # A pan can arrive before the preceding click callback. Apply
+                # its selected field atomically, but reject an old map after a
+                # newer selection through Change plot.
+                if value.get('source_plot_id')!=st.session_state.selected_plot_id:return
+                _apply_selection(value)
+                if pid!=st.session_state.selected_plot_id:return
             st.session_state.research_map_camera={'center':[lat,lon],'zoom':zoom,'plot_id':st.session_state.selected_plot_id}
     except (TypeError,ValueError,KeyError):pass
 

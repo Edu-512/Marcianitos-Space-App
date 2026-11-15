@@ -408,7 +408,7 @@ def _format_priorities_summary(priorities: FarmerPriorities) -> str:
 
 def _system_prompt(plot_id: str) -> str:
     if fm.enabled():
-        return (f'You are Mr Corn, the Field Shift farming assistant. Respond in clear English. Active model profile: {plot_id}. '
+        return (f'You are Mr Corn, the Know Your Farm farming assistant. Respond in clear English. Active model profile: {plot_id}. '
                 f'Active climate: {st.session_state.get("selected_climate_id","normal")}; selected plan: {st.session_state.get("selected_plan_id")}. '
                 'Use only tool outputs for every figure. The research model supplies derived estimates from historical data and literature; it does not predict an individual future harvest. '
                 'Preserve source units: maize bu/acre, USD/acre, soil loss ton/acre/year and nitrogen lb/acre. Do not sum maize and soybean yields. '
@@ -425,7 +425,7 @@ def _system_prompt(plot_id: str) -> str:
     )
     priorities_text = _format_priorities_summary(_get_active_priorities())
 
-    return f"""You are "Mr Corn", the agronomy assistant in the Field Shift app (NASA Space Apps 2026).
+    return f"""You are "Mr Corn", the agronomy assistant in the Know Your Farm app (NASA Space Apps 2026).
 The user is a farmer and has selected this plot: {context}.
 The farmer's current priorities are: {priorities_text}.
 

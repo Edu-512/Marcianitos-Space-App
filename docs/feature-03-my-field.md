@@ -53,7 +53,7 @@ El recorte transparente conserva el maíz, tractor y detalles; no modifica nombr
 ## 10. Pruebas ejecutadas
 
 - `python -m unittest discover -s tests`: **20 pruebas aprobadas**. Incluyen recorrido, parcela, indicadores por ID, fuentes ausentes, respuesta con ID incorrecto, cero distinto de ausencia, registro por parcela e historial futuro sin cultivo/sin información.
-- Pruebas Node de chat, PWA y rutas: **10 aprobadas**.
+- Pruebas Node de chat y rutas.
 - Mypy en los tres módulos Python modificados/creados: sin errores.
 - Compilación de Python y `git diff --check`: sin errores.
 - Inicio real: `python -m streamlit run streamlit_app.py --server.headless=true --server.address=127.0.0.1 --server.port=8776 --server.enableAgentApi=true`.
@@ -79,7 +79,7 @@ Todavía no hay suelo, historial de cultivos, eventos ni mediciones reales. El m
 5. Guardar una nota en **Local ground log**, cambiar de parcela y regresar; la nota debe corresponder solo a su ID.
 6. Pulsar **Compare My Options**, confirmar parcela y volver a My Field.
 7. Revisar escritorio, 360 y 390 px, ambos temas y teclado. Confirmar que Don Surco y la barra inferior no ocultan el botón ni los controles y que no existe desplazamiento horizontal global.
-8. Verificar la nueva imagen transparente de Don Surco en burbuja y encabezado. Para comprobar PWA, usar `pwa_app.py` como antes.
+8. Verificar la nueva imagen transparente de Don Surco en burbuja y encabezado.
 
 
 ## Actualizaci?n del asistente: Mr Corn

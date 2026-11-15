@@ -88,7 +88,7 @@ CSS local reserva espacio junto a acciones para Mr Corn, y se conserva la separa
 ## 11. Pruebas funcionales
 
 - Suite completa Python: **26 pruebas aprobadas**, incluyendo las 20 anteriores.
-- JavaScript de chatbot, PWA y rutas: **10 pruebas aprobadas**.
+- Pruebas JavaScript de chatbot y rutas.
 - Pruebas nuevas: correspondencia sin sustituir soya por frijol; IDs futuros del proveedor; selección y contexto al navegar; cambio de parcela; planes pendientes; primavera húmeda sin llamada al modelo; respuesta ausente/ID incorrecto; cambios de resultados con entradas; HTML escapado; unidades, índices y límites inválidos; control climático móvil.
 - Mypy con `--explicit-package-bases`: sin errores en los cuatro módulos implicados.
 - Compilación y `git diff --check`: sin errores.
@@ -126,4 +126,3 @@ Persisten avisos heredados de `use_container_width` en otras páginas. No se amp
 5. Abrir detalles, explicación de rangos y **More demo plans & original simulator**. Comprobar las alternativas anteriores, controles, tradeoffs y trayectorias.
 6. Continuar a Recommendations y volver; comprobar parcela, clima y plan. Cambiar de parcela y confirmar que se solicita selección explícita.
 7. Revisar 1366×768 y 1920×1080, luego 390/360 px, temas claro/oscuro y teclado. Confirmar legibilidad, foco, columnas, rangos visibles, ausencia de desbordamiento global y que Mr Corn/barra inferior no ocultan acciones.
-8. Para verificar la PWA, iniciar `pwa_app.py` como antes. Esta feature no convierte los cálculos de Streamlit en un servicio sin conexión.

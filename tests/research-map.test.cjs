@@ -81,3 +81,18 @@ test('selection zooms to its field and survives zoom, camera rerenders and panel
  assert.deepEqual(Array.from(t.root.querySelector('.basemap').options,o=>o.value),['normal','aerial']);
  t.dom.window.close();
 });
+
+test('a stale camera rerender cannot restore the default field before a click is acknowledged',()=>{
+ const t=setup(),map=t.root.map;
+ t.root.layer.layers.find(l=>l.feature.properties.plot_id==='467').events.click();
+ const fits=map.fits;
+ // Backend still reports the initial field while the click request is pending.
+ map.events.moveend();t.render({selected:'806',camera:{center:[42.7,-92.8],zoom:14}});
+ assert.equal(t.root.pid,'467');assert.equal(map.fits,fits);
+ assert.equal(t.root.querySelector('.panel-title').textContent,'Profile 467');
+ // Acknowledging the click must not zoom back or replace the camera.
+ t.render({selected:'467'});assert.equal(t.root.pid,'467');assert.equal(map.fits,fits);
+ // A later, genuine selection through Change plot still wins.
+ t.render({selected:'1413'});assert.equal(t.root.pid,'1413');assert.equal(map.fits,fits+1);
+ t.dom.window.close();
+});
