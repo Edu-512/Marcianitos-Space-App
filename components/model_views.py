@@ -63,7 +63,12 @@ def compare() -> None:
                     st.write(f"Gross income (p50): {fm.n(out['economia']['ingreso_usd_acre']['p50'],0)} USD/acre")
                     st.write(f"Cost: {fm.n(out['economia']['costo_usd_acre'],0)} USD/acre")
                     st.write(f"Nitrogen input for maize: {fm.n(out['fertilizante']['nitrogeno_lb_acre'],0)} lb/acre")
-                    st.json(out)
+                    income=out['economia']['ingreso_usd_acre']
+                    st.write(f"Gross income range (p10 to p90): {fm.n(income['p10'],0)} to {fm.n(income['p90'],0)} USD/acre")
+                    st.write(f"Historical/model frequency of a yield drop greater than 20%: {fm.n(out['riesgo']['prob_caida_mayor_20_pct'])}%")
+                    st.write(f"Estimated share unable to be planted: {fm.n(out['riesgo']['prob_no_poder_sembrar_pct'],2)}%")
+                    confidence={'alta':'High','media':'Medium','baja':'Low'}.get(str(out.get('confianza')),'Not supplied')
+                    st.write(f"Source confidence label: {confidence}. This is not a probability or guarantee.")
         section('Read the tradeoffs','◈')
         st.write(f'You are exploring {fm.CLIMATES[climate].lower()}. Compare the lower margin bound alongside soil loss before choosing; neither a higher median nor a confidence label guarantees the result.')
         scenario=fm.profile(pid)['escenarios'][climate]

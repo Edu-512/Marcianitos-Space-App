@@ -1,4 +1,4 @@
-﻿const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');
+const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');
 const {JSDOM}=require('../.venv/js-tests/node_modules/jsdom');
 const folder='components/field_map_frontend/';
 const raw=JSON.parse(fs.readFileSync('model/datos_ui/resultado_todas.json','utf8'));
@@ -6,7 +6,7 @@ function setup(){
  const dom=new JSDOM(fs.readFileSync(folder+'map.html','utf8'),{runScripts:'outside-only'}),w=dom.window,events=[];let instances=0;
  class FakeMap {constructor(){this.events={};this.center=[42.73,-92.79];this.zoom=12;this.fits=0;instances++;}on(k,f){this.events[k]=f;}fitBounds(){this.fits++;return this;}setView(c,z){this.center=c;this.zoom=z;return this;}getCenter(){return {lat:this.center[0],lng:this.center[1]};}getZoom(){return this.zoom;}hasLayer(){return true;}removeLayer(){}invalidateSize(){}remove(){this.removed=true;}}
  w.L={map:()=>new FakeMap(),control:{attribution:()=>({addTo(){}})},tileLayer:()=>({addTo(){return this;},on(){return this;}}),DomEvent:{disableClickPropagation(){},disableScrollPropagation(){}},geoJSON:(data,options)=>{
-  const layers=data.features.map(feature=>{const el=w.document.createElement('button');w.document.querySelector('.field-canvas').append(el);const l={feature,events:{},on(k,f){this.events[k]=f;},getElement(){return el;}};options.onEachFeature(feature,l);return l;});
+  const layers=data.features.map(feature=>{const el=w.document.createElement('button');w.document.querySelector('.field-canvas').append(el);const l={feature,events:{},on(k,f){this.events[k]=f;},getElement(){return el;},getBounds(){return [[42.7,-92.8],[42.71,-92.79]];}};options.onEachFeature(feature,l);return l;});
   return {layers,addTo(){return this;},eachLayer(fn){layers.forEach(fn);},getBounds(){return [];},setStyle(){}};
  }};
  w.ResizeObserver=class{observe(){}disconnect(){}};
@@ -64,4 +64,20 @@ test('real Leaflet draws all 167 source geometries with their MultiPolygons and 
  feature.getElement().dispatchEvent(new w.KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
  assert.equal(events.at(-1).plot_id,'467');
  root.map.remove();dom.window.close();
+});
+
+test('selection zooms to its field and survives zoom, camera rerenders and panel toggle',()=>{
+ const t=setup(),map=t.root.map,initial=map.fits;
+ t.root.layer.layers.find(l=>l.feature.properties.plot_id==='467').events.click();
+ assert.equal(map.fits,initial+1);assert.equal(t.root.pid,'467');
+ t.render({selected:'467',view:{plot_id:'467',open:true,expanded:false}});
+ t.root.querySelector('.fit').click();assert.equal(map.fits,initial+2);
+ assert.equal(t.root.pid,'467');assert.equal(t.root.querySelector('.field-panel').hidden,false);
+ map.events.moveend();t.render({camera:{center:[42.7,-92.8],zoom:15}});
+ assert.equal(t.root.pid,'467');assert.equal(t.root.querySelector('.field-panel').hidden,false);
+ const fits=map.fits;t.render({selected:'806'});assert.equal(map.fits,fits+1);
+ t.root.querySelector('.panel-toggle').click();assert.equal(t.root.querySelector('.panel-toggle').getAttribute('aria-expanded'),'true');
+ assert.equal(t.events.at(-1)[0],'view');assert.equal(t.events.at(-1)[1].expanded,true);
+ assert.deepEqual(Array.from(t.root.querySelector('.basemap').options,o=>o.value),['normal','aerial']);
+ t.dom.window.close();
 });

@@ -1,15 +1,18 @@
 <div class="field-scene">
  <div class="field-canvas" aria-label="Satellite-derived agricultural fields in Butler County"></div>
  <div class="scene-note">167 satellite-derived fields · not property boundaries</div>
- <div class="scene-toolbar"><button class="fit" type="button">Fit plots</button><select class="basemap" aria-label="Map background"><option value="normal">Map</option><option value="aerial">Aerial</option><option value="none">No background</option></select></div>
+ <div class="scene-toolbar"><button class="fit" type="button">Zoom to field</button><select class="basemap" aria-label="Map background"><option value="normal">Map</option><option value="aerial">Aerial</option></select></div>
  <p class="scene-status" role="status"></p>
  <aside class="field-panel" aria-label="Rotation options for selected field" hidden>
   <header><span class="panel-title"></span><button type="button" class="close" aria-label="Close rotation panel">×</button></header>
   <p class="profile-area"></p>
+  <button class="panel-toggle" type="button" aria-expanded="false">View rotations</button>
+  <div class="panel-body">
   <label>Type of year<select class="climate"></select></label>
   <div class="rotation-cards"></div>
   <p class="panel-note">Derived model estimates. p10–p90 are supplied quantiles, not a guaranteed harvest. Costs include land rent.</p>
   <button class="full-comparison" type="button">Open full comparison →</button>
   <button class="view-field" type="button">Know this field →</button>
+  </div>
  </aside>
 </div>

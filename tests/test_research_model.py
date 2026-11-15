@@ -152,3 +152,23 @@ class ResearchModelTests(TestCase):
         self.assertFalse(at.exception)
         self.assertIsNone(at.session_state['selected_plan_id'])
         self.assertTrue(at.button(key='continue_rotations').disabled)
+
+    def test_compare_details_show_information_without_json_or_research_banner(self):
+        at=self.app()
+        at.button(key='mobile_nav_rotations').click().run()
+        self.assertFalse(at.exception)
+        self.assertEqual(len(at.json),0)
+        self.assertTrue(any('Estimated share unable to be planted' in m.value for m in at.markdown))
+        self.assertFalse(any('Research model: derived estimates' in m.value for m in at.info))
+
+    def test_camera_and_panel_updates_preserve_selected_field(self):
+        class State(dict):
+            def __getattr__(self,key):return self[key]
+            def __setattr__(self,key,value):self[key]=value
+        state=State(selected_plot_id='467',selected_climate_id='normal',selected_plan_id=None)
+        state[field_map.KEY]={'camera':{'center':[42.7,-92.8],'zoom':15},'view':{'plot_id':'467','open':True,'expanded':True}}
+        with patch.object(field_map.st,'session_state',state):
+            field_map._camera();field_map._view()
+        self.assertEqual(state.selected_plot_id,'467')
+        self.assertEqual(state.research_map_camera['plot_id'],'467')
+        self.assertTrue(state.research_map_panel['open'])

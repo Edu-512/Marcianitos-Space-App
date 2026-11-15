@@ -81,6 +81,7 @@ def _select_plot(valid_ids: tuple[str, ...]) -> None:
     st.session_state.selected_plot_id = (
         selected if selected in valid_ids else valid_ids[0] if valid_ids else None
     )
+    st.session_state.research_map_panel={"plot_id":st.session_state.selected_plot_id,"open":True,"expanded":False}
 
 
 def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) -> None:
@@ -98,12 +99,9 @@ def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) ->
         if not plots:
             st.info("No plots are available to select.")
         else:
-            names = {plot.id: plot.name for plot in plots}
-            st.selectbox(
-                "Change plot", list(names), format_func=lambda pid: names[pid],
-                key="fs_plot_select", on_change=_select_plot,
-                args=(tuple(names),),
-            )
+            names={plot.id:plot.name for plot in plots}
+            st.selectbox("Change plot",list(names),format_func=lambda pid:names[pid],
+                         key="fs_plot_select",on_change=_select_plot,args=(tuple(names),))
             plot = next(p for p in plots if p.id == st.session_state.selected_plot_id)
             from utils import field_model as fm
             if fm.enabled():
@@ -232,20 +230,22 @@ def _mobile_select_plot(valid_ids: tuple[str, ...]) -> None:
     selected=st.session_state.get("fs_mobile_plot_select")
     if selected in valid_ids:
         st.session_state.selected_plot_id=selected
+        st.session_state.research_map_panel={"plot_id":selected,"open":True,"expanded":False}
 
 
 def render_mobile_plot_selector(plots: list[Plot]) -> None:
     active=st.session_state.get("page_key","map_view")
     if active not in PAGES:active="map_view"
-    status=f"Field Shift | {PAGES[active].title} | {list(PAGES).index(active)+1}/4"
+    status=f"Step {list(PAGES).index(active)+1}/4"
     # Streamlit exposes no viewport-aware sidebar visibility API. These two
     # native sidebar hooks are deliberately isolated in this media query.
     st.html("""<style>
 .st-key-fs_mobile_tools { display:none; }
+.st-key-fs_mobile_tools button {min-height:52px;min-width:156px;font-size:16px;padding:12px 18px;}
 @media(max-width:767px) {
  [data-testid="stSidebar"],[data-testid="stSidebarCollapsedControl"] { display:none!important; }
- .st-key-fs_mobile_tools { display:block;position:fixed;right:1rem;top:3.25rem;z-index:145;max-width:calc(100% - 2rem); }
- .st-key-fs_mobile_tools button {min-height:44px;}
+ .st-key-fs_mobile_tools { display:flex;justify-content:flex-end;position:fixed;right:1rem;left:auto;top:3.25rem;width:fit-content!important;z-index:145;max-width:calc(100% - 2rem); }
+ .st-key-fs_mobile_tools button {min-height:52px;min-width:156px;font-size:16px;padding:12px 18px;}
  .st-key-fs_mobile_navigation::before { content:"__JOURNEY_STATUS__";grid-column:1/-1;font-size:12px;font-weight:650;text-align:center; }
 }
 </style>""".replace("__JOURNEY_STATUS__",status))

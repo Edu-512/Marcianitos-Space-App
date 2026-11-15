@@ -44,8 +44,8 @@ spec = PAGES[active_key]
 if not (fm.enabled() and active_key == "map_view"):
     st.title(spec.heading, icon=spec.icon)
     st.write(spec.description)
-    st.info("Research model: derived estimates from historical and literature inputs. Field outlines come from satellite crop patterns, not verified property boundaries." if fm.enabled() else
-            "Demo mode: plots, indicators, and results are simulated. They are not real observations from Butler County, Iowa.", icon=":material/info:")
+    if not fm.enabled():
+        st.info("Demo mode: plots, indicators, and results are simulated. They are not real observations from Butler County, Iowa.", icon=":material/info:")
 if load_error:
     st.error("We couldn't load the plots. Please try again in a moment.")
     st.stop()
