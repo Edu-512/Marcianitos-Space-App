@@ -409,14 +409,21 @@ Strict rules:
 
 
 def _build_generate_config(plot_id: str, model_name: str) -> Any:
-    """Build GenerateContentConfig tuned for fast tool-calling orchestration."""
+    """Build GenerateContentConfig tuned for Gemini 3.x / 2.5 tool-calling orchestration."""
     config_kwargs: dict[str, Any] = {
         "system_instruction": _system_prompt(plot_id),
-        "temperature": 0.3,
         "tools": [_build_tool()],
     }
-    if "2.5" in model_name and hasattr(types, "ThinkingConfig"):
+    # Gemini 3.x models use thinking_level (LOW avoids premature tool-chain stops while keeping latency low).
+    if ("3." in model_name or "gemini-3" in model_name) and hasattr(types, "ThinkingConfig") and hasattr(types, "ThinkingLevel"):
+        config_kwargs["thinking_config"] = types.ThinkingConfig(
+            thinking_level=types.ThinkingLevel.LOW
+        )
+    elif "2.5" in model_name and hasattr(types, "ThinkingConfig"):
         config_kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
+        config_kwargs["temperature"] = 0.3
+    else:
+        config_kwargs["temperature"] = 0.3
     return types.GenerateContentConfig(**config_kwargs)
 
 
