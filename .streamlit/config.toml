@@ -76,3 +76,6 @@ primaryColor = "#8d4925"
 linkColor = "#ffb48a"
 dataframeHeaderBackgroundColor = "#241913"
 dataframeBorderColor = "#493021"
+
+[server]
+enableStaticServing = true
