@@ -8,7 +8,7 @@ from streamlit.testing.v1 import AppTest
 
 class MainNavigationTests(unittest.TestCase):
     def app(self):
-        return AppTest.from_file(str(Path(__file__).resolve().parents[1] / "streamlit_app.py"), default_timeout=20)
+        return _legacy_app_from_file(str(Path(__file__).resolve().parents[1] / "streamlit_app.py"), default_timeout=20)
 
     def test_initial_screen_sidebar_order_and_simulation_notice(self):
         at = self.app().run()
@@ -102,3 +102,9 @@ class MainNavigationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _legacy_app_from_file(*args,**kwargs):
+    app=AppTest.from_file(*args,**kwargs)
+    app.session_state["data_mode"]="legacy"
+    return app

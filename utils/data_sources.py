@@ -1,10 +1,9 @@
-"""Data access layer for plot and satellite data.
+"""Data access for the research model and explicitly separate legacy demo.
 
-All functions return typed objects from :mod:`utils.types`. They currently
-generate deterministic mock data so the interface can be developed in parallel
-with the model. Replace each body with real NASA sources (POWER, SMAP, MODIS,
-GPM, ECOSTRESS, GRACE-FO, SRTM) without changing signatures or return types —
-the pages only depend on these functions.
+The default plot catalog uses Butler satellite-derived GeoJSON linked by ID to
+exported research results. Legacy snapshot/history/scenario functions remain
+simulated and are used only in the labelled legacy interface or demo table.
+They must not be presented as observations of the Butler model parcels.
 """
 
 from __future__ import annotations
@@ -77,9 +76,28 @@ _ROTATION_SCENARIOS = (
 
 
 @st.cache_data(ttl="1h")
-def load_plots() -> list[Plot]:
+def _load_legacy_plots() -> list[Plot]:
     """All farm plots in the study area."""
     return list(_PLOTS)
+
+
+def load_plots() -> list[Plot]:
+    from utils import field_model as fm
+    if not fm.enabled():
+        return _load_legacy_plots()
+    geometries=fm.parcels()
+    showcase=[str(pid) for pid in fm.PROFILE_NAMES if str(pid) in geometries]
+    ids=showcase+sorted(set(geometries)-set(showcase),key=int)
+    plots=[]
+    for pid in ids:
+        feature=geometries[pid];geom=feature['geometry']
+        # Plot supports one ring; the map always receives every part and hole.
+        ring=geom['coordinates'][0] if geom['type']=='Polygon' else geom['coordinates'][0][0]
+        lat,lon=fm.plot_position(pid)
+        plots.append(Plot(id=pid,name=fm.label(pid),lat=lat,lon=lon,
+                          area_hectares=feature['properties']['acres']*0.40468564224,
+                          current_crop='',polygon=tuple((p[1],p[0]) for p in ring)))
+    return plots
 
 
 @st.cache_data(ttl="1h")

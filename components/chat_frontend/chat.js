@@ -5,6 +5,58 @@ export default function(component) {
   const q = selector => root.querySelector(selector);
   const fab = q('.surco-fab'), panel = q('.surco-panel'), input = q('textarea');
   const body = q('.chat-body'), send = q('.send'), status = q('.chat-status');
+  const visualViewport = window.visualViewport;
+  const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+  let mainScrollState = null;
+  const mainElement = () => window.parent.document.querySelector('[data-testid="stMain"]');
+  const keepMainScroll = () => {
+    if (mainScrollState) mainScrollState.element.scrollTop = mainScrollState.scrollTop;
+  };
+  const lockMainScroll = () => {
+    if (!isMobile() || mainScrollState) return;
+    const main = mainElement();
+    if (!main) return;
+    mainScrollState = {
+      element: main,
+      scrollTop: main.scrollTop,
+      overflowY: main.style.getPropertyValue('overflow-y'),
+      overflowPriority: main.style.getPropertyPriority('overflow-y'),
+      overscroll: main.style.getPropertyValue('overscroll-behavior-y'),
+      overscrollPriority: main.style.getPropertyPriority('overscroll-behavior-y'),
+    };
+    main.style.setProperty('overflow-y', 'hidden');
+    main.style.setProperty('overscroll-behavior-y', 'none');
+    main.addEventListener('scroll', keepMainScroll, { passive:true });
+    keepMainScroll();
+  };
+  const restoreMainScroll = () => {
+    if (!mainScrollState) return;
+    const { element, overflowY, overflowPriority, overscroll, overscrollPriority } = mainScrollState;
+    element.removeEventListener('scroll', keepMainScroll);
+    if (overflowY) element.style.setProperty('overflow-y', overflowY, overflowPriority);
+    else element.style.removeProperty('overflow-y');
+    if (overscroll) element.style.setProperty('overscroll-behavior-y', overscroll, overscrollPriority);
+    else element.style.removeProperty('overscroll-behavior-y');
+    keepMainScroll();
+    mainScrollState = null;
+  };
+  const syncVisualViewport = () => {
+    if (!visualViewport || !root.classList.contains('keyboard-open')) return;
+    root.style.setProperty('--visual-viewport-height', `${visualViewport.height}px`);
+    root.style.setProperty('--visual-viewport-offset-top', `${visualViewport.offsetTop}px`);
+    keepMainScroll();
+  };
+  const handleInputFocus = () => {
+    if (!isMobile()) return;
+    root.classList.add('keyboard-open');
+    lockMainScroll();
+    syncVisualViewport();
+  };
+  const handleInputBlur = () => {
+    root.classList.remove('keyboard-open');
+    root.style.removeProperty('--visual-viewport-height');
+    root.style.removeProperty('--visual-viewport-offset-top');
+  };
   let busy = Boolean(data.busy);
   let enabled = Boolean(data.enabled);
   // The DOM lives only for this user's Streamlit session; never persist messages to storage.
@@ -14,7 +66,7 @@ export default function(component) {
     root._renderedMessages = null;
   }
   root.querySelectorAll('img').forEach(img => { if (img.src !== data.avatar) img.src = data.avatar; });
-  q('.chat-context').textContent = `Let's talk about ${data.plot_name}`;
+  q('.chat-context').textContent = data.model_context || `Let's talk about ${data.plot_name}`;
   const controls = () => {
     send.disabled = busy || !enabled || !input.value.trim() || !navigator.onLine;
     input.disabled = busy || !enabled || !navigator.onLine;
@@ -30,6 +82,12 @@ export default function(component) {
     q('.surco-scrim').hidden = !open;
     panel.inert = !open;
     fab.setAttribute('aria-expanded', String(open));
+    if (open) lockMainScroll();
+    else {
+      input.blur();
+      handleInputBlur();
+      restoreMainScroll();
+    }
     if (changed) {
       if (open) requestAnimationFrame(() => q('.close').focus());
       else fab.focus();
@@ -60,6 +118,8 @@ export default function(component) {
   };
   q('form').onsubmit = event => { event.preventDefault(); submit(input.value); };
   input.oninput = controls;
+  input.addEventListener('focus', handleInputFocus);
+  input.addEventListener('blur', handleInputBlur);
   input.onkeydown = event => {
     if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
       event.preventDefault(); submit(input.value);
@@ -99,7 +159,6 @@ export default function(component) {
     (data.messages || []).forEach((message, index) => {
       const article = textNode('article', '', `message ${message.role}${message.error ? ' error' : ''}`);
       article.append(textNode('p', message.role === 'user' ? 'YOU' : 'DON SURCO', 'message-label'));
-      if (message.content) article.append(textNode('div', message.content, 'message-content'));
       (message.steps || []).forEach((step, stepIndex) => {
         const details = document.createElement('details');
         details.className = 'tool-step'; details.dataset.step = `${index}-${stepIndex}`;
@@ -109,6 +168,7 @@ export default function(component) {
         for (const [key, value] of flatten(step.payload)) dl.append(textNode('dt', key), textNode('dd', value));
         details.append(dl); article.append(details);
       });
+      if (message.content) article.append(textNode('div', message.content, 'message-content'));
       fragment.append(article);
     });
     q('.messages').replaceChildren(fragment);
@@ -121,8 +181,15 @@ export default function(component) {
   setOpen(Boolean(data.open), false);
   window.addEventListener('online', controls);
   window.addEventListener('offline', controls);
+  visualViewport?.addEventListener('resize', syncVisualViewport);
+  visualViewport?.addEventListener('scroll', syncVisualViewport);
   return () => {
     window.removeEventListener('online', controls);
     window.removeEventListener('offline', controls);
+    visualViewport?.removeEventListener('resize', syncVisualViewport);
+    visualViewport?.removeEventListener('scroll', syncVisualViewport);
+    input.removeEventListener('focus', handleInputFocus);
+    input.removeEventListener('blur', handleInputBlur);
+    restoreMainScroll();
   };
 }

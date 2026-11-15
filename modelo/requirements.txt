@@ -1,0 +1,8 @@
+# Para correr gen.py (genera lo que usa la app)
+pandas>=2.2
+numpy>=1.26
+scipy>=1.11
+
+# Solo para recalibrar (carpeta calibracion/)
+scikit-learn>=1.4
+geopandas>=0.14

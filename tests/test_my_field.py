@@ -1,4 +1,4 @@
-﻿"""My Field acceptance tests: shared state, no invented records, retained tools."""
+"""My Field acceptance tests: shared state, no invented records, retained tools."""
 from dataclasses import replace
 from pathlib import Path
 from unittest import TestCase
@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 class MyFieldTests(TestCase):
     def app(self):
-        at=AppTest.from_file(str(ROOT/'streamlit_app.py'),default_timeout=20).run()
+        at=_legacy_app_from_file(str(ROOT/'streamlit_app.py'),default_timeout=20).run()
         at.button(key='mobile_nav_home').click().run()
         self.assertFalse(at.exception)
         return at
@@ -67,3 +67,9 @@ planting_event()
         self.assertIn('No crop recorded',text)
         self.assertNotIn('2019',text)
         self.assertTrue(any('no pattern inferred' in x.value for x in at.markdown))
+
+
+def _legacy_app_from_file(*args,**kwargs):
+    app=AppTest.from_file(*args,**kwargs)
+    app.session_state["data_mode"]="legacy"
+    return app

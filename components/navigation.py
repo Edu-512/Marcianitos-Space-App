@@ -1,4 +1,4 @@
-﻿"""Native sidebar navigation and shared plot selection for Field Shift."""
+"""Native sidebar navigation and shared plot selection for Know Your Farm."""
 from __future__ import annotations
 
 import importlib
@@ -8,6 +8,7 @@ from typing import Any, Callable
 import streamlit as st
 
 from utils.types import Plot
+from components.branding import APP_NAME
 
 @dataclass(frozen=True)
 class PageSpec:
@@ -69,6 +70,8 @@ def prepare_plot_selection(plots: list[Plot]) -> bool:
     selected = st.session_state.selected_plot_id
     # This runs before the selector is mounted. Never overwrite another widget
     # after mount, and never use a display name as the parcel identity.
+    if st.session_state.get("fs_mobile_plot_select") != selected:
+        st.session_state.fs_mobile_plot_select = selected
     if st.session_state.get("fs_plot_select") != selected:
         st.session_state.fs_plot_select = selected
     return recovered
@@ -79,11 +82,12 @@ def _select_plot(valid_ids: tuple[str, ...]) -> None:
     st.session_state.selected_plot_id = (
         selected if selected in valid_ids else valid_ids[0] if valid_ids else None
     )
+    st.session_state.research_map_panel={"plot_id":st.session_state.selected_plot_id,"open":True,"expanded":False}
 
 
 def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) -> None:
     with st.sidebar:
-        st.title("Field Shift")
+        st.title(APP_NAME)
         st.caption("Adapting Farms with NASA Data")
         st.space("small")
         st.markdown("**Your Journey**")
@@ -96,17 +100,18 @@ def render_sidebar(pages: dict[str, Any], active_key: str, plots: list[Plot]) ->
         if not plots:
             st.info("No plots are available to select.")
         else:
-            names = {plot.id: plot.name for plot in plots}
-            st.selectbox(
-                "Change plot", list(names), format_func=lambda pid: names[pid],
-                key="fs_plot_select", on_change=_select_plot,
-                args=(tuple(names),),
-            )
+            names={plot.id:plot.name for plot in plots}
+            st.selectbox("Change plot",list(names),format_func=lambda pid:names[pid],
+                         key="fs_plot_select",on_change=_select_plot,args=(tuple(names),))
             plot = next(p for p in plots if p.id == st.session_state.selected_plot_id)
-            st.caption(f"{plot.name} · {plot.area_hectares:g} ha · {plot.current_crop}")
+            from utils import field_model as fm
+            if fm.enabled():
+                st.caption(f"{plot.name} | {fm.profile(plot.id)['parcela']['acres']:,} acres")
+            else:
+                st.caption(f"{plot.name} | {plot.area_hectares:g} ha | {plot.current_crop}")
         st.divider()
-        st.caption("Case study: Butler County, Iowa.")
-        st.caption("Prototype with simulated plots and results.")
+        from utils import field_model as fm
+        st.caption("167 satellite-derived fields | property boundaries unverified" if fm.enabled() else "Legacy demonstration data")
 
 
 def render_continuation(pages: dict[str, Any], active_key: str) -> None:
@@ -220,3 +225,36 @@ def render_mobile_clearance() -> None:
     """Let users scroll the final action above the phone navigation dock."""
     with st.container(key="fs_mobile_navigation_clearance"):
         st.space(136)
+
+
+def _mobile_select_plot(valid_ids: tuple[str, ...]) -> None:
+    selected=st.session_state.get("fs_mobile_plot_select")
+    if selected in valid_ids:
+        st.session_state.selected_plot_id=selected
+        st.session_state.research_map_panel={"plot_id":selected,"open":True,"expanded":False}
+
+
+def render_mobile_plot_selector(plots: list[Plot]) -> None:
+    active=st.session_state.get("page_key","map_view")
+    if active not in PAGES:active="map_view"
+    status=f"Step {list(PAGES).index(active)+1}/4"
+    # Streamlit exposes no viewport-aware sidebar visibility API. These two
+    # native sidebar hooks are deliberately isolated in this media query.
+    st.html("""<style>
+.st-key-fs_mobile_tools { display:none; }
+.st-key-fs_mobile_tools button {min-height:52px;min-width:156px;font-size:16px;padding:12px 18px;}
+@media(max-width:767px) {
+ [data-testid="stSidebar"],[data-testid="stSidebarCollapsedControl"] { display:none!important; }
+ .st-key-fs_mobile_tools { display:flex;justify-content:flex-end;position:fixed;right:1rem;left:auto;top:3.25rem;width:fit-content!important;z-index:145;max-width:calc(100% - 2rem); }
+ .st-key-fs_mobile_tools button {min-height:52px;min-width:156px;font-size:16px;padding:12px 18px;}
+ .st-key-fs_mobile_navigation::before { content:"__JOURNEY_STATUS__";grid-column:1/-1;font-size:12px;font-weight:650;text-align:center; }
+}
+</style>""".replace("__JOURNEY_STATUS__",status))
+    with st.container(key="fs_mobile_tools",horizontal=True,horizontal_alignment="right"):
+        with st.popover("Change plot",icon=":material/landscape:"):
+            if not plots:
+                st.info("No profiles are available.")
+            else:
+                names={p.id:p.name for p in plots}
+                st.selectbox("Choose a plot",list(names),format_func=lambda pid:names[pid],key="fs_mobile_plot_select",
+                             on_change=_mobile_select_plot,args=(tuple(names),))

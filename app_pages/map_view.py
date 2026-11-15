@@ -40,6 +40,12 @@ def _magnitude_rgb(value: float, lo: float, hi: float) -> list[int]:
 
 
 def run() -> None:
+    from utils import field_model as fm
+    if fm.enabled():
+        from components import model_views
+        model_views.map_view()
+        return
+
     """Render the interactive polygon map and the per-plot indicator table."""
     plot_id = st.session_state.selected_plot_id
     plots = load_plots()

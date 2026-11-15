@@ -156,6 +156,12 @@ def _advanced(plot_id: str, scenarios: list[RotationScenario]) -> None:
 
 
 def run() -> None:
+    from utils import field_model as fm
+    if fm.enabled():
+        from components import model_views
+        model_views.compare()
+        return
+
     try:
         plots=load_plots()
         scenarios=load_rotation_scenarios()
@@ -212,6 +218,12 @@ def run() -> None:
 
 
 def render_plan_continuation(pages: dict[str,Any]) -> None:
+    from utils import field_model as fm
+    if fm.enabled():
+        from components.model_views import continue_to_recommendations
+        continue_to_recommendations(pages)
+        return
+
     """Called by the shared shell only for this screen; other navigation is intact."""
     key=st.session_state.get("selected_plan_key")
     name=next((p.title for p in PLANS if p.key==key),"No plan selected")

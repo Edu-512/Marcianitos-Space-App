@@ -147,10 +147,17 @@ def _help() -> None:
     with st.container(horizontal=True,vertical_alignment="center"):
         st.image(str(AVATAR),width=72,alt="Mr Corn, the friendly corn farming assistant")
         st.write("**Mr Corn** · Your farming companion")
-    st.write("Open the floating corn icon to chat. Mr Corn receives your active field and farm priorities. Mention the plan and weather you are exploring in your question; they are not passed automatically.")
+    from utils import field_model as fm
+    st.write("Open the floating corn icon to chat. Mr Corn receives your active field, selected plan and weather scenario. Ask about the model assumptions or the results you are reviewing." if fm.enabled() else "Open the floating corn icon to chat. Mr Corn receives your active field and farm priorities. Mention the plan and weather you are exploring in your question; they are not passed automatically.")
 
 
 def run() -> None:
+    from utils import field_model as fm
+    if fm.enabled():
+        from components import model_views
+        model_views.recommendations()
+        return
+
     try:
         plots=load_plots()
     except Exception:
