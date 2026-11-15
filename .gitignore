@@ -8,7 +8,7 @@ venv/
 # ---- Análisis: datos crudos pesados (se descargan, ver los README) ----
 analisis/cdl/datos/*.tif
 analisis/cdl/datos/ndvi/
-analisis/ss/datos/shp/
+analisis/ss/datos/spatial/
 analisis/ss/datos/tabular/
 analisis/humedad_nasa/datos/geojson_condados_eua.json
 
