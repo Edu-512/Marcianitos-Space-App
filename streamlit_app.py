@@ -7,7 +7,13 @@ summary, and resilient page routing ready for model integration.
 
 import streamlit as st
 
-from components.navigation import DEFAULT_PAGE, PAGES, render_nav, run_page
+from components.navigation import (
+    DEFAULT_PAGE,
+    PAGES,
+    render_nav,
+    render_nav_clearance,
+    run_page,
+)
 from utils.data_sources import load_plots
 from utils.types import FarmerPriorities
 
@@ -84,14 +90,14 @@ st.session_state.selected_plot_id = plot_labels[selected_label]
 priorities = st.session_state.farmer_priorities
 with col_priorities:
     st.caption("Farm Strategy")
-    with st.popover("My Priorities and Equipment", use_container_width=True):
+    with st.popover("My Priorities and Equipment", width="stretch"):
         st.markdown("**Quick Strategy Presets**")
         st.caption("Click a preset or fine-tune the sliders below.")
         p_col1, p_col2, p_col3 = st.columns(3)
         with p_col1:
             st.button(
                 "Save Water",
-                use_container_width=True,
+                width="stretch",
                 on_click=apply_priority_preset,
                 args=(0.85, 0.50, 0.40),
                 help="Prioritize drought resilience and low water usage.",
@@ -99,7 +105,7 @@ with col_priorities:
         with p_col2:
             st.button(
                 "Soil First",
-                use_container_width=True,
+                width="stretch",
                 on_click=apply_priority_preset,
                 args=(0.50, 0.90, 0.45),
                 help="Focus on long-term soil recovery and organic matter.",
@@ -107,7 +113,7 @@ with col_priorities:
         with p_col3:
             st.button(
                 "Max Return",
-                use_container_width=True,
+                width="stretch",
                 on_click=apply_priority_preset,
                 args=(0.35, 0.45, 0.90),
                 help="Focus on high-margin market crops.",
@@ -184,7 +190,7 @@ st.session_state.farmer_priorities = FarmerPriorities(
 
 with col_guide:
     st.caption("Field Reference")
-    with st.popover("Satellite Guide", use_container_width=True):
+    with st.popover("Satellite Guide", width="stretch"):
         st.markdown(
             """
 ### Understanding Your NASA Data
@@ -240,7 +246,9 @@ except Exception as page_exc:
     )
     col_retry, col_fallback = st.columns([1, 4])
     with col_retry:
-        if st.button("Retry Loading Page", use_container_width=True):
+        if st.button("Retry Loading Page", width="stretch"):
             st.rerun()
     with st.expander("Technical diagnostics (for the model integration team)"):
         st.exception(page_exc)
+
+render_nav_clearance()
