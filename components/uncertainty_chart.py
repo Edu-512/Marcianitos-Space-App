@@ -71,10 +71,6 @@ def impact_with_ci(df: pd.DataFrame, height: int = 300) -> alt.v6.LayerChart:
 #: Calendar order for the seasonal timeline (Spanish month abbreviations).
 _MONTHS_ES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
 
-#: Severity -> data color (chart data colors are theme-independent by design).
-_SEVERITY_COLORS = {"Low": "#6B8E23", "Moderate": "#6A452C", "High": "#3D2217"}
-
-
 def _window_months(start_month: str, end_month: str) -> list[int]:
     """Month numbers (1..12) covered by a window, handling Dec -> Jan wraparound."""
     start, end = int(start_month), int(end_month)
@@ -113,7 +109,7 @@ def seasonal_vulnerability_timeline(windows: list[SeasonalWindow], height: int =
         y=alt.Y("window_type:N", title=None),
         color=alt.Color(
             "severity:N",
-            scale=alt.Scale(domain=list(_SEVERITY_COLORS), range=list(_SEVERITY_COLORS.values())),
+            sort=["Low", "Moderate", "High"],
             legend=alt.Legend(title="Severidad"),
         ),
         tooltip=[

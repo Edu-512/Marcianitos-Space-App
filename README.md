@@ -14,12 +14,13 @@ App_web/
 │   └── recommendations.py      # Plan de acción DSS según prioridades del productor, con impacto y CI
 ├── components/
 │   ├── navigation.py           # Barra de navegación responsiva con botones nativos (arriba en escritorio, abajo en móvil)
-│   └── uncertainty_chart.py    # Gráficas reutilizables de incertidumbre (Altir/Vega)
+│   ├── palette.py              # Tokens compartidos para mapas y gráficas
+│   └── uncertainty_chart.py    # Gráficas reutilizables de incertidumbre (Altair/Vega)
 ├── utils/
 │   ├── types.py                # Dataclasses: contrato tipado entre UI y modelo
 │   ├── data_sources.py         # Acceso a datos (mock determinista hoy; NASA mañana)
 │   └── model_interface.py      # Contrato con el equipo de ML (stubs con TODOs)
-├── .streamlit/config.toml      # Tema (verde agrícola, modo claro/oscuro)
+├── .streamlit/config.toml      # Paleta tierra/verde con modo claro/oscuro
 └── requirements.txt
 ```
 
