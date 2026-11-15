@@ -3,6 +3,7 @@ from pathlib import Path
 import math
 import streamlit as st
 from utils import field_model as fm
+from components import national_fields
 
 FRONT=Path(__file__).with_name('field_map_frontend')
 KEY='research_field_map'
@@ -35,8 +36,15 @@ def _camera() -> None:
     except (TypeError,ValueError,KeyError):pass
 
 
+def _national() -> None:
+    value=st.session_state.get(KEY,{}).get('national')
+    if isinstance(value,bool):st.session_state.research_map_national=value
+
+
 def render() -> None:
     _COMPONENT(key=KEY,data={'geometry':fm.map_features(),'profiles':fm.records(),'names':{pid:fm.label(pid) for pid in fm.records()},
                            'selected':st.session_state.selected_plot_id,'climate':st.session_state.selected_climate_id,
                            'plan':st.session_state.get('selected_plan_id'),'plans':fm.PLANS,'climates':fm.CLIMATES,
-                           'camera':st.session_state.get('research_map_camera')},height='content',width='stretch',on_action_change=_action,on_camera_change=_camera)
+                           'camera':st.session_state.get('research_map_camera'),
+                           'national':national_fields.config(),'national_on':st.session_state.get('research_map_national',True)},
+                height='content',width='stretch',on_action_change=_action,on_camera_change=_camera,on_national_change=_national)
