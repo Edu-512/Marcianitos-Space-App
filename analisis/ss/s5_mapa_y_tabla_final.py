@@ -1,6 +1,6 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))  # rutas relativas a esta carpeta
 import geopandas as gpd,pandas as pd,matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
-g=gpd.read_file('datos/shp/soilmu.shp'); s=pd.read_csv('suelo_con_area.csv',dtype={'mukey':str})
+g=gpd.read_file('datos/spatial/soilmu_a_ia023.shp'); s=pd.read_csv('suelo_con_area.csv',dtype={'mukey':str})
 g=g.merge(s[['mukey','agua_disp_0_150cm','arena_pct']],left_on='MUKEY',right_on='mukey',how='left').to_crs(26915)
 fig,ax=plt.subplots(1,2,figsize=(13,5.6))
 for a,c,t,cm in[(ax[0],'agua_disp_0_150cm','Agua que guarda el suelo (cm, hasta 150 cm de profundidad)','YlGnBu'),(ax[1],'arena_pct','Arena en la capa superficial (%)','YlOrBr')]:

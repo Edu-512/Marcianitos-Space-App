@@ -1,6 +1,6 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))  # rutas relativas a esta carpeta
 import geopandas as gpd,pandas as pd,numpy as np
-g=gpd.read_file('datos/shp/soilmu.shp'); print(g.shape,list(g.columns),g.crs); print(g.head(3).drop(columns='geometry').to_string())
+g=gpd.read_file('datos/spatial/soilmu_a_ia023.shp'); print(g.shape,list(g.columns),g.crs); print(g.head(3).drop(columns='geometry').to_string())
 print('geometrias invalidas:',(~g.is_valid).sum(),'| vacias',g.is_empty.sum(),'| limites',g.total_bounds.round(3))
 p=g.to_crs(26915); g['acres']=p.area/4046.8564
 print('poligonos',len(g),'| unidades distintas',g.MUKEY.nunique(),'| area total acres',round(g.acres.sum()))

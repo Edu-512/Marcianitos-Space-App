@@ -1,11 +1,9 @@
-# Falta: datos crudos de SSURGO y el script de extracción
+# Se bajan de Web Soil Survey (no van en el repo)
 
-1. **Datos crudos** (no se suben, se bajan de https://websoilsurvey.nrcs.usda.gov/ → Download Soils Data → Iowa, Butler County IA023):
-   - `shp/soilmu.shp` y sus archivos compañeros (.dbf, .shx, .prj)
-   - `tabular/mucrpyd.txt`, `tabular/ccrpyd.txt`, `tabular/crstrcts.txt`, `tabular/cmonth.txt`
-2. **Tablas intermedias** que leen los scripts y que no tienen script que las genere:
-   - `component.csv`
-   - `ssurgo_butler_por_suelo.csv`
-3. **El script que genera `ssurgo_butler_variables_modelo.csv`** (la tabla de 22 variables que usa el modelo).
+https://websoilsurvey.nrcs.usda.gov/ → Download Soils Data → Soil Survey Area: Iowa, Butler County (IA023), versión 33.
+Al descomprimir, copiar aquí las carpetas tal como vienen:
 
-Pedir 2 y 3 a quien hizo el análisis de SSURGO.
+- `spatial/` → la usan `s2`, `s5`, `cdl/s2`, `cdl/s11` y `modelo/calibracion/r3` (`spatial/soilmu_a_ia023.shp`)
+- `tabular/` → la usan `s1` y `s3` (`mucrpyd.txt`, `ccrpyd.txt`, `crstrcts.txt`, `cmonth.txt`)
+
+No depende de nadie del equipo: cualquiera lo puede descargar.
