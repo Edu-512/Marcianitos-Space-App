@@ -1,0 +1,134 @@
+{
+ "A_quickstats": {
+  "maiz": {
+   "tendencia_bu_ac_anio": 2.29,
+   "peores_anios": {
+    "2012": -25.9,
+    "2010": -9.9,
+    "2013": -9.5,
+    "2020": -8.4,
+    "2001": -4.9
+   },
+   "variacion_explicada_por_anio": 0.48
+  },
+  "soya": {
+   "tendencia_bu_ac_anio": 0.73,
+   "peores_anios": {
+    "2003": -28.6,
+    "2013": -14.0,
+    "2012": -12.9,
+    "2008": -6.8,
+    "2020": -6.1
+   },
+   "variacion_explicada_por_anio": 0.62
+  },
+  "corr_anual_maiz_soya": 0.58,
+  "perdida_anios_malos": {
+   "cuartil_bajo": -20.5,
+   "resto": -11.1
+  },
+  "condados_con_dato_2024": {
+   "maiz": 73,
+   "soya": 68
+  },
+  "faltantes_recientes": {
+   "condados": 11,
+   "corr_con_rendimiento": -0.19,
+   "rend_con_faltantes": 156.0,
+   "rend_sin_faltantes": 161.3
+  },
+  "butler_2003": {
+   "soya": 24.4,
+   "soya_anom": -46.54,
+   "maiz_anom": -3.27,
+   "sm100_7_z": 0.6,
+   "sm100_8_z": -0.58,
+   "d35_z": 0.81,
+   "lluvia_jul_ago_z": -0.81
+  },
+  "butler_percentil_maiz": 84
+ },
+ "B_interaccion_suelo_clima": {
+  "sm100_8_z": {
+   "diferencia": 1.28,
+   "ic95": [
+    -3.45,
+    6.11
+   ]
+  },
+  "d35_z": {
+   "diferencia": -1.95,
+   "ic95": [
+    -5.09,
+    4.05
+   ]
+  }
+ },
+ "C_panel_rotacion": {
+  "maiz_sobre_maiz_a_rend_maiz": {
+   "efecto": -0.4,
+   "ic95": [
+    -9.3,
+    10.2
+   ]
+  },
+  "placebo_a_rend_soya": {
+   "efecto": 10.2,
+   "ic95": [
+    0.7,
+    22.3
+   ]
+  },
+  "futuro_a_rend_maiz": {
+   "efecto": 11.0,
+   "ic95": [
+    2.8,
+    18.7
+   ]
+  },
+  "sensibilidad_clima_maiz_continuo": {
+   "sm100_8_z": {
+    "diferencia": -0.07,
+    "ic95": [
+     -2.64,
+     2.14
+    ]
+   },
+   "d35_z": {
+    "diferencia": 0.64,
+    "ic95": [
+     -2.68,
+     2.49
+    ]
+   },
+   "lluvia_may_jun_z": {
+    "diferencia": 2.3,
+    "ic95": [
+     0.07,
+     4.75
+    ]
+   }
+  },
+  "cambio_anual_vs_clima_spearman": {
+   "lluvia_may_jun_z": 0.05,
+   "sm10_5_z": -0.07,
+   "anom_prev": 0.14
+  },
+  "perdida_2012": {
+   "mas_maiz_continuo": -23.0,
+   "menos": -28.7
+  },
+  "corr_maiz_continuo_vs_rendimiento_condado": 0.63,
+  "por_distrito": {
+   "SOUTH CENTRAL": 0.03,
+   "SOUTHWEST": 0.07,
+   "SOUTHEAST": 0.12,
+   "NORTHWEST": 0.19,
+   "WEST CENTRAL": 0.21,
+   "CENTRAL": 0.24,
+   "NORTH CENTRAL": 0.3,
+   "EAST CENTRAL": 0.32,
+   "NORTHEAST": 0.49
+  }
+ }
+}

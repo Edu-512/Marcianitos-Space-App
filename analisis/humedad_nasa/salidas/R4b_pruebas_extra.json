@@ -1,0 +1,58 @@
+{
+ "maiz|mejor anterior": {
+  "rmse_todo": 10.28,
+  "rmse_sin_derecho": 10.18,
+  "base_sin_derecho": 11.69,
+  "2012_pred": -12.5,
+  "corr_anual": 0.63
+ },
+ "maiz|+ lluvia jul-ago": {
+  "rmse_todo": 10.38,
+  "rmse_sin_derecho": 10.27,
+  "base_sin_derecho": 11.69,
+  "2012_pred": -12.3,
+  "corr_anual": 0.614
+ },
+ "maiz|humedad jul-ago + lluvia jul-ago": {
+  "rmse_todo": 11.65,
+  "rmse_sin_derecho": 11.57,
+  "base_sin_derecho": 11.69,
+  "2012_pred": -2.3,
+  "corr_anual": 0.249
+ },
+ "maiz|+ lluvia jul-ago + días>35": {
+  "rmse_todo": 9.67,
+  "rmse_sin_derecho": 9.55,
+  "base_sin_derecho": 11.69,
+  "2012_pred": -21.0,
+  "corr_anual": 0.73
+ },
+ "soya|mejor anterior": {
+  "rmse_todo": 11.56,
+  "rmse_sin_derecho": 11.58,
+  "base_sin_derecho": 12.01,
+  "2012_pred": 1.1,
+  "corr_anual": 0.376
+ },
+ "soya|+ lluvia jul-ago": {
+  "rmse_todo": 11.66,
+  "rmse_sin_derecho": 11.69,
+  "base_sin_derecho": 12.01,
+  "2012_pred": 1.1,
+  "corr_anual": 0.353
+ },
+ "soya|humedad jul-ago + lluvia jul-ago": {
+  "rmse_todo": 10.89,
+  "rmse_sin_derecho": 10.92,
+  "base_sin_derecho": 12.01,
+  "2012_pred": 0.4,
+  "corr_anual": 0.547
+ },
+ "soya|+ lluvia jul-ago + días>35": {
+  "rmse_todo": 10.4,
+  "rmse_sin_derecho": 10.41,
+  "base_sin_derecho": 12.01,
+  "2012_pred": -17.1,
+  "corr_anual": 0.642
+ }
+}

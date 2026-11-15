@@ -1,0 +1,15 @@
+# Dependencias de los scripts de análisis (la app no las necesita)
+pandas>=2.2
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4
+statsmodels>=0.14
+matplotlib>=3.8
+pillow>=10
+rasterio>=1.3
+geopandas>=0.14
+shapely>=2.0
+requests>=2.31
+
+# Solo para volver a descargar NLDAS por condado (humedad_nasa/04)
+earthaccess>=0.9

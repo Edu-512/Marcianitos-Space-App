@@ -1,0 +1,252 @@
+{
+ "n_obs": {
+  "maiz": 2470,
+  "soya": 2437
+ },
+ "cv": {
+  "maiz": {
+   "year|línea base (solo tendencia)": 11.83,
+   "year|lineal solo humedad jul-ago": 11.57,
+   "year|lineal humedad jun+jul+ago": 11.2,
+   "year|lineal + calor": 11.06,
+   "year|lineal + calor + lluvia primavera": 10.31,
+   "year|lineal + calor + lluvia + derecho": 10.31,
+   "year|gradient boosting (todas)": 10.42,
+   "distrito|línea base (solo tendencia)": 11.08,
+   "distrito|lineal solo humedad jul-ago": 10.23,
+   "distrito|lineal humedad jun+jul+ago": 9.92,
+   "distrito|lineal + calor": 9.58,
+   "distrito|lineal + calor + lluvia primavera": 8.96,
+   "distrito|lineal + calor + lluvia + derecho": 8.84,
+   "distrito|gradient boosting (todas)": 7.29
+  },
+  "soya": {
+   "year|línea base (solo tendencia)": 12.01,
+   "year|lineal solo humedad jul-ago": 10.77,
+   "year|lineal humedad jun+jul+ago": 10.94,
+   "year|lineal + calor": 11.49,
+   "year|lineal + calor + lluvia primavera": 11.55,
+   "year|lineal + calor + lluvia + derecho": 11.56,
+   "year|gradient boosting (todas)": 11.55,
+   "distrito|línea base (solo tendencia)": 11.11,
+   "distrito|lineal solo humedad jul-ago": 9.5,
+   "distrito|lineal humedad jun+jul+ago": 9.5,
+   "distrito|lineal + calor": 9.53,
+   "distrito|lineal + calor + lluvia primavera": 9.4,
+   "distrito|lineal + calor + lluvia + derecho": 9.39,
+   "distrito|gradient boosting (todas)": 7.92
+  }
+ },
+ "spearman": {
+  "maiz": {
+   "sm100_6_z": [
+    -0.095,
+    -0.351,
+    0.18
+   ],
+   "sm100_7_z": [
+    0.164,
+    -0.082,
+    0.41
+   ],
+   "sm100_8_z": [
+    0.367,
+    0.097,
+    0.585
+   ],
+   "sm10_5_z": [
+    0.027,
+    -0.219,
+    0.25
+   ],
+   "lluvia_may_jun_z": [
+    -0.143,
+    -0.374,
+    0.105
+   ],
+   "lluvia_jul_ago_z": [
+    0.41,
+    0.177,
+    0.6
+   ],
+   "tair_7_z": [
+    -0.178,
+    -0.458,
+    0.114
+   ],
+   "d30_z": [
+    -0.16,
+    -0.385,
+    0.075
+   ],
+   "d32_z": [
+    -0.17,
+    -0.426,
+    0.064
+   ],
+   "d35_z": [
+    -0.241,
+    -0.477,
+    0.004
+   ],
+   "tmax_jul_z": [
+    -0.122,
+    -0.39,
+    0.14
+   ]
+  },
+  "soya": {
+   "sm100_6_z": [
+    -0.095,
+    -0.345,
+    0.136
+   ],
+   "sm100_7_z": [
+    0.002,
+    -0.221,
+    0.26
+   ],
+   "sm100_8_z": [
+    0.358,
+    0.124,
+    0.532
+   ],
+   "sm10_5_z": [
+    -0.044,
+    -0.251,
+    0.193
+   ],
+   "lluvia_may_jun_z": [
+    -0.189,
+    -0.399,
+    0.028
+   ],
+   "lluvia_jul_ago_z": [
+    0.479,
+    0.259,
+    0.634
+   ],
+   "tair_7_z": [
+    0.062,
+    -0.222,
+    0.301
+   ],
+   "d30_z": [
+    0.025,
+    -0.273,
+    0.293
+   ],
+   "d32_z": [
+    -0.019,
+    -0.29,
+    0.257
+   ],
+   "d35_z": [
+    -0.161,
+    -0.446,
+    0.157
+   ],
+   "tmax_jul_z": [
+    0.089,
+    -0.198,
+    0.348
+   ]
+  }
+ },
+ "anios": {
+  "maiz": {
+   "2012": {
+    "real": -26.6,
+    "gb": -11.7,
+    "lineal": -12.2
+   },
+   "2013": {
+    "real": -9.9,
+    "gb": -7.4,
+    "lineal": -3.6
+   },
+   "2020": {
+    "real": -9.0,
+    "gb": -1.4,
+    "lineal": -3.1
+   },
+   "2021": {
+    "real": 3.3,
+    "gb": 0.3,
+    "lineal": 0.6
+   },
+   "2023": {
+    "real": 0.8,
+    "gb": 1.6,
+    "lineal": 2.3
+   }
+  },
+  "maiz_corr_anual": {
+   "gb": 0.621,
+   "lineal": 0.628
+  },
+  "soya": {
+   "2012": {
+    "real": -13.4,
+    "gb": -3.4,
+    "lineal": 1.2
+   },
+   "2013": {
+    "real": -14.5,
+    "gb": -6.9,
+    "lineal": -5.5
+   },
+   "2020": {
+    "real": -6.6,
+    "gb": -1.9,
+    "lineal": -5.4
+   },
+   "2021": {
+    "real": 9.4,
+    "gb": -1.3,
+    "lineal": -4.7
+   },
+   "2023": {
+    "real": -3.2,
+    "gb": 0.2,
+    "lineal": -0.8
+   }
+  },
+  "soya_corr_anual": {
+   "gb": 0.404,
+   "lineal": 0.372
+  }
+ },
+ "derecho": {
+  "maiz": {
+   "afectados": -19.0,
+   "resto": -5.3
+  },
+  "soya": {
+   "afectados": -9.6,
+   "resto": -5.0
+  }
+ },
+ "importancia": {
+  "maiz": {
+   "sm100_8_z": 3.29,
+   "lluvia_may_jun_z": 2.04,
+   "tair_7_z": 1.78,
+   "sm100_6_z": 1.57,
+   "sm100_7_z": 0.93,
+   "d32_z": 0.93,
+   "sm10_5_z": 0.55,
+   "derecho": 0.0
+  },
+  "soya": {
+   "sm100_8_z": 7.84,
+   "sm100_7_z": 4.21,
+   "tair_7_z": 1.68,
+   "d32_z": 1.29,
+   "lluvia_may_jun_z": 0.83,
+   "sm10_5_z": 0.63,
+   "sm100_6_z": 0.56,
+   "derecho": 0.0
+  }
+ }
+}

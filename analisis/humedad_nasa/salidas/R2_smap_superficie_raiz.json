@@ -1,0 +1,35 @@
+{
+ "smap_sup_vs_raiz": {
+  "r_diaria": 0.78,
+  "sd_surf": 0.055,
+  "sd_rz": 0.034,
+  "cv_surf": 21.5,
+  "cv_rz": 12.0,
+  "autocorr_lag1_surf": 0.895,
+  "autocorr_lag1_rz": 0.989,
+  "autocorr_lag30_surf": 0.26,
+  "autocorr_lag30_rz": 0.67,
+  "xcorr_cambios": {
+   "0": 0.73,
+   "1": 0.35,
+   "2": 0.01,
+   "3": 0.01,
+   "5": -0.01,
+   "7": -0.1
+  },
+  "respuesta_raiz_tras_lluvia": {
+   "n": 37,
+   "max_media": 0.0185,
+   "dia_max": 1
+  }
+ },
+ "ciclo_diario": {
+  "amplitud_surf": 0.0075,
+  "amplitud_rz": 0.00098,
+  "hora_max_surf": 4,
+  "hora_min_surf": 16,
+  "amp_verano": 0.0179,
+  "amp_invierno": 0.0017,
+  "rel_amp_vs_sd_diaria": 0.14
+ }
+}
