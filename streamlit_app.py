@@ -221,6 +221,10 @@ except Exception as page_exc:
     with st.expander("Troubleshooting details"):
         st.exception(page_exc)
 
-render_continuation(pages, active_key)
+if active_key == "rotations":
+    from app_pages.rotations import render_plan_continuation
+    render_plan_continuation(pages)
+else:
+    render_continuation(pages, active_key)
 render_mobile_clearance()
 render_chat()

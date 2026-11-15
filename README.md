@@ -249,3 +249,15 @@ remains in English. No agricultural model or data contracts were changed.
 See [the implementation and validation report](docs/feature-03-my-field.md) for
 integration fields, limitations, tests and manual checks. Mr Corn uses the new
 transparent smiling corn avatar without the tractor without changing chat behavior.
+
+## Feature 04: Compare Crops
+
+Compare Crops now offers visual weather selection, three planting-plan cards,
+explicit plan selection and shared context for Recommendations. Current model
+results are used only where definitions exist. Soybean plans and wet-spring
+results remain clearly pending; costs are not presented as profit. The original
+plans and simulator remain available in expandable details. Interface text stays
+in English and the existing earth-tone themes and Mr Corn are preserved.
+
+See the [implementation and validation report](docs/feature-04-compare-crops.md)
+for available data, pending model fields, test results and manual visual checks.

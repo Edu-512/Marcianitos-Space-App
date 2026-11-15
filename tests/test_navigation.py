@@ -30,6 +30,8 @@ class MainNavigationTests(unittest.TestCase):
             ("rotations", "recommendations", "Your Next Steps"),
             ("recommendations", "rotations", "Compare Your Options"),
         ]:
+            if source == "rotations":
+                at.button(key="select_continuous").click().run()
             at.button(key=f"continue_{source}").click().run()
             self.assertFalse(at.exception)
             self.assertEqual(at.session_state["page_key"], target)
