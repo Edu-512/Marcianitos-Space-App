@@ -1,6 +1,6 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))  # rutas relativas a esta carpeta
 import pandas as pd,numpy as np
-F="../../analisis/clima_power/datos/POWER_Point_Daily_20000101_20251231_042d73N_092d79W_LST.csv"
+F="../../analisis/clima_power/datos/POWER_Point_Daily_20000101_20251231_042d73N_092d79W_LST_1.csv"
 d=pd.read_csv(F,skiprows=12)
 print('filas',len(d),'| años',d.YEAR.min(),d.YEAR.max(),'| faltantes(-999):',int((d[['T2M','T2M_MAX','PRECTOTCORR','GWETROOT']]==-999).sum().sum()))
 d['fecha']=pd.to_datetime(d.YEAR.astype(str)+d.DOY.astype(str),format='%Y%j'); d['mes']=d.fecha.dt.month

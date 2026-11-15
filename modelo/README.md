@@ -27,7 +27,7 @@ python modelo/gen.py --todas    # 167 parcelas            -> salidas/resultado_t
 |---|---|---|
 | `anomalias.csv` | `analisis/qs/s3_tendencia.py` | USDA QuickStats |
 | `quickstats_iowa_limpio.csv` | `analisis/qs/s2_limpieza.py` | USDA QuickStats |
-| `ssurgo_butler_variables_modelo.csv` | Pendiente (ver `analisis/ss/datos/PENDIENTE.md`) | USDA SSURGO |
+| `ssurgo_butler_variables_modelo.csv` | `analisis/ss/` s0 → s2 → s3 → s7 | USDA SSURGO |
 | `precios_iowa.csv` | `analisis/economia/s1_precios.py` | USDA |
 | `clima_butler_por_anio.csv` | `calibracion/r4_clima.py` y `calibracion/r5_reclasificar.py` | NASA POWER |
 | `modelo_suelo.json` | `calibracion/r3_calibrar_y_validar.py` | SSURGO + NDVI de MODIS |
@@ -38,7 +38,7 @@ python modelo/gen.py --todas    # 167 parcelas            -> salidas/resultado_t
 ## Recalibrar
 
 En orden: `calibracion/r3_calibrar_y_validar.py` (necesita haber corrido `analisis/ss/` y `analisis/cdl/` s2, s4 y s6),
-`calibracion/r4_clima.py` (necesita el CSV de POWER en `analisis/clima_power/datos/`) y `calibracion/r5_reclasificar.py`.
+`calibracion/r4_clima.py` (usa `analisis/clima_power/datos/POWER_..._LST_1.csv`) y `calibracion/r5_reclasificar.py`.
 `ajuste_suelo.csv` y `clima_por_escenario.csv` en `calibracion/` son resultados de revisión; `gen.py` no los lee.
 
 ## Qué está medido y qué viene de la literatura

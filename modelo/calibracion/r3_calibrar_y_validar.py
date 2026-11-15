@@ -24,7 +24,7 @@ S=np.load('../../analisis/cdl/cdl_stack.npy'); z=np.load('../../analisis/cdl/rej
 mp={k:v for k,v in zip(d.mukey,d.ajuste_pct)}
 mu=z['mu']; lut=pd.read_csv('../../analisis/ss/suelo_con_area.csv',dtype={'mukey':str})
 import geopandas as gpd
-g=gpd.read_file('../../analisis/ss/datos/shp/soilmu.shp'); keys={k:i+1 for i,k in enumerate(sorted(g.MUKEY.unique()))}
+g=gpd.read_file('../../analisis/ss/datos/spatial/soilmu_a_ia023.shp'); keys={k:i+1 for i,k in enumerate(sorted(g.MUKEY.unique()))}
 arr=np.full(len(keys)+1,np.nan)
 for k,i in keys.items():
     if k in mp: arr[i]=mp[k]
