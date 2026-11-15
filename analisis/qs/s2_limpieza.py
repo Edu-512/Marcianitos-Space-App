@@ -1,6 +1,6 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))  # rutas relativas a esta carpeta
 import pandas as pd,sys
-d=pd.read_csv(sys.argv[1] if len(sys.argv)>1 else 'datos/quickstats_iowa_crudo.csv',dtype=str)
+d=pd.read_csv(sys.argv[1] if len(sys.argv)>1 else 'datos/quickstats_crudo.csv',dtype=str)
 d['valor']=d['Value'].str.replace(',','').astype(float); d['anio']=d['Year'].astype(int)
 m={'CORN - ACRES PLANTED':'maiz_acres','CORN, GRAIN - YIELD, MEASURED IN BU / ACRE':'maiz_rend','SOYBEANS - ACRES PLANTED':'soya_acres','SOYBEANS - YIELD, MEASURED IN BU / ACRE':'soya_rend','OATS - ACRES PLANTED':'avena_acres','OATS - YIELD, MEASURED IN BU / ACRE':'avena_rend','CORN, SILAGE - YIELD, MEASURED IN TONS / ACRE':'ensilaje_rend'}
 d['var']=d['Data Item'].map(m)

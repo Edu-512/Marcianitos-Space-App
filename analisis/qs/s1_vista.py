@@ -1,6 +1,6 @@
 import os; os.chdir(os.path.dirname(os.path.abspath(__file__)))  # rutas relativas a esta carpeta
 import pandas as pd,sys
-d=pd.read_csv(sys.argv[1] if len(sys.argv)>1 else 'datos/quickstats_iowa_crudo.csv',dtype=str)
+d=pd.read_csv(sys.argv[1] if len(sys.argv)>1 else 'datos/quickstats_crudo.csv',dtype=str)
 print(d.shape); print(list(d.columns))
 print(d.head(3).T.to_string())
 for c in['Program','Period','Geo Level','State','Commodity','Data Item','Domain','Ag District']:

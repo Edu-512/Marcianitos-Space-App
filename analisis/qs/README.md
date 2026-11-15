@@ -12,5 +12,5 @@
 | `s8_verificar_hallazgo4.py` | Verifica que los condados que rinden más son más estables | — |
 | `s9_calibracion.py` | Comprueba que un rango de 80 % cubre el 80 % de los años | — |
 
-Uso: `python s2_limpieza.py` (lee `datos/quickstats_iowa_crudo.csv`, ver `datos/PENDIENTE.md`) y después `s3` a `s9`.
+Uso: `python s2_limpieza.py` (lee `datos/quickstats_crudo.csv`; de dónde salió está en `../PROCEDENCIA.md`) y después `s3` a `s9`.
 `anomalias.csv` y `quickstats_iowa_limpio.csv` son entradas del modelo; la copia que usa el modelo está en `modelo/entradas/`.
