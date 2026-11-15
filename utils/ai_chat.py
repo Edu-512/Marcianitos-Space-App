@@ -36,7 +36,6 @@ from utils.model_interface import (
     score_scenario_priority_fit,
 )
 from utils.types import FarmerPriorities
-from utils import field_model as fm
 
 #: True when the google-genai SDK is available in this environment.
 AI_READY: bool = genai is not None
@@ -112,10 +111,6 @@ def _get_active_priorities() -> FarmerPriorities:
 # --- Tools (thin wrappers over the existing contracts) -----------------------
 
 def tool_get_plot_status(plot_id: str) -> dict:
-    if fm.enabled():
-        try:return {"profile":fm.profile(plot_id)["parcela"],"profile_name":fm.label(plot_id),"nature":"derived research model inputs","geometry":"USDA CDL satellite-derived geometry; not verified ownership boundaries","sources":fm.catalog()["fuentes"]}
-        except ValueError:return {"error":"Unknown model profile"}
-
     """Current state of a plot: satellite indicators + aggregated risks."""
     plots = {p.id: p for p in load_plots()}
     if plot_id not in plots:
@@ -144,9 +139,6 @@ def tool_get_plot_status(plot_id: str) -> dict:
 
 
 def tool_list_rotation_scenarios() -> list[dict]:
-    if fm.enabled():
-        return [{"id":pid,"name":name,"climates":fm.CLIMATES,"units":"bu/acre, USD/acre, ton/acre/year, lb/acre"} for pid,name in fm.PLANS.items()]
-
     """All rotation scenarios available for evaluation."""
     return [
         {"id": s.id, "name": s.name, "crops": list(s.crops)}
@@ -159,16 +151,8 @@ def tool_predict_scenario_outcome(
     scenario_id: str,
     rainfall_shift_pct: float = 0.0,
     temp_anomaly_c: float = 0.0,
-    climate_id: str | None = None,
 ) -> dict:
     """Expected outcome of a rotation on a plot, including farmer priority fit score."""
-    if fm.enabled():
-        climate=climate_id or st.session_state.get("selected_climate_id","normal")
-        if rainfall_shift_pct or temp_anomaly_c:
-            return {"error":"Research model supports named historical climates, not arbitrary rainfall/temperature sliders.","climates":fm.CLIMATES}
-        try:return {"plot_id":plot_id,"climate_id":climate,"outcome":fm.result(plot_id,climate,scenario_id),"nature":"derived model estimate","sources":fm.catalog()["fuentes"]}
-        except (ValueError,KeyError):return {"error":"Unknown model profile, plan or climate","plans":fm.PLANS,"climates":fm.CLIMATES}
-
     plots = {p.id for p in load_plots()}
     if plot_id not in plots:
         return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
@@ -209,14 +193,6 @@ def tool_predict_scenario_outcome(
 
 
 def tool_get_action_recommendations(plot_id: str) -> list[dict] | dict:
-    if fm.enabled():
-        plan=st.session_state.get("selected_plan_id")
-        if plan not in fm.PLANS:return {"notice":"Select a plan before discussing its budget, erosion, nitrogen and risks.","plans":fm.PLANS}
-        try:
-            out=fm.result(plot_id,st.session_state.get("selected_climate_id","normal"),plan)
-            return {"scope":"Review prompts from supplied model outputs, not additional prescriptions","plan":out,"nitrogen_target":"maize phase only; timing and applicability require agronomic confirmation","sources":fm.catalog()["fuentes"]}
-        except ValueError:return {"error":"Unknown model profile"}
-
     """Decision-support recommendations aligned with the farmer's active priorities."""
     plots = {p.id for p in load_plots()}
     if plot_id not in plots:
@@ -241,9 +217,6 @@ def tool_get_action_recommendations(plot_id: str) -> list[dict] | dict:
 
 
 def tool_get_crop_price(crop: str) -> dict:
-    if fm.enabled():
-        return {"notice":"Standalone current prices are not exposed by the model export. Use the supplied income, cost and margin outputs; do not substitute the legacy simulated price table.","source":fm.catalog()["fuentes"]["rendimiento_y_precios"]}
-
     """Current market price of a crop (mock table — TODO: real source)."""
     canonical = _CROP_ALIASES.get(crop.strip().lower(), crop.strip().capitalize())
     if canonical not in _MOCK_CROP_PRICES_USD_PER_TONNE:
@@ -293,7 +266,7 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
                 "plot_id": {
                     "type": "string",
                     "description": (
-                        "Profile ID from active context (research examples: 806, 467); legacy demo uses lote-norte. If the user does not specify one, "
+                        "Plot ID, such as 'lote-norte'. If the user does not specify one, "
                         "use the selected plot from the instructions."
                     ),
                 },
@@ -312,7 +285,7 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
         "name": "predict_scenario_outcome",
         "description": (
             "Expected outcome of a crop rotation on a plot: farmer-priority fit score (0–100), "
-            "source quantiles and units. In research mode use climate_id for the three historical groups; no arbitrary weather inputs. In legacy mode only, water, nutrients, cost, and agronomic mechanism. "
+            "yield with a 90% confidence interval, water, nutrients, cost, and agronomic mechanism. "
             "Supports what-if scenarios: rainfall_shift_pct is the seasonal rainfall change "
             "(-30 to +20; positive means more rain, e.g. +20 for prolonged heavy rainfall), and "
             "temp_anomaly_c is the temperature anomaly in °C (0 to 3.5)."
@@ -322,13 +295,12 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
             "properties": {
                 "plot_id": {
                     "type": "string",
-                    "description": "Profile ID from active context (research examples: 806, 467); legacy demo uses lote-norte.",
+                    "description": "Plot ID, such as 'lote-norte'.",
                 },
                 "scenario_id": {
                     "type": "string",
                     "description": "Rotation scenario ID (retrieve IDs with list_rotation_scenarios).",
                 },
-                "climate_id": {"type":"string","description":"Research-model climate ID: normal, seco_caluroso or humedo_primavera."},
                 "rainfall_shift_pct": {
                     "type": "number",
                     "description": "Seasonal rainfall change in percent, -30 to +20. 0 = no change.",
@@ -353,7 +325,7 @@ _TOOL_SCHEMAS: list[dict[str, Any]] = [
             "properties": {
                 "plot_id": {
                     "type": "string",
-                    "description": "Profile ID from active context (research examples: 806, 467); legacy demo uses lote-norte.",
+                    "description": "Plot ID, such as 'lote-norte'.",
                 },
             },
             "required": ["plot_id"],
@@ -407,16 +379,6 @@ def _format_priorities_summary(priorities: FarmerPriorities) -> str:
 
 
 def _system_prompt(plot_id: str) -> str:
-    if fm.enabled():
-        return (f'You are Mr Corn, the Know Your Farm farming assistant. Respond in clear English. Active model profile: {plot_id}. '
-                f'Active climate: {st.session_state.get("selected_climate_id","normal")}; selected plan: {st.session_state.get("selected_plan_id")}. '
-                'Use only tool outputs for every figure. The research model supplies derived estimates from historical data and literature; it does not predict an individual future harvest. '
-                'Preserve source units: maize bu/acre, USD/acre, soil loss ton/acre/year and nitrogen lb/acre. Do not sum maize and soybean yields. '
-                'p10/p50/p90 are supplied quantiles, not validated guarantees for this profile. Costs include land rent; rotation economics average maize and soybean phases. '
-                'Nitrogen applies to maize and requires confirmation, not a universal rotation prescription. Plot locations and outlines come from USDA CDL crop patterns, not verified ownership boundaries. The model includes a 37 USD/acre cover establishment assumption and a planting-risk estimate scaled from the unplanted fraction observed in 2019; neither is a guaranteed field outcome. '
-                'Do not use arbitrary weather sliders, legacy simulated prices, invented observations, new forecasts or invented actions. Compare the three named historical climates and three exported plans. '
-                'Describe tradeoffs without guaranteeing profit or safety. Quote source and limitations briefly. Keep answers concise.')
-
     plot = next((p for p in load_plots() if p.id == plot_id), None)
     context = (
         f"{plot.name} ({plot_id}), {plot.area_hectares:.0f} ha, current crop: {plot.current_crop}"
@@ -425,7 +387,7 @@ def _system_prompt(plot_id: str) -> str:
     )
     priorities_text = _format_priorities_summary(_get_active_priorities())
 
-    return f"""You are "Mr Corn", the agronomy assistant in the Know Your Farm app (NASA Space Apps 2026).
+    return f"""You are "Mr Corn", the agronomy assistant in the Field Shift app (NASA Space Apps 2026).
 The user is a farmer and has selected this plot: {context}.
 The farmer's current priorities are: {priorities_text}.
 
@@ -443,7 +405,7 @@ Strict rules:
 
 
 def _build_generate_config(plot_id: str, model_name: str) -> Any:
-    """Build GenerateContentConfig tuned for Gemini 3.x / 2.5 tool-calling orchestration."""
+    """Build GenerateContentConfig tuned for Gemini 3.5 Flash Lite tool-calling orchestration."""
     config_kwargs: dict[str, Any] = {
         "system_instruction": _system_prompt(plot_id),
         "tools": [_build_tool()],
