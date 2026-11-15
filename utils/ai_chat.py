@@ -14,6 +14,7 @@ to the ``GOOGLE_API_KEY`` environment variable. To swap providers, replace only
 
 from __future__ import annotations
 
+from copy import deepcopy
 import os
 from dataclasses import dataclass
 from typing import Any, Callable, Iterator
@@ -29,6 +30,7 @@ except ImportError:  # pragma: no cover
     types = None  # type: ignore[assignment]
 
 from utils.data_sources import load_plots, load_rotation_scenarios, load_satellite_snapshot
+from utils import field_model as fm
 from utils.model_interface import (
     compute_plot_risk,
     generate_recommendations,
@@ -111,7 +113,14 @@ def _get_active_priorities() -> FarmerPriorities:
 # --- Tools (thin wrappers over the existing contracts) -----------------------
 
 def tool_get_plot_status(plot_id: str) -> dict:
-    """Current state of a plot: satellite indicators + aggregated risks."""
+    """Current plot profile or legacy demo indicators, depending on data mode."""
+    if fm.enabled():
+        try:
+            profile = fm.profile(str(plot_id))["parcela"]
+        except ValueError:
+            return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(fm.records())}"}
+        return {"profile": profile, "data_source": "exported research model"}
+
     plots = {p.id: p for p in load_plots()}
     if plot_id not in plots:
         return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
@@ -140,6 +149,11 @@ def tool_get_plot_status(plot_id: str) -> dict:
 
 def tool_list_rotation_scenarios() -> list[dict]:
     """All rotation scenarios available for evaluation."""
+    if fm.enabled():
+        return [
+            {"id": plan_id, "name": name, "available_climates": list(fm.CLIMATES)}
+            for plan_id, name in fm.PLANS.items()
+        ]
     return [
         {"id": s.id, "name": s.name, "crops": list(s.crops)}
         for s in load_rotation_scenarios()
@@ -151,8 +165,42 @@ def tool_predict_scenario_outcome(
     scenario_id: str,
     rainfall_shift_pct: float = 0.0,
     temp_anomaly_c: float = 0.0,
+    climate_id: str | None = None,
 ) -> dict:
     """Expected outcome of a rotation on a plot, including farmer priority fit score."""
+    if fm.enabled():
+        plot_id = str(plot_id)
+        if plot_id not in fm.records():
+            return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(fm.records())}"}
+        if scenario_id not in fm.PLANS:
+            return {
+                "error": (
+                    f"Unknown plan: '{scenario_id}'. "
+                    f"Valid plan IDs: {sorted(fm.PLANS)}"
+                )
+            }
+        selected_climate = climate_id or st.session_state.get("selected_climate_id", "normal")
+        if selected_climate not in fm.CLIMATES:
+            return {
+                "error": (
+                    f"Unknown climate: '{selected_climate}'. "
+                    f"Valid climate IDs: {sorted(fm.CLIMATES)}"
+                )
+            }
+        if float(rainfall_shift_pct) != 0.0 or float(temp_anomaly_c) != 0.0:
+            return {
+                "error": (
+                    "Climate-shift what-if estimates are not available in the exported model. "
+                    "Choose one of the available climate scenarios instead."
+                )
+            }
+        return {
+            "scenario": scenario_id,
+            "plot": plot_id,
+            "climate": selected_climate,
+            "outcome": fm.result(plot_id, selected_climate, scenario_id),
+        }
+
     plots = {p.id for p in load_plots()}
     if plot_id not in plots:
         return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
@@ -194,6 +242,14 @@ def tool_predict_scenario_outcome(
 
 def tool_get_action_recommendations(plot_id: str) -> list[dict] | dict:
     """Decision-support recommendations aligned with the farmer's active priorities."""
+    if fm.enabled():
+        return {
+            "error": (
+                "Action recommendations are not included in the exported research model. "
+                "Available plan outcomes can be compared instead."
+            )
+        }
+
     plots = {p.id for p in load_plots()}
     if plot_id not in plots:
         return {"error": f"Unknown plot: {plot_id}. Valid plot IDs: {sorted(plots)}"}
@@ -218,6 +274,9 @@ def tool_get_action_recommendations(plot_id: str) -> list[dict] | dict:
 
 def tool_get_crop_price(crop: str) -> dict:
     """Current market price of a crop (mock table — TODO: real source)."""
+    if fm.enabled():
+        return {"error": "Market prices are not included in the exported research model."}
+
     canonical = _CROP_ALIASES.get(crop.strip().lower(), crop.strip().capitalize())
     if canonical not in _MOCK_CROP_PRICES_USD_PER_TONNE:
         return {
@@ -355,9 +414,41 @@ def _build_tool() -> Any:
     """Build a ``types.Tool`` from ``_TOOL_SCHEMAS`` for Gemini function calling."""
     if types is None:
         raise RuntimeError("The `google-genai` package is not installed.")
+    schemas = deepcopy(_TOOL_SCHEMAS)
+    if fm.enabled():
+        for schema in schemas:
+            if schema["name"] == "get_plot_status":
+                schema["description"] = (
+                    "Get the selected field's exported model profile, acreage, rotation, "
+                    "and soil attributes. This tool does not return live satellite observations."
+                )
+            elif schema["name"] == "predict_scenario_outcome":
+                schema["description"] = (
+                    "Get an exported model outcome for a field, plan, and available climate scenario. "
+                    "Climate-shift what-if estimates are not available."
+                )
+                properties = schema["parameters_json_schema"]["properties"]
+                properties.pop("rainfall_shift_pct")
+                properties.pop("temp_anomaly_c")
+                properties["climate_id"] = {
+                    "type": "string",
+                    "description": (
+                        "Climate scenario ID: normal, seco_caluroso, or humedo_primavera. "
+                        "Use the selected climate when omitted."
+                    ),
+                }
+            elif schema["name"] == "get_action_recommendations":
+                schema["description"] = (
+                    "Request action recommendations. The exported research model may report that "
+                    "recommendations are unavailable."
+                )
+            elif schema["name"] == "get_crop_price":
+                schema["description"] = (
+                    "Request crop market prices. The exported research model does not include prices."
+                )
     declarations = [
         types.FunctionDeclaration(**schema)
-        for schema in _TOOL_SCHEMAS
+        for schema in schemas
     ]
     return types.Tool(function_declarations=declarations)
 
@@ -386,10 +477,20 @@ def _system_prompt(plot_id: str) -> str:
         else f"Unknown ID: {plot_id}"
     )
     priorities_text = _format_priorities_summary(_get_active_priorities())
+    data_guidance = (
+        "Active data mode: exported research model. Plot tools return model profile and soil attributes, "
+        "not live satellite observations. Use only the exported climate scenarios and plans; do not "
+        "invent climate-shift estimates, market prices, or action recommendations when the tools report "
+        "that those data are unavailable."
+        if fm.enabled()
+        else "Active data mode: legacy demo. Clearly label simulated satellite indicators, predictions, "
+        "recommendations, and crop prices as demo data."
+    )
 
     return f"""You are "Mr Corn", the agronomy assistant in the Field Shift app (NASA Space Apps 2026).
 The user is a farmer and has selected this plot: {context}.
 The farmer's current priorities are: {priorities_text}.
+{data_guidance}
 
 Strict rules:
 1. Always respond in English, using clear, plain language; explain technical terms.
