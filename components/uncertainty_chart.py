@@ -5,6 +5,8 @@ from __future__ import annotations
 import altair as alt
 import pandas as pd
 
+from utils.types import SeasonalWindow
+
 
 def yield_uncertainty_bands(df: pd.DataFrame, height: int = 300) -> alt.v6.LayerChart:
     """Expected yield over time with a confidence band per scenario.
@@ -64,3 +66,63 @@ def impact_with_ci(df: pd.DataFrame, height: int = 300) -> alt.v6.LayerChart:
     whiskers.mark = alt.MarkDef(type="rule", strokeWidth=2, orient="horizontal")
 
     return alt.layer(bar, whiskers).properties(height=max(height, 40 * len(data)))
+
+
+#: Calendar order for the seasonal timeline (Spanish month abbreviations).
+_MONTHS_ES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+
+#: Severity -> data color (chart data colors are theme-independent by design).
+_SEVERITY_COLORS = {"Low": "#6B8E23", "Moderate": "#6A452C", "High": "#3D2217"}
+
+
+def _window_months(start_month: str, end_month: str) -> list[int]:
+    """Month numbers (1..12) covered by a window, handling Dec -> Jan wraparound."""
+    start, end = int(start_month), int(end_month)
+    if end >= start:
+        return list(range(start, end + 1))
+    return list(range(start, 13)) + list(range(1, end + 1))
+
+
+def seasonal_vulnerability_timeline(windows: list[SeasonalWindow], height: int = 180) -> alt.v6.LayerChart:
+    """Horizontal 12-month timeline of bare-soil and climate-hazard windows.
+
+    One row per window type; each covered month is a bar colored by severity,
+    with rich tooltips carrying the plain-language explanation.
+    """
+    rows: list[dict] = []
+    for w in windows:
+        span = f"{_MONTHS_ES[int(w.start_month) - 1]}–{_MONTHS_ES[int(w.end_month) - 1]}"
+        for m in _window_months(w.start_month, w.end_month):
+            rows.append(
+                {
+                    "month": _MONTHS_ES[m - 1],
+                    "window_type": w.window_type,
+                    "severity": w.severity,
+                    "span": span,
+                    "explanation": w.plain_explanation,
+                }
+            )
+
+    if not rows:
+        return alt.layer().properties(height=height)
+
+    df = pd.DataFrame(rows)
+
+    chart = alt.Chart(df, mark="bar").encode(
+        x=alt.X("month:N", sort=_MONTHS_ES, title=None),
+        y=alt.Y("window_type:N", title=None),
+        color=alt.Color(
+            "severity:N",
+            scale=alt.Scale(domain=list(_SEVERITY_COLORS), range=list(_SEVERITY_COLORS.values())),
+            legend=alt.Legend(title="Severidad"),
+        ),
+        tooltip=[
+            alt.Tooltip("window_type:N", title="Ventana"),
+            alt.Tooltip("severity:N", title="Severidad"),
+            alt.Tooltip("span:N", title="Periodo"),
+            alt.Tooltip("explanation:N", title=None),
+        ],
+    )
+    chart.mark = alt.MarkDef(type="bar", opacity=0.85)
+
+    return alt.layer(chart).properties(height=max(height, 40 * len(windows)))

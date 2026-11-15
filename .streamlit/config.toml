@@ -17,7 +17,7 @@ linkUnderline = true
 
 [theme.light]
 primaryColor = "#7DA24E"
-backgroundColor = "#c8e4a7"
+backgroundColor = "#d0e6b6"
 secondaryBackgroundColor = "#b0e68d"
 codeBackgroundColor = "#b9e296"
 textColor = "#19231B"
