@@ -1,0 +1,1988 @@
+{
+ "version": "1.0",
+ "zona": "Butler County, Iowa (IA023)",
+ "moneda": "USD",
+ "parcelas": [
+  {
+   "parcela": {
+    "id": 806,
+    "perfil": "Buen suelo, rotacion clasica",
+    "acres": 407,
+    "rotacion_actual": "rotacion estricta",
+    "suelo": {
+     "productividad_csr2": 86.7,
+     "arena_pct": 23.5,
+     "agua_disponible_cm": 23.6,
+     "pendiente_pct": 2.8,
+     "materia_organica_pct": 4.7,
+     "riesgo_inundacion_siembra_pct": 1.0
+    },
+    "ajuste_por_suelo_pct": 2.2
+   },
+   "escenarios": {
+    "seco_caluroso": {
+     "anios_historicos": [
+      2001,
+      2002,
+      2003,
+      2005,
+      2006,
+      2012,
+      2021,
+      2022,
+      2023
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 19.2,
+      "dias_arriba_35c": 7.3,
+      "lluvia_mayo_junio_percentil": 27.3,
+      "temperatura_julio_c": 24.7,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 179.0,
+        "p50": 218.0,
+        "p90": 239.2
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 615,
+         "p50": 780,
+         "p90": 856
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -162,
+         "p50": 2,
+         "p90": 78
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 4.1,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 143.2,
+        "p50": 174.4,
+        "p90": 191.4
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 587,
+         "p50": 715,
+         "p90": 785
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -373,
+         "p50": -245,
+         "p90": -175
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.3,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 179.0,
+        "p50": 218.0,
+        "p90": 239.2
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 615,
+         "p50": 780,
+         "p90": 856
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -162,
+         "p50": 2,
+         "p90": 78
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.6,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "humedo_primavera": {
+     "anios_historicos": [
+      2004,
+      2008,
+      2010,
+      2013,
+      2014,
+      2018,
+      2020,
+      2024
+     ],
+     "n_anios": 8,
+     "clima": {
+      "humedad_raices_agosto_percentil": 73.6,
+      "dias_arriba_35c": 0.1,
+      "lluvia_mayo_junio_percentil": 86.6,
+      "temperatura_julio_c": 22.2,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 184.2,
+        "p50": 214.3,
+        "p90": 245.9
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 654,
+         "p50": 758,
+         "p90": 854
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -124,
+         "p50": -20,
+         "p90": 76
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 4.1,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 151.1,
+        "p50": 175.7,
+        "p90": 201.6
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 620,
+         "p50": 720,
+         "p90": 827
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -340,
+         "p50": -240,
+         "p90": -133
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.3,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 184.2,
+        "p50": 214.3,
+        "p90": 245.9
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 654,
+         "p50": 758,
+         "p90": 854
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -124,
+         "p50": -20,
+         "p90": 76
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.6,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "normal": {
+     "anios_historicos": [
+      2000,
+      2007,
+      2009,
+      2011,
+      2015,
+      2016,
+      2017,
+      2019,
+      2025
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 65.4,
+      "dias_arriba_35c": 0.0,
+      "lluvia_mayo_junio_percentil": 45.7,
+      "temperatura_julio_c": 22.9,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 202.8,
+        "p50": 223.2,
+        "p90": 241.1
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 724,
+         "p50": 797,
+         "p90": 859
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -54,
+         "p50": 20,
+         "p90": 82
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 4.1,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 190.7,
+        "p50": 209.8,
+        "p90": 226.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 782,
+         "p50": 860,
+         "p90": 929
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -178,
+         "p50": -100,
+         "p90": -31
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.3,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 202.8,
+        "p50": 223.2,
+        "p90": 241.1
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 724,
+         "p50": 797,
+         "p90": 859
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -54,
+         "p50": 20,
+         "p90": 82
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.6,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "parcela": {
+    "id": 467,
+    "perfil": "Suelo arenoso, poca agua",
+    "acres": 160,
+    "rotacion_actual": "rotacion con quiebre",
+    "suelo": {
+     "productividad_csr2": 55.8,
+     "arena_pct": 57.8,
+     "agua_disponible_cm": 13.7,
+     "pendiente_pct": 1.1,
+     "materia_organica_pct": 3.2,
+     "riesgo_inundacion_siembra_pct": 17.9
+    },
+    "ajuste_por_suelo_pct": -9.1
+   },
+   "escenarios": {
+    "seco_caluroso": {
+     "anios_historicos": [
+      2001,
+      2002,
+      2003,
+      2005,
+      2006,
+      2012,
+      2021,
+      2022,
+      2023
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 19.2,
+      "dias_arriba_35c": 7.3,
+      "lluvia_mayo_junio_percentil": 27.3,
+      "temperatura_julio_c": 24.7,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 159.2,
+        "p50": 193.9,
+        "p90": 212.8
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 547,
+         "p50": 694,
+         "p90": 762
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -230,
+         "p50": -84,
+         "p90": -16
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 2.1,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 127.4,
+        "p50": 155.1,
+        "p90": 170.2
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 522,
+         "p50": 636,
+         "p90": 698
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -438,
+         "p50": -324,
+         "p90": -262
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.7,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 159.2,
+        "p50": 193.9,
+        "p90": 212.8
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 547,
+         "p50": 694,
+         "p90": 762
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -230,
+         "p50": -84,
+         "p90": -16
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 0.8,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "humedo_primavera": {
+     "anios_historicos": [
+      2004,
+      2008,
+      2010,
+      2013,
+      2014,
+      2018,
+      2020,
+      2024
+     ],
+     "n_anios": 8,
+     "clima": {
+      "humedad_raices_agosto_percentil": 73.6,
+      "dias_arriba_35c": 0.1,
+      "lluvia_mayo_junio_percentil": 86.6,
+      "temperatura_julio_c": 22.2,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 163.8,
+        "p50": 190.6,
+        "p90": 218.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 582,
+         "p50": 674,
+         "p90": 760
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -196,
+         "p50": -104,
+         "p90": -18
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 2.1,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 134.4,
+        "p50": 156.3,
+        "p90": 179.4
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 551,
+         "p50": 641,
+         "p90": 736
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -409,
+         "p50": -319,
+         "p90": -224
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.7,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 163.8,
+        "p50": 190.6,
+        "p90": 218.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 582,
+         "p50": 674,
+         "p90": 760
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -196,
+         "p50": -104,
+         "p90": -18
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 0.8,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "normal": {
+     "anios_historicos": [
+      2000,
+      2007,
+      2009,
+      2011,
+      2015,
+      2016,
+      2017,
+      2019,
+      2025
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 65.4,
+      "dias_arriba_35c": 0.0,
+      "lluvia_mayo_junio_percentil": 45.7,
+      "temperatura_julio_c": 22.9,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 180.4,
+        "p50": 198.5,
+        "p90": 214.5
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 644,
+         "p50": 708,
+         "p90": 764
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -134,
+         "p50": -70,
+         "p90": -14
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 2.1,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 169.6,
+        "p50": 186.6,
+        "p90": 201.6
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 695,
+         "p50": 765,
+         "p90": 827
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -265,
+         "p50": -195,
+         "p90": -133
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.7,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 180.4,
+        "p50": 198.5,
+        "p90": 214.5
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 644,
+         "p50": 708,
+         "p90": 764
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -134,
+         "p50": -70,
+         "p90": -14
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 0.8,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "parcela": {
+    "id": 1452,
+    "perfil": "Maiz dominante, buen suelo",
+    "acres": 1020,
+    "rotacion_actual": "maiz dominante",
+    "suelo": {
+     "productividad_csr2": 88.1,
+     "arena_pct": 27.8,
+     "agua_disponible_cm": 25.8,
+     "pendiente_pct": 2.5,
+     "materia_organica_pct": 5.7,
+     "riesgo_inundacion_siembra_pct": 1.5
+    },
+    "ajuste_por_suelo_pct": 3.2
+   },
+   "escenarios": {
+    "seco_caluroso": {
+     "anios_historicos": [
+      2001,
+      2002,
+      2003,
+      2005,
+      2006,
+      2012,
+      2021,
+      2022,
+      2023
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 19.2,
+      "dias_arriba_35c": 7.3,
+      "lluvia_mayo_junio_percentil": 27.3,
+      "temperatura_julio_c": 24.7,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 180.7,
+        "p50": 220.0,
+        "p90": 241.4
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 621,
+         "p50": 788,
+         "p90": 864
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -156,
+         "p50": 10,
+         "p90": 86
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.8,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 144.6,
+        "p50": 176.0,
+        "p90": 193.1
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 593,
+         "p50": 722,
+         "p90": 792
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -367,
+         "p50": -238,
+         "p90": -168
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.0,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 180.7,
+        "p50": 220.0,
+        "p90": 241.4
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 621,
+         "p50": 788,
+         "p90": 864
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -156,
+         "p50": 10,
+         "p90": 86
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.5,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "humedo_primavera": {
+     "anios_historicos": [
+      2004,
+      2008,
+      2010,
+      2013,
+      2014,
+      2018,
+      2020,
+      2024
+     ],
+     "n_anios": 8,
+     "clima": {
+      "humedad_raices_agosto_percentil": 73.6,
+      "dias_arriba_35c": 0.1,
+      "lluvia_mayo_junio_percentil": 86.6,
+      "temperatura_julio_c": 22.2,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 185.9,
+        "p50": 216.3,
+        "p90": 248.2
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 660,
+         "p50": 765,
+         "p90": 862
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -118,
+         "p50": -12,
+         "p90": 84
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.8,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 152.5,
+        "p50": 177.4,
+        "p90": 203.5
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 625,
+         "p50": 727,
+         "p90": 834
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -335,
+         "p50": -233,
+         "p90": -126
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.0,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 185.9,
+        "p50": 216.3,
+        "p90": 248.2
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 660,
+         "p50": 765,
+         "p90": 862
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -118,
+         "p50": -12,
+         "p90": 84
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.5,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "normal": {
+     "anios_historicos": [
+      2000,
+      2007,
+      2009,
+      2011,
+      2015,
+      2016,
+      2017,
+      2019,
+      2025
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 65.4,
+      "dias_arriba_35c": 0.0,
+      "lluvia_mayo_junio_percentil": 45.7,
+      "temperatura_julio_c": 22.9,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 204.7,
+        "p50": 225.3,
+        "p90": 243.4
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 731,
+         "p50": 804,
+         "p90": 867
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -46,
+         "p50": 26,
+         "p90": 90
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.8,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 192.4,
+        "p50": 211.8,
+        "p90": 228.8
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 789,
+         "p50": 868,
+         "p90": 938
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -171,
+         "p50": -92,
+         "p90": -22
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 3.0,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 204.7,
+        "p50": 225.3,
+        "p90": 243.4
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 731,
+         "p50": 804,
+         "p90": 867
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -46,
+         "p50": 26,
+         "p90": 90
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.5,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "parcela": {
+    "id": 1737,
+    "perfil": "Propensa a no poder sembrarse",
+    "acres": 233,
+    "rotacion_actual": "irregular",
+    "suelo": {
+     "productividad_csr2": 57.9,
+     "arena_pct": 34.7,
+     "agua_disponible_cm": 18.7,
+     "pendiente_pct": 1.1,
+     "materia_organica_pct": 4.1,
+     "riesgo_inundacion_siembra_pct": 12.1
+    },
+    "ajuste_por_suelo_pct": -2.1
+   },
+   "escenarios": {
+    "seco_caluroso": {
+     "anios_historicos": [
+      2001,
+      2002,
+      2003,
+      2005,
+      2006,
+      2012,
+      2021,
+      2022,
+      2023
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 19.2,
+      "dias_arriba_35c": 7.3,
+      "lluvia_mayo_junio_percentil": 27.3,
+      "temperatura_julio_c": 24.7,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 171.4,
+        "p50": 208.7,
+        "p90": 229.0
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 589,
+         "p50": 747,
+         "p90": 820
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -188,
+         "p50": -30,
+         "p90": 42
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 2.2,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 137.1,
+        "p50": 167.0,
+        "p90": 183.2
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 562,
+         "p50": 685,
+         "p90": 751
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -398,
+         "p50": -275,
+         "p90": -209
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.7,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 171.4,
+        "p50": 208.7,
+        "p90": 229.0
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 589,
+         "p50": 747,
+         "p90": 820
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -188,
+         "p50": -30,
+         "p90": 42
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 0.9,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "humedo_primavera": {
+     "anios_historicos": [
+      2004,
+      2008,
+      2010,
+      2013,
+      2014,
+      2018,
+      2020,
+      2024
+     ],
+     "n_anios": 8,
+     "clima": {
+      "humedad_raices_agosto_percentil": 73.6,
+      "dias_arriba_35c": 0.1,
+      "lluvia_mayo_junio_percentil": 86.6,
+      "temperatura_julio_c": 22.2,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 176.4,
+        "p50": 205.2,
+        "p90": 235.5
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 627,
+         "p50": 726,
+         "p90": 818
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -150,
+         "p50": -52,
+         "p90": 40
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 2.2,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 144.6,
+        "p50": 168.3,
+        "p90": 193.1
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 593,
+         "p50": 690,
+         "p90": 792
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -367,
+         "p50": -270,
+         "p90": -168
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.7,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 176.4,
+        "p50": 205.2,
+        "p90": 235.5
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 627,
+         "p50": 726,
+         "p90": 818
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -150,
+         "p50": -52,
+         "p90": 40
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 0.9,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "normal": {
+     "anios_historicos": [
+      2000,
+      2007,
+      2009,
+      2011,
+      2015,
+      2016,
+      2017,
+      2019,
+      2025
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 65.4,
+      "dias_arriba_35c": 0.0,
+      "lluvia_mayo_junio_percentil": 45.7,
+      "temperatura_julio_c": 22.9,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 194.2,
+        "p50": 213.7,
+        "p90": 230.9
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 694,
+         "p50": 763,
+         "p90": 822
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -84,
+         "p50": -14,
+         "p90": 44
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 2.2,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 182.6,
+        "p50": 200.9,
+        "p90": 217.0
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 749,
+         "p50": 824,
+         "p90": 890
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -211,
+         "p50": -136,
+         "p90": -70
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 1.7,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 194.2,
+        "p50": 213.7,
+        "p90": 230.9
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 694,
+         "p50": 763,
+         "p90": 822
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -84,
+         "p50": -14,
+         "p90": 44
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 0.9,
+        "arriba_del_limite": false
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "parcela": {
+    "id": 1413,
+    "perfil": "Pendiente fuerte, erosion",
+    "acres": 277,
+    "rotacion_actual": "rotacion estricta",
+    "suelo": {
+     "productividad_csr2": 71.5,
+     "arena_pct": 11.2,
+     "agua_disponible_cm": 27.4,
+     "pendiente_pct": 6.8,
+     "materia_organica_pct": 2.9,
+     "riesgo_inundacion_siembra_pct": 2.9
+    },
+    "ajuste_por_suelo_pct": 5.0
+   },
+   "escenarios": {
+    "seco_caluroso": {
+     "anios_historicos": [
+      2001,
+      2002,
+      2003,
+      2005,
+      2006,
+      2012,
+      2021,
+      2022,
+      2023
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 19.2,
+      "dias_arriba_35c": 7.3,
+      "lluvia_mayo_junio_percentil": 27.3,
+      "temperatura_julio_c": 24.7,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 183.9,
+        "p50": 223.9,
+        "p90": 245.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 632,
+         "p50": 801,
+         "p90": 880
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -146,
+         "p50": 24,
+         "p90": 102
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 14.0,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 147.1,
+        "p50": 179.1,
+        "p90": 196.6
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 603,
+         "p50": 734,
+         "p90": 806
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -357,
+         "p50": -226,
+         "p90": -154
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 11.2,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 183.9,
+        "p50": 223.9,
+        "p90": 245.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 632,
+         "p50": 801,
+         "p90": 880
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -146,
+         "p50": 24,
+         "p90": 102
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 5.6,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 8.5,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "humedo_primavera": {
+     "anios_historicos": [
+      2004,
+      2008,
+      2010,
+      2013,
+      2014,
+      2018,
+      2020,
+      2024
+     ],
+     "n_anios": 8,
+     "clima": {
+      "humedad_raices_agosto_percentil": 73.6,
+      "dias_arriba_35c": 0.1,
+      "lluvia_mayo_junio_percentil": 86.6,
+      "temperatura_julio_c": 22.2,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 189.2,
+        "p50": 220.1,
+        "p90": 252.6
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 672,
+         "p50": 779,
+         "p90": 877
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -106,
+         "p50": 2,
+         "p90": 100
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 14.0,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 155.2,
+        "p50": 180.5,
+        "p90": 207.1
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 636,
+         "p50": 740,
+         "p90": 849
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -324,
+         "p50": -220,
+         "p90": -111
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 11.2,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 189.2,
+        "p50": 220.1,
+        "p90": 252.6
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 672,
+         "p50": 779,
+         "p90": 877
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -106,
+         "p50": 2,
+         "p90": 100
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 5.6,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 6.1,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    },
+    "normal": {
+     "anios_historicos": [
+      2000,
+      2007,
+      2009,
+      2011,
+      2015,
+      2016,
+      2017,
+      2019,
+      2025
+     ],
+     "n_anios": 9,
+     "clima": {
+      "humedad_raices_agosto_percentil": 65.4,
+      "dias_arriba_35c": 0.0,
+      "lluvia_mayo_junio_percentil": 45.7,
+      "temperatura_julio_c": 22.9,
+      "fuente": "NASA POWER (MERRA-2), punto 42.73N 92.79W, 2000-2025"
+     },
+     "planes": [
+      {
+       "id": "maiz_soya",
+       "nombre": "Maíz y soya alternados",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 208.3,
+        "p50": 229.2,
+        "p90": 247.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 744,
+         "p50": 818,
+         "p90": 883
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -34,
+         "p50": 40,
+         "p90": 106
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 14.0,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      },
+      {
+       "id": "maiz_continuo",
+       "nombre": "Maíz todos los años",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 195.8,
+        "p50": 215.5,
+        "p90": 232.8
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 803,
+         "p50": 884,
+         "p90": 954
+        },
+        "costo_usd_acre": 960,
+        "margen_usd_acre": {
+         "p10": -157,
+         "p50": -76,
+         "p90": -6
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 11.2,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 181
+       },
+       "confianza": "media"
+      },
+      {
+       "id": "maiz_soya_cobertura",
+       "nombre": "Maíz y soya con cultivo de cobertura",
+       "rendimiento_maiz_bu_acre": {
+        "p10": 208.3,
+        "p50": 229.2,
+        "p90": 247.7
+       },
+       "economia": {
+        "ingreso_usd_acre": {
+         "p10": 744,
+         "p50": 818,
+         "p90": 883
+        },
+        "costo_usd_acre": 778,
+        "margen_usd_acre": {
+         "p10": -34,
+         "p50": 40,
+         "p90": 106
+        }
+       },
+       "suelo": {
+        "erosion_ton_acre_anio": 5.6,
+        "arriba_del_limite": true
+       },
+       "riesgo": {
+        "prob_caida_mayor_20_pct": 1.2,
+        "prob_no_poder_sembrar_pct": 0.58
+       },
+       "fertilizante": {
+        "nitrogeno_lb_acre": 124
+       },
+       "confianza": "alta"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "fuentes": {
+  "rendimiento_y_precios": "USDA NASS QuickStats, 2000-2025",
+  "suelo": "USDA NRCS SSURGO IA023 v33 (2026-09-08)",
+  "rotacion": "USDA NASS Cropland Data Layer 2018-2025",
+  "clima": "NASA POWER (MERRA-2) diario 2000-2025, Butler County",
+  "penalizacion_rotacion": "Iowa State University Extension (literatura, no medido por nosotros)",
+  "costos": "ISU Estimated Costs of Crop Production in Iowa 2026 (incluyen renta de la tierra)",
+  "nitrogeno": "ISU Corn Nitrogen Rate Calculator"
+ },
+ "advertencias": [
+  "La penalizacion del maiz continuo viene de la literatura, no de nuestros datos.",
+  "Los rangos p10-p90 estan calibrados: un rango de 80% cubrio el 80% de los casos historicos.",
+  "Los costos incluyen renta de la tierra; un agricultor dueño tiene margenes mayores.",
+  "Los escenarios se definen por el clima medido, no por el rendimiento.",
+  "El ajuste por suelo usa solo variables disponibles en todo EE.UU. y esta validado en un solo condado."
+ ]
+}
