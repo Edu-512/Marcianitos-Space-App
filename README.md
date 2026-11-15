@@ -261,3 +261,13 @@ in English and the existing earth-tone themes and Mr Corn are preserved.
 
 See the [implementation and validation report](docs/feature-04-compare-crops.md)
 for available data, pending model fields, test results and manual visual checks.
+
+## Feature 05: Recommendations
+
+Recommendations now reuses the saved comparison outcome, validates plot/plan/
+weather context and presents the existing general field actions with their
+scope and limits. A session checklist tracks reviewed actions per context.
+Nitrogen doses remain pending; Mr Corn and existing navigation are preserved.
+
+See the [implementation and validation report](docs/feature-05-recommendations.md)
+for data gaps, tests and manual checks. This branch depends on Feature 04.
